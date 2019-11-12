@@ -5,7 +5,7 @@ var {testData,times,baseUrl} = require('./efbalens_ddt.js');
 
 console.log(testData);
 //default data
-var iBrowser = 0, iUser = 4, iServer = 0, iAmount = 5, iRes = 0;
+var iBrowser = 0, iUser = 0, iServer = 0, iAmount = 5, iRes = 0;
 var paymentSetId = 17;
 var paymentSet = "a.c-pay-col:nth-child("+paymentSetId+")";
 var browserName = testData.browsers[iBrowser];
@@ -26,8 +26,8 @@ var lineNum = 1;
 (async () => {
 	try{
 		report('_Loading test: '+scriptName);
-		//await testRunner();
-		await resolutionsEnum();
+		await testRunner();
+		//await resolutionsEnum();
 		report("_End");
 	}
 	catch(error){
@@ -53,7 +53,7 @@ async function testRunner(){
 			.build();
 		report("*** Browser is launched ***");
 		await test();
-		await driver.quit(); 
+		await driver.quit();
 		xvfb.stopSync();
 	}
 	catch(error){
@@ -68,7 +68,7 @@ try {
 	 await driver.manage().window().maximize();
 	 resolution = await driver.manage().window().getRect();
 	 await report("*** Current resolution: "+resolution.width+"x"+resolution.height+" ***");
-	 await logWaiting("*** Page loading ...");  
+	 await logWaiting("*** Page loading ...");
 	 var time = performance.now();
      result = await driver.get("https://crea:Deifiey3@dev.creagames.ru/");
 	 time = performance.now() - time;
@@ -79,9 +79,9 @@ try {
 	  await Type(By.id("loginform-username"),login);
 	  await Type(By.id("loginform-password"),pass);
 	  await Click(By.xpath("//*[.='Войти']"));
-	  await WaitForDisplay(By.css('.g-header_profile_data_name'),'',colors.green("Authorization: SUCCESS"));
-      for(let i = 0; i < times; i++) {	 
-	      await Click(By.css('.g-header_profile_data .b-btn'));
+	  await WaitForDisplay(By.css('.g-header_profile_data_name'));
+      for(let i = 0; i < times; i++) {
+	    await Click(By.css('.g-header_profile_data_item'));
 		  await WaitForDisplay(By.css(paymentSet));
 		  await Click(By.css(paymentSet));
 		  await WaitForDisplay(By.css(".b-translation-tabs-pay-tabl-item__btn"));
@@ -95,7 +95,7 @@ try {
 		  await Click(By.id("cbExpMounth"));
 		  await WaitForDisplay(By.css("#cbExpMounth > option:nth-child(9)"));
 		  await Click(By.css("#cbExpMounth > option:nth-child(9)"));
-          await Click(By.id("cbExpYear"));
+      await Click(By.id("cbExpYear"));
 		  await WaitForDisplay(By.css("#cbExpYear > option:nth-child(3)"));
 		  await Click(By.css("#cbExpYear > option:nth-child(3)"));
 		  await Type(By.id("cvv2"),"971");
@@ -118,7 +118,7 @@ try {
 }
 };
 
-async function WaitForDisplay(el, timeout, description) { 
+async function WaitForDisplay(el, timeout, description) {
 	var time = performance.now();
 	timeout ? timeout : timeout = 30000; //default param1
 	description ? description : description = ""; //default param2
@@ -134,7 +134,7 @@ async function WaitForDisplay(el, timeout, description) {
 		time = performance.now() - time;
 		await logResult(lineNum+". *** Searching for an element: "+colors.red("FAIL! Element isn't display ")+"("+colors.gray(String(el))+"). "+description+"Timeout: "+parseFloat(time/1000).toPrecision(3)+" s ***\n");
 		if(timeout < 60000) {
-			console.log("*** Let's try to increase the timeout! ***"); 
+			console.log("*** Let's try to increase the timeout! ***");
 			timeout*=2;
 			return WaitForDisplay(el,timeout,"(retry with timeout: "+timeout+" ms). ");
 		}
@@ -159,7 +159,7 @@ async function Click(el, description, timeout) {
 	catch(error) {
 		console.error(colors.red(lineNum+". *** FAIL. Element is not clickable: ")+colors.gray(String(el))+". "+description+colors.red("Check the selector or use WaitForDisplay(). ***"));
 		throw new Error(colors.red("CRIT: ")+error.message+"("+error.lineNumber+")");
-	}	
+	}
 	finally {
 		lineNum++;
 	}
@@ -177,7 +177,7 @@ async function ClickElement(el,description) {
 	catch(error) {
 		console.error(colors.red(lineNum+". *** FAIL. Element is not clickable: ")+colors.gray(String(await el.getAttribute('class')))+". "+description+colors.red("Check the selector or use WaitForDisplay(). ***"));
 		throw new Error(colors.red("CRIT: ")+error.message+"("+error.lineNumber+")");
-	}	
+	}
 	finally {
 		lineNum++;
 	}
@@ -197,12 +197,12 @@ async function Type(el, string, timeout, description) {
 	catch(error) {
 		console.error(colors.yellow(lineNum+". *** WARN! Input failed: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
 		throw new Error(colors.yellow("WARN: ")+error.message+"("+error.lineNumber+")");
-	}	
+	}
 	finally {
 		lineNum++;
 	}
 };
-	
+
 async function GetString(el, timeout, description) {
 	timeout ? timeout : timeout = 30000; //default param1
 	description ? description : description = ""; //default param2
@@ -213,14 +213,14 @@ async function GetString(el, timeout, description) {
 	catch(error) {
 		console.error(colors.yellow("*** WARN! Failed to get string: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
 		throw new Error(colors.yellow("WARN: ")+error.message+"("+error.lineNumber+")");
-	}	
+	}
 };
 
 async function shot(name,target) {
 	target ? target : target = driver; //default param
 	try{
 		var fileName = String(name)+testData.resolutions[iRes].x+'x'+testData.resolutions[iRes].y+'.png';
-		fs.writeFile('./screens/'+scriptName+'/'+browserName+'/'+fileName,await target.takeScreenshot(), 'base64', function(){console.log("*** Screenshot "+colors.gray(fileName)+colors.white(' has been saved to ')+colors.gray('"/screens/'+scriptName+'/'+browserName+'/"')+colors.white(" ***"))});
+		fs.writeFile('/home/roma/screens/'+scriptName+'/'+browserName+'/'+fileName,await target.takeScreenshot(), 'base64', function(){console.log("*** Screenshot "+colors.gray(fileName)+colors.white(' has been saved to ')+colors.gray('"/screens/'+scriptName+'/'+browserName+'/"')+colors.white(" ***"))});
 		return true;
 	}
 	catch(error){
@@ -254,9 +254,9 @@ async function findByAttr(elems,attribute,target) {
 		if(await elems[i].getAttribute(attribute) == target) {
 			return i;
 			}
-		}	
+		}
 		throw new Error("Element not found");
-	}	
+	}
 	catch(error){
 		throw new Error(error);
 	}
