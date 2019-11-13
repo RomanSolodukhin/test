@@ -29,7 +29,7 @@ describe('Eternal Fury RU', function() {
     await driver.quit()
   })
   afterEach(function() {
-    //shot(String(this.currentTest.title)+'. Отчёт', driver)
+    shot(String(this.currentTest.title)+'. Отчёт', driver)
   })
 
 it('Авторизация', async function () {
@@ -37,6 +37,14 @@ it('Авторизация', async function () {
     await driver.get(site)
     await driver.manage().window().setRect(1920,1080)
     await driver.manage().window().maximize()
+    //await driver.wait(until.elementLocated(By.css(".lang-list")))
+    await shot('css=.lang-list', driver)
+    await driver.findElement(By.css(".lang-list")).click()
+    await shot('linkText=Русский1', driver)
+    //await driver.wait(until.elementLocated(By.linkText("Русский")))
+    await shot('linkText=Русский2', driver)
+    await driver.findElement(By.linkText("Русский")).click()
+    await shot('Вход', driver)
     await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
     await driver.findElement(By.linkText("Вход")).click()
@@ -48,13 +56,14 @@ it('Авторизация', async function () {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")))
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     assert.ok(true)
+    return true
   }
   catch(error) {
       assert.fail(error)
+      return false
   }
-  return
 })
-describe('Серверы', function() {
+describe.skip('Серверы', function() {
   let MAX_SERVERS = 10
   for(i = 1; i <= MAX_SERVERS; i++) {
     let it_ = i > 8 ? it : it.skip
@@ -68,12 +77,14 @@ describe('Серверы', function() {
         await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')))
         let frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
         await driver.switchTo().frame(frame)
+        await driver.wait(until.elementLocated(By.id('gameFrame')))
         frame = await driver.findElement(By.id('gameFrame'))
         await driver.switchTo().frame(frame)
         await driver.wait(until.elementLocated(By.id('GameCanvas')),10000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))),10000)
         await driver.findElement(By.id('GameCanvas')).click()
         assert.ok(true)
+        return true
       }
       catch(error) {
         /*обработка ошибок
@@ -83,13 +94,13 @@ describe('Серверы', function() {
           console.log(error)
           assert.fail('Страница не найдена: "'+driver.getTitle()+'"')
         }
-        else if(await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))){
+        else if(await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))) {
           console.log(error)
           assert.fail('Авторизация не была выполнена.')
         }
         else assert.fail(error)
+        return false
       }
-      return
       })
   }
 })

@@ -110,7 +110,7 @@ describe('dev.creagames.ru — Попополнение счёта ЛК', functi
 						await Click(By.linkText("OK"));
 						var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")));
 						var cgvar = cgvar2-cgvar1;
-						console.log(colors.gray("Баланс: "+cgvar1+" + "+cgvar+" = "+cgvar2+"\n"));
+						assert.ok(colors.gray("Баланс: "+cgvar1+" + "+cgvar+" = "+cgvar2+"\n"))
 						return true
 					}
 		    catch(error) {
