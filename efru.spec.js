@@ -5,17 +5,19 @@ var Xvfb = require('xvfb')
 const fs = require('fs');
 
 describe('Eternal Fury RU', function() {
-  this.timeout(30000)
+  this.timeout(10000)
   let driver
   let vars
   let xvfb
-  let site = "https://creagames.com/ru"
+  let site = "https://www.creagames.com/ru"
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
-      version: '76.0',
+      version: '78.0',
+      screenResolution: "1920x1080x24",
       enableVNC: true,
-      enableVideo: false
+      enableVideo: true,
+      env: ['OVERRIDE_VIDEO_OUTPUT_DIR = /home/roma/test/video']
     };
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
@@ -37,14 +39,14 @@ it('Авторизация', async function () {
     await driver.get(site)
     await driver.manage().window().setRect(1920,1080)
     await driver.manage().window().maximize()
-    //await driver.wait(until.elementLocated(By.css(".lang-list")))
-    await shot('css=.lang-list', driver)
+    await driver.wait(until.elementLocated(By.css(".lang-list")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
     await driver.findElement(By.css(".lang-list")).click()
-    await shot('linkText=Русский1', driver)
-    //await driver.wait(until.elementLocated(By.linkText("Русский")))
-    await shot('linkText=Русский2', driver)
-    await driver.findElement(By.linkText("Русский")).click()
-    await shot('Вход', driver)
+    await driver.wait(until.elementLocated(By.css(".global-header-sub-menu")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".global-header-sub-menu"))))
+    await driver.wait(until.elementLocated(By.linkText("ru")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("ru"))))
+    await driver.findElement(By.linkText("ru")).click()
     await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
     await driver.findElement(By.linkText("Вход")).click()
