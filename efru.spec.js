@@ -5,7 +5,7 @@ var Xvfb = require('xvfb')
 const fs = require('fs');
 
 describe('Eternal Fury RU', function() {
-  this.timeout(10000)
+  this.timeout(30000)
   let driver
   let vars
   let xvfb
@@ -36,27 +36,25 @@ describe('Eternal Fury RU', function() {
 
 it('Авторизация', async function () {
   try {
-    await driver.get(site)
     await driver.manage().window().setRect(1920,1080)
     await driver.manage().window().maximize()
+    await driver.get(site)
     await driver.wait(until.elementLocated(By.css(".lang-list")))
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
-    await driver.findElement(By.css(".lang-list")).click()
-    await driver.wait(until.elementLocated(By.css(".global-header-sub-menu")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".global-header-sub-menu"))))
-    await driver.wait(until.elementLocated(By.linkText("ru")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("ru"))))
-    await driver.findElement(By.linkText("ru")).click()
+    await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
+    //await driver.findElement(By.css(".lang-list")).click()
+    await driver.wait(until.elementLocated(By.linkText("Русский")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+    await driver.findElement(By.linkText("Русский")).click()
     await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    await driver.wait(until.elementLocated(By.css(".g-header_profile_data_item")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_item"))))
     assert.ok(true)
     return true
   }
@@ -65,26 +63,29 @@ it('Авторизация', async function () {
       return false
   }
 })
-describe.skip('Серверы', function() {
+describe('Серверы', function() {
   let MAX_SERVERS = 10
   for(i = 1; i <= MAX_SERVERS; i++) {
-    let it_ = i > 8 ? it : it.skip
+    //let it_ = i > 7 ? it : it.skip
     let link = site+"games/ef/server/"+i
-    it_('s'+i, async function() {
+    it('s'+i, async function() {
       try {
-        await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")))
+        await driver.wait(until.elementLocated(By.css(".g-header_profile_data_item")))
         await driver.get(link)
         await driver.wait(until.elementLocated(By.id('container')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))),10000)
-        await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')))
-        let frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))),30000)
+        await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))))
+        frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
         await driver.switchTo().frame(frame)
-        await driver.wait(until.elementLocated(By.id('gameFrame')))
+        await driver.wait(until.elementLocated(By.id('gameFrame')),30000)
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
         frame = await driver.findElement(By.id('gameFrame'))
         await driver.switchTo().frame(frame)
-        await driver.wait(until.elementLocated(By.id('GameCanvas')),10000)
+        await driver.wait(until.elementLocated(By.id('GameCanvas')),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))),10000)
         await driver.findElement(By.id('GameCanvas')).click()
+        await driver.switchTo().defaultContent()
         assert.ok(true)
         return true
       }
