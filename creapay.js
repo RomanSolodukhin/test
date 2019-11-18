@@ -22,7 +22,7 @@ let driver
 
 var lineNum = 1;
 
-describe('dev.creagames.ru — Попополнение счёта ЛК', function() {
+describe('dev.creagames.ru — Пополнение счёта ЛК', function() {
 	  this.timeout(30000)
 	  //let driver
 	  let vars
@@ -31,7 +31,7 @@ describe('dev.creagames.ru — Попополнение счёта ЛК', functi
 	  before(async function() {
 	    var capabilities = {
 	      browserName: 'chrome',
-	      version: '76.0',
+	      version: '78.0',
 	      enableVNC: true,
 	      enableVideo: false
 	    };

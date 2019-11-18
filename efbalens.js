@@ -52,8 +52,8 @@ async function testRunner(){
 /*===========================================*/
 var capabilities = {
   browserName: 'opera',
-  version: '63.0',
-  enableVNC: false,
+  version: '64.0',
+  enableVNC: true,
   enableVideo: false
 };
 driver = await new Builder()
