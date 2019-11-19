@@ -139,7 +139,7 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementLocated(By.id('progress')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('progress'))))
     });
-    it('Загрузка завершена', async function() {
+    it.skip('Загрузка завершена', async function() {
       try {
         await driver.wait(until.elementLocated(By.id('progress')))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('progress'))))
