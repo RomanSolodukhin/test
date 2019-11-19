@@ -28,11 +28,11 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    /*allure.addArgument('OS:','Ubuntu 18.04')
-    allure.addArgument('browserName:','chrome')
-    allure.addArgument('version:','78.0')
-    allure.addArgument('browserName: ','chrome')
-    allure.addArgument('resolution: ','1920x1080')*/
+    allure.addEnvironment('OS:','Ubuntu 18.04')
+    allure.addEnvironment('browserName:','chrome')
+    allure.addEnvironment('version:','78.0')
+    allure.addEnvironment('browserName: ','chrome')
+    allure.addEnvironment('resolution: ','1920x1080')
   })
 
   const screenshot = allure.createStep("saveScreenshot", async name => {
@@ -46,8 +46,8 @@ describe('Eternal Fury RU', function() {
 
 describe('Авторизация', function(done) {
   afterEach(async function() {
-    if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
-    await screenshot()
+    if(this.currentTest.err) throw new Error(this.currentTest.err)
+    await screenshot(this.currentTest.title)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -102,8 +102,8 @@ describe('Сервер '+i, function(done) {
       await driver.navigate().back()
     })
     afterEach(async function() {
-      if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
-      await screenshot()
+      if(this.currentTest.err) throw new Error(this.currentTest.err)
+      await screenshot(this.currentTest.title)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
