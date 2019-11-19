@@ -8,7 +8,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 1
+  let MAX_SERVERS = 9
   let testName = String(this.title)
   before(async function() {
     var capabilities = {
