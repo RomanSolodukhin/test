@@ -12,13 +12,12 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 
-  allure.addArgument('OS:','Ubuntu 18.04')
-  allure.addArgument('browserName:','chrome')
-  allure.addArgument('version:','78.0')
-  allure.addArgument('browserName: ','chrome')
-  allure.addArgument('resolution: ','1920x1080')
-
   before(async function() {
+    allure.addArgument('OS:','Ubuntu 18.04')
+    allure.addArgument('browserName:','chrome')
+    allure.addArgument('version:','78.0')
+    allure.addArgument('browserName: ','chrome')
+    allure.addArgument('resolution: ','1920x1080')
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
