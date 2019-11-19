@@ -2,6 +2,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 const fs = require('fs');
+require("mocha-allure-reporter");
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -10,7 +11,13 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
-  
+
+  allure.addArgument('OS:','Ubuntu 18.04')
+  allure.addArgument('browserName:','chrome')
+  allure.addArgument('version:','78.0')
+  allure.addArgument('browserName: ','chrome')
+  allure.addArgument('resolution: ','1920x1080')
+
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
