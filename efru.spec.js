@@ -9,6 +9,7 @@ describe('Eternal Fury RU', function() {
   let driver
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
+  console.log(this.test)
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
