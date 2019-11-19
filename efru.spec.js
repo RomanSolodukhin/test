@@ -2,7 +2,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 const fs = require('fs');
-//const robot = require("robotjs");
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -16,7 +15,7 @@ describe('Eternal Fury RU', function() {
       version: '78.0',
       enableVNC: true,
       enableLog: true,
-      name : this.currentTest.title,
+      name: this.currentTest.title,
       enableVideo: true
     }
     driver = await new Builder()
