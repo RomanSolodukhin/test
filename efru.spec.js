@@ -10,6 +10,10 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 9
   let testName = String(this.title)
+  const screenshot = allure.createStep("saveScreenshot", async name => {
+    const res = await driver.takeScreenshot()
+    allure.createAttachment(name, new Buffer(res.value, "base64"))
+  });
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
@@ -24,7 +28,7 @@ describe('Eternal Fury RU', function() {
     .withCapabilities(capabilities)
     .setAlertBehavior()
     .build();
-    await driver.manage().window().setRect(1920,1080)
+    await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
   })
 
@@ -34,7 +38,8 @@ describe('Eternal Fury RU', function() {
 
 describe('Авторизация', function(done) {
   afterEach(function() {
-    if(this.currentTest.err) throw new Error('Тест остановлен')
+    if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
+    await screenshot
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -90,6 +95,7 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(function() {
       if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
+      await screenshot
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
@@ -136,11 +142,11 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementLocated(By.id('GameCanvas')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
     });
-    it.skip('Игра загружается', async function() {
+    it('Игра загружается', async function() {
       await driver.wait(until.elementLocated(By.id('progress')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('progress'))))
     });
-    it.skip('Загрузка завершена', async function() {
+    it('Загрузка завершена', async function() {
       try {
         await driver.wait(until.elementLocated(By.id('progress')))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('progress'))))
@@ -148,6 +154,7 @@ describe('Сервер '+i, function(done) {
       catch(error) {
         assert.ok(true)
       }
+      assert.ok(true)
     });
     it.skip('Кликнуть по иконке Подземелья', async function() {
       await driver.sleep(10000)
