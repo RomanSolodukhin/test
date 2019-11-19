@@ -88,7 +88,7 @@ describe('Сервер '+i, function(done) {
       await driver.navigate().back()
     })
     afterEach(function() {
-      if(this.currentTest.err) throw new Error('Тест остановлен')
+      if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
