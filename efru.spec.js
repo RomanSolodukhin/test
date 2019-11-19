@@ -1,7 +1,7 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var allure = require("mocha-allure-reporter")
+require("mocha-allure-reporter")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -31,6 +31,13 @@ describe('Eternal Fury RU', function() {
     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
     allure.addArgument('resolution:', '1920x1080')
   })
+
+  const screenshot = allure.createStep("saveScreenshot", async name => {
+    const res = await driver.takeScreenshot();
+    // Webdriver.io produces values as base64-encoded string. Allure expects either plain text
+    // string or Buffer. So, we are decoding our value, using constructor of built-in Buffer object
+    allure.createAttachment(name, new Buffer(res.value, "base64"));
+  });
 
   after(async function() {
     await driver.quit()
@@ -94,6 +101,7 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
+      await screenshot(this.currentTest.title)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
