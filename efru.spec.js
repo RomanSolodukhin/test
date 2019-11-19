@@ -1,8 +1,7 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-const fs = require('fs');
-const { allure } = require("mocha-allure-reporter");
+require("mocha-allure-reporter")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -35,10 +34,10 @@ describe('Eternal Fury RU', function() {
     allure.addArgument('resolution: ','1920x1080')
   })
 
-  const screenshot = allure.createStep("saveScreenshot", async name => {
+  /*const screenshot = allure.createStep("saveScreenshot", async name => {
     const res = await driver.takeScreenshot()
     allure.createAttachment(name, new Buffer(res.value, "base64"))
-  });
+  });*/
 
   after(async function() {
     await driver.quit()
@@ -47,7 +46,7 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
-    await screenshot(this.currentTest.title)
+    //await screenshot(this.currentTest.title)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -103,7 +102,7 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
-      await screenshot(this.currentTest.title)
+      //await screenshot(this.currentTest.title)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
