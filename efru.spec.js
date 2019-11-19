@@ -16,10 +16,6 @@ describe('Eternal Fury RU', function() {
   allure.addArgument('browserName: ','chrome')
   allure.addArgument('resolution: ','1920x1080')
 
-  const screenshot = allure.createStep("saveScreenshot", async name => {
-    const res = await driver.takeScreenshot()
-    allure.createAttachment(name, new Buffer(res.value, "base64"))
-  });
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
@@ -38,6 +34,11 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().maximize()
   })
 
+  const screenshot = allure.createStep("saveScreenshot", async name => {
+    const res = await driver.takeScreenshot()
+    allure.createAttachment(name, new Buffer(res.value, "base64"))
+  });
+
   after(async function() {
     await driver.quit()
   })
@@ -45,7 +46,7 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
-    await screenshot
+    await screenshot()
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -101,7 +102,7 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
-      await screenshot
+      await screenshot()
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
