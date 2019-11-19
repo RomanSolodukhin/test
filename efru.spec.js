@@ -31,12 +31,11 @@ describe('Eternal Fury RU', function() {
     allure.addArgument('platform:','Ubuntu 18.04')
     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
     allure.addArgument('resolution:', '1920x1080')
+    const screenshot = allure.createStep("saveScreenshot", async name => {
+      const res = await driver.takeScreenshot();
+      allure.createAttachment(name, new Buffer(res.value, "base64"));
+    });
   })
-
-  const screenshot = allure.createStep("saveScreenshot", async name => {
-    const res = await driver.takeScreenshot();
-    allure.createAttachment(name, new Buffer(res.value, "base64"));
-  });
 
   after(async function() {
     await driver.quit()
