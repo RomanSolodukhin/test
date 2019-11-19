@@ -138,7 +138,7 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementLocated(By.id('GameCanvas')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
     });
-    it('Игра загружается', async function() {
+    /*it('Игра загружается', async function() {
       await driver.wait(until.elementLocated(By.id('progress')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('progress'))))
     });
@@ -160,7 +160,7 @@ describe('Сервер '+i, function(done) {
     it.skip('Кликнуть по кнопке пополнения счёта', async function() {
       await driver.actions({bridge: true}).move({x: 1557, y: 143}).press().release().perform()
       await driver.wait(until.elementLocated(By.css('.crea_buy_popup_overlay')))
-    });
+    });*/
     it('Вернуться в основной frame', async function() {
       await driver.switchTo().defaultContent()
       await driver.wait(until.elementLocated(By.id('container')))
