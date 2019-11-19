@@ -12,8 +12,8 @@ describe('Rise of Angels — проверка', function() {
   let site = "https://creagames.com/en"
   before(async function() {
     var capabilities = {
-      browserName: 'chrome',
-      version: '76.0',
+      browserName: 'firefox',
+      version: '70.0',
       enableVNC: true,
       enableVideo: false
     };
