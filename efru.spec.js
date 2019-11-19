@@ -9,12 +9,14 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 9
+  let MAX_SERVERS = 1
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
       enableVNC: true,
+      enableLog: true,
+      name : this.currentTest.title,
       enableVideo: true
     }
     driver = await new Builder()
