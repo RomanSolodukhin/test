@@ -37,7 +37,7 @@ describe('Eternal Fury RU', function() {
   })
 
 describe('Авторизация', function(done) {
-  afterEach(function() {
+  afterEach(async function() {
     if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
     await screenshot
   })
@@ -93,7 +93,7 @@ describe('Сервер '+i, function(done) {
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
     })
-    afterEach(function() {
+    afterEach(async function() {
       if(this.currentTest.err) throw new Error('Тест остановлен',this.currentTest.err)
       await screenshot
     })
