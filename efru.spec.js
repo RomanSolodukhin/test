@@ -15,7 +15,6 @@ describe('Eternal Fury RU', function() {
       version: '78.0',
       enableVNC: true,
       enableLog: true,
-      name: this.currentTest.title,
       enableVideo: true
     }
     driver = await new Builder()
