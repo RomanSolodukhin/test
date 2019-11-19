@@ -1,7 +1,7 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-require("mocha-allure-reporter")
+var allure = require("mocha-allure-reporter")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -27,7 +27,9 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-
+    allure.addArgument('platform:','Ubuntu 18.04')
+    allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+    allure.addArgument('resolution:', '1920x1080')
   })
 
   after(async function() {
