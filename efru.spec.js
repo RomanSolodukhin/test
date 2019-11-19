@@ -13,11 +13,6 @@ describe('Eternal Fury RU', function() {
   let testName = String(this.title)
 
   before(async function() {
-    allure.addArgument('OS:','Ubuntu 18.04')
-    allure.addArgument('browserName:','chrome')
-    allure.addArgument('version:','78.0')
-    allure.addArgument('browserName: ','chrome')
-    allure.addArgument('resolution: ','1920x1080')
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
@@ -33,6 +28,11 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
+    /*allure.addArgument('OS:','Ubuntu 18.04')
+    allure.addArgument('browserName:','chrome')
+    allure.addArgument('version:','78.0')
+    allure.addArgument('browserName: ','chrome')
+    allure.addArgument('resolution: ','1920x1080')*/
   })
 
   const screenshot = allure.createStep("saveScreenshot", async name => {
