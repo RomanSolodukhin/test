@@ -8,7 +8,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 9
+  let MAX_SERVERS = 1
   let testName = String(this.title)
   const screenshot = allure.createStep("saveScreenshot", async name => {
     const res = await driver.takeScreenshot()
