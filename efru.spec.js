@@ -35,8 +35,6 @@ describe('Eternal Fury RU', function() {
 
   const screenshot = allure.createStep("saveScreenshot", async name => {
     const res = await driver.takeScreenshot();
-    // Webdriver.io produces values as base64-encoded string. Allure expects either plain text
-    // string or Buffer. So, we are decoding our value, using constructor of built-in Buffer object
     allure.createAttachment(name, new Buffer(res.value, "base64"));
   });
 
