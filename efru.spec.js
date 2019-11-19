@@ -12,9 +12,9 @@ describe('Eternal Fury RU', function() {
   let testName = String(this.title)
   before(async function() {
     var capabilities = {
-      browserName: 'android',
-      version: '8.1',
-      enableVNC: false,
+      browserName: 'chrome',
+      version: '78.0',
+      enableVNC: true,
       enableLog: true,
       name: testName,
       enableVideo: true
