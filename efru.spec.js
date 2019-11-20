@@ -45,9 +45,10 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
-    let name = String(this.currentTest.title)   allure.createStep("saveScreenshot", async function() {
+    let name = String(this.currentTest.title)
+    await allure.createStep("saveScreenshot", async function() {
     var res = await driver.takeScreenshot();
-    allure.createAttachment(name, new Buffer(res.value, "base64"))
+    await allure.createAttachment(name, new Buffer(res.value, "base64"))
 })
   })
   it('Загрузить страницу', async function() {
@@ -104,9 +105,10 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
-      let name = String(this.currentTest.title) allure.createStep("saveScreenshot", async function() {
-    var res = await driver.takeScreenshot();
-    allure.createAttachment(name, new Buffer(res.value, "base64"))
+      let name = String(this.currentTest.title)
+      await allure.createStep("saveScreenshot", async function() {
+      var res = await driver.takeScreenshot();
+      await allure.createAttachment(name, new Buffer(res.value, "base64"))
 })
     })
     /*it('Загрузить сервер: '+link, async function() {
