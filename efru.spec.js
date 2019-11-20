@@ -1,7 +1,7 @@
-
+declare const allure: any
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var { Allure } = require("allure-js-commons")
+require("mocha-allure-reporter")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
