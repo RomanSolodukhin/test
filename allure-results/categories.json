@@ -16,17 +16,17 @@
   { 
     "name": "Timeout",
     "matchedStatuses": ["failed"],
-    "traceRegex": ".*Timeout of*"
+    "messageRegex": ".*Timeout of*"
   }, 
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "traceRegex": ".*Тест остановлен*"
+    "messageRegex": ".*Тест остановлен*"
   }, 
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "traceRegex": "*Тест остановлен*"
+    "messageRegex": "*Тест остановлен*"
   }, 
   { 
     "name": "Product defects",
