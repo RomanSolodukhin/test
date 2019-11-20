@@ -12,12 +12,6 @@ describe('Eternal Fury RU', function() {
     const res = await driver.takeScreenshot();
     await allure.createAttachment(name, new Buffer(res.value, "base64"));
   });
-  beforeEach(function () {
-     allure.addArgument('platform:','Ubuntu 18.04')
-     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-     allure.addArgument('res:', '1920x1080')
-  });
-
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
@@ -35,6 +29,11 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
   })
+  beforeEach(function () {
+     allure.addArgument('platform:','Ubuntu 18.04')
+     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+     allure.addArgument('res:', '1920x1080')
+  });
 
   after(async function() {
     await driver.quit()
