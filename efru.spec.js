@@ -25,13 +25,13 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    const screenshot = allure.createStep("saveScreenshot", async name => {
-    const res = await browser.screenshot();
-    // Webdriver.io produces values as base64-encoded string. Allure expects either plain text
-    // string or Buffer. So, we are decoding our value, using constructor of built-in Buffer object
-    allure.createAttachment(name, new Buffer(res.value, "base64"));
-}
-  })
+    function screenshot(target, name) {
+      target.createStep("saveScreenshot", async name => {
+      const res = await browser.screenshot();
+      target.createAttachment(name, new Buffer(res.value, "base64"))
+    })
+  }
+})
   beforeEach(function () {
     const screenshot = allure.createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
@@ -49,7 +49,7 @@ describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
     let name = String(this.currentTest.title)
-    await screenshot(name)
+    await screenshot(allure, name)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -105,7 +105,8 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
-      await screenshot(this.currentTest.title)
+      let name = String(this.currentTest.title)
+      await screenshot(allure, name)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
