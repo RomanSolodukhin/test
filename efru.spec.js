@@ -8,7 +8,6 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
-  var screenshot
 
   before(async function() {
     var capabilities = {
@@ -26,12 +25,12 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    screenshot = allure.createStep("saveScreenshot", async name => {
+  })
+  beforeEach(function () {
+    const screenshot = allure.createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
       await allure.createAttachment(name, new Buffer(res.value, "base64"));
     });
-  })
-  beforeEach(function () {
     allure.addEnvironment('platform:','Ubuntu 18.04')
     allure.addEnvironment('browser:', 'chrome 78.0')
     allure.addEnvironment('res:', '1920x1080')
