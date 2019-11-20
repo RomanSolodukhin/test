@@ -25,6 +25,12 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
+    const screenshot = allure.createStep("saveScreenshot", async name => {
+    const res = await browser.screenshot();
+    // Webdriver.io produces values as base64-encoded string. Allure expects either plain text
+    // string or Buffer. So, we are decoding our value, using constructor of built-in Buffer object
+    allure.createAttachment(name, new Buffer(res.value, "base64"));
+}
   })
   beforeEach(function () {
     const screenshot = allure.createStep("saveScreenshot", async name => {
@@ -35,7 +41,6 @@ describe('Eternal Fury RU', function() {
     allure.addEnvironment('browser:', 'chrome 78.0')
     allure.addEnvironment('res:', '1920x1080')
   });
-
   after(async function() {
     await driver.quit()
   })
