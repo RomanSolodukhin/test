@@ -1,7 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var proxyquire = require('proxyquire')
-var Allure = proxyquire('../index', {'fs-extra': require('./helpers/mock-fs')})
+var Allure
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -10,7 +9,7 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
-  var allure;
+  var allure
 
   beforeEach(function () {
       allure = new Allure()
