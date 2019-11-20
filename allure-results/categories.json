@@ -21,12 +21,12 @@
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*Тест остановлен.*"
+    "messageRegex": ".*Тест остановлен"
   }, 
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "traceRegex": "*Тест остановлен.*"
+    "traceRegex": "*Тест остановлен"
   }, 
   { 
     "name": "Product defects",
