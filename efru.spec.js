@@ -31,7 +31,7 @@ describe('Eternal Fury RU', function() {
   })
   beforeEach(function () {
      allure.addArgument('platform:','Ubuntu 18.04')
-     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+     allure.addArgument('browser:', 'chrome 78.0')
      allure.addArgument('res:', '1920x1080')
   });
 
