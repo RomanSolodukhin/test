@@ -8,11 +8,8 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
-  var allure
 
   beforeEach(function () {
-    allure = new Allure()
-    console.log(allure)
   });
 
   before(async function() {
