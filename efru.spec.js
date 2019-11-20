@@ -12,8 +12,6 @@ describe('Eternal Fury RU', function() {
   var allure
 
   beforeEach(function () {
-      allure = new Allure()
-      allure.startSuite('test suite')
   });
 
   before(async function() {
