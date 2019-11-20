@@ -48,7 +48,7 @@ describe('Авторизация', function(done) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot();
       allure.createAttachment(name, new Buffer(res, 'base64'))
-      allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.createAttachment('Отчёт', String(this.currentTest.err), 'text/javascript')
       allure.severity('blocker')
       assert.fail('Тест остановлен')
   }
@@ -110,7 +110,7 @@ describe('Сервер '+i, function(done) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot();
       allure.createAttachment(name, new Buffer(res, 'base64'))
-      allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.createAttachment('Отчёт', String(this.currentTest.err), 'text/javascript')
       allure.severity('blocker')
       assert.fail('Тест остановлен')
   }
