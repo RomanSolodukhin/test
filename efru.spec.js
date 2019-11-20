@@ -50,7 +50,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment(name, String(this.currentTest.err))
       allure.severity('blocker')
-      throw new Error('Тест остановлен')
+      assert.fail('Тест остановлен')
   }
   })
   it('Загрузить страницу', async function() {
@@ -112,7 +112,7 @@ describe('Сервер '+i, function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment(name, String(this.currentTest.err))
       allure.severity('blocker')
-      throw new Error('Тест остановлен')
+      assert.fail('Тест остановлен')
   }
     })
     /*it('Загрузить сервер: '+link, async function() {
