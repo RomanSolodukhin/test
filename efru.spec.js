@@ -1,10 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-
-var AllureReporter = require("mocha-allure-reporter")
-console.log(allure)
-console.log(allure._allure)
-console.log(AllureReporter)
+require("mocha-allure-reporter")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -14,6 +10,7 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 beforeEach(function() {
+  console.log(allure)
 })
   before(async function() {
     var capabilities = {
@@ -47,6 +44,7 @@ beforeEach(function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
+    console.log(allure)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
