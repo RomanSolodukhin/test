@@ -4,6 +4,8 @@ const assert = require('assert')
 var AllureReporter = require("mocha-allure-reporter")
 console.log(allure)
 console.log(allure._allure)
+console.log(AllureReporter)
+console.log(Allure)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
