@@ -3,7 +3,7 @@ const assert = require('assert')
 const { Allure } = require('allure-js-commons')
 
 var allure2 = new Allure()
-console.log(allure2)
+console.log(Allure)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
