@@ -44,7 +44,7 @@ beforeEach(function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
-    console.log(allure)
+    //console.log(allure)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
