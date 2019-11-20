@@ -13,9 +13,9 @@ describe('Eternal Fury RU', function() {
     await allure.createAttachment(name, new Buffer(res.value, "base64"));
   });
   beforeEach(function () {
-    await allure.addArgument('platform:','Ubuntu 18.04')
-    await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-    await allure.addArgument('res:', '1920x1080')
+     allure.addArgument('platform:','Ubuntu 18.04')
+     allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+     allure.addArgument('res:', '1920x1080')
   });
 
   before(async function() {
