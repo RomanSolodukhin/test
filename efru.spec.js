@@ -1,7 +1,7 @@
 
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var { allure2 } = require("mocha-allure-reporter")
+var allure2 = require("mocha-allure-reporter")
 console.log(allure2)
 
 describe('Eternal Fury RU', function() {
