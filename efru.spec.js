@@ -2,7 +2,7 @@ declare const allure: any
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 require("mocha-allure-reporter")
-
+console.log(allure)
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
@@ -28,12 +28,12 @@ beforeEach(function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    await Allure.addArgument('platform:','Ubuntu 18.04')
-    await Allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-    await Allure.addArgument('resolution:', '1920x1080')
+    await allure.addArgument('platform:','Ubuntu 18.04')
+    await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+    await allure.addArgument('resolution:', '1920x1080')
     const screenshot = Allure.createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
-      await Allure.createAttachment(name, new Buffer(res.value, "base64"));
+      await allure.createAttachment(name, new Buffer(res.value, "base64"));
     });
   })
 
