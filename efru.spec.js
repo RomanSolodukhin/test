@@ -2,7 +2,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 require("mocha-allure-reporter")
-console.log(allure)
+console.log(allure._allure)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -11,7 +11,9 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
-
+beforeEach(function() {
+  console.log(allure._allure);
+})
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
