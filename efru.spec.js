@@ -48,7 +48,7 @@ describe('Авторизация', function(done) {
     let name = String(this.currentTest.title)
 allure.createStep("saveScreenshot", async function() {
     var res = await driver.takeScreenshot();
-    allure.createAttachment(name, res)
+    allure.createAttachment(name, 'жопа')
 })
   })
   it('Загрузить страницу', async function() {
@@ -108,7 +108,7 @@ describe('Сервер '+i, function(done) {
       let name = String(this.currentTest.title)
 allure.createStep("saveScreenshot", async function() {
       var res = await driver.takeScreenshot();
-      allure.createAttachment(name, res)
+      allure.createAttachment(name, 'жопа')
 })
     })
     /*it('Загрузить сервер: '+link, async function() {
