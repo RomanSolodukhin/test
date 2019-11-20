@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-require('allure-js-commons')
+var { Allure } = require('allure-js-commons')
 
 
 describe('Eternal Fury RU', function() {
