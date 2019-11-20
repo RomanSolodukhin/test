@@ -28,7 +28,7 @@ describe('Eternal Fury RU', function() {
 })
 const screenshot = allure.createStep("saveScreenshot", async name => {
     const res = await driver.takeScreenshot();
-    target.createAttachment(name, new Buffer(res.value, "base64"))
+    allure.createAttachment(name, new Buffer(res.value, "base64"))
 })
   beforeEach(function () {
     allure.addEnvironment('platform:','Ubuntu 18.04')
