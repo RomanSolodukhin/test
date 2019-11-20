@@ -44,10 +44,13 @@ describe('Eternal Fury RU', function() {
 
 describe('Авторизация', function(done) {
   afterEach(async function() {
-    //if(this.currentTest.err) throw new Error(this.currentTest.err)
+    if(this.currentTest.err) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot();
       allure.createAttachment(name, new Buffer(res, 'base64'))
+      allure.createAttachment(name, this.currentTest.err)
+      throw new Error('Тест остановлен')
+  }
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -72,7 +75,7 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму авторизации', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
@@ -102,10 +105,13 @@ describe('Сервер '+i, function(done) {
       await driver.navigate().back()
     })
     afterEach(async function() {
-      if(this.currentTest.err) throw new Error(this.currentTest.err)
-      let name = String(this.currentTest.title)
+      if(this.currentTest.err) {
+    let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot();
       allure.createAttachment(name, new Buffer(res, 'base64'))
+      allure.createAttachment(name, this.currentTest.err)
+      throw new Error('Тест остановлен')
+  }
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
