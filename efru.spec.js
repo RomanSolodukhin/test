@@ -32,7 +32,7 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    await allure.prototype.addArgument('platform:','Ubuntu 18.04')
+    await allure.addArgument('platform:','Ubuntu 18.04')
     await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
     await allure.addArgument('res:', '1920x1080')
     const screenshot = allure.createStep("saveScreenshot", async name => {
