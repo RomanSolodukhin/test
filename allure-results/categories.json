@@ -26,7 +26,7 @@
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "messageRegex": "*Тест остановлен*"
+    "traceRegex": "*Тест остановлен.*"
   }, 
   { 
     "name": "Product defects",
