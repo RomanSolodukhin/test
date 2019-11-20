@@ -1,19 +1,5 @@
 [ 
   { 
-    "name": "Ignored tests",
-    "matchedStatuses": ["skipped"] 
-  }, 
-  { 
-    "name": "Infrastructure problems",
-    "matchedStatuses": ["broken", "failed"],
-    "messageRegex": ".*bye-bye.*", 
-  }, 
-  { 
-    "name": "Outdated tests",
-    "matchedStatuses": ["broken"],
-    "traceRegex": ".*FileNotFoundException.*"
-  }, 
-  { 
     "name": "Timeout",
     "matchedStatuses": ["failed"],
     "messageRegex": ".*Timeout of.*"
@@ -27,6 +13,30 @@
     "name": "Blocker",
     "matchedStatuses": ["failed"],
     "traceRegex": ".*Тест остановлен"
+  }, 
+  { 
+    "name": "Blocker",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*Тест остановлен.*"
+  }, 
+  { 
+    "name": "Blocker",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*Тест остановлен.*"
+  }, 
+  { 
+    "name": "Ignored tests",
+    "matchedStatuses": ["skipped"] 
+  }, 
+  { 
+    "name": "Infrastructure problems",
+    "matchedStatuses": ["broken", "failed"],
+    "messageRegex": ".*bye-bye.*", 
+  }, 
+  { 
+    "name": "Outdated tests",
+    "matchedStatuses": ["broken"],
+    "traceRegex": ".*FileNotFoundException.*"
   }, 
   { 
     "name": "Product defects",
