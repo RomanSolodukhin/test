@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var Allure
+var proxyquire = require('proxyquire');
+var Allure = proxyquire('../index', {'fs-extra': require('./helpers/mock-fs')});
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -12,6 +13,7 @@ describe('Eternal Fury RU', function() {
   var allure
 
   beforeEach(function () {
+    allure = new Allure();
   });
 
   before(async function() {
