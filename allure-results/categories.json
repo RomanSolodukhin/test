@@ -19,6 +19,16 @@
     "traceRegex": ".*Timeout of*"
   }, 
   { 
+    "name": "Blocker",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*Тест остановлен*"
+  }, 
+  { 
+    "name": "Blocker",
+    "matchedStatuses": ["failed"],
+    "traceRegex": "*Тест остановлен*"
+  }, 
+  { 
     "name": "Product defects",
     "matchedStatuses": ["failed"] 
   }, 
