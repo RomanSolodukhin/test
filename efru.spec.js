@@ -33,10 +33,6 @@ function screenshot(target, name) {
   })
 }
   beforeEach(function () {
-    const screenshot = allure.createStep("saveScreenshot", async name => {
-      const res = await driver.takeScreenshot();
-      await allure.createAttachment(name, new Buffer(res.value, "base64"));
-    });
     allure.addEnvironment('platform:','Ubuntu 18.04')
     allure.addEnvironment('browser:', 'chrome 78.0')
     allure.addEnvironment('res:', '1920x1080')
