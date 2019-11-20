@@ -27,13 +27,6 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().maximize()
 });
 
-var screenshot = async function(name) { 
-allure.createStep("saveScreenshot", async function() {
-    var res = await driver.takeScreenshot();
-    name ? name : name = 'screen'
-    allure.createAttachment(name, new Buffer(res.value, "base64"))
-})
-}
   beforeEach(function () {
     allure.addEnvironment('platform:','Ubuntu 18.04')
     allure.addEnvironment('browser:', 'chrome 78.0')
@@ -52,8 +45,10 @@ allure.createStep("saveScreenshot", async function() {
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
-    let name = String(this.currentTest.title)
-    await screenshot(name)
+    let name = String(this.currentTest.title)   allure.createStep("saveScreenshot", async function() {
+    var res = await driver.takeScreenshot();
+    allure.createAttachment(name, new Buffer(res.value, "base64"))
+})
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -109,8 +104,10 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
-      let name = String(this.currentTest.title)
-      await screenshot(name)
+      let name = String(this.currentTest.title) allure.createStep("saveScreenshot", async function() {
+    var res = await driver.takeScreenshot();
+    allure.createAttachment(name, new Buffer(res.value, "base64"))
+})
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
