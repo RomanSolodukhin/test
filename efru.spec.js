@@ -9,6 +9,8 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 beforeEach(function() {
+  console.log(allure)
+  console.log(Allure)
 })
   before(async function() {
     var capabilities = {
