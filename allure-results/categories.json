@@ -1,28 +1,28 @@
 [ 
   { 
     "name": "Timeout",
-    "matchedStatuses": ["failed"],
-    "messageRegex": ".*Timeout of.*"
+    "messageRegex": ".*Timeout of.*",
+    "matchedStatuses": ["failed"]
   }, 
   { 
-    "name": "Blocker",
-    "matchedStatuses": ["failed"],
-    "messageRegex": ".*Тест остановлен"
+    "name": "Broken 1",
+    "messageRegex": ".*Тест остановлен",
+    "matchedStatuses": ["failed"]
   }, 
   { 
-    "name": "Blocker",
-    "matchedStatuses": ["failed"],
-    "traceRegex": ".*Тест остановлен"
+    "name": "Blocker 2",
+    "traceRegex": ".*Тест остановлен",
+    "matchedStatuses": ["failed"]
   }, 
   { 
-    "name": "Blocker",
-    "matchedStatuses": ["failed"],
-    "messageRegex": ".*Тест остановлен.*"
+    "name": "Blocker 3",
+    "messageRegex": ".*Тест остановлен.*",
+    "matchedStatuses": ["failed"]
   }, 
   { 
-    "name": "Blocker",
-    "matchedStatuses": ["failed"],
-    "traceRegex": ".*Тест остановлен.*"
+    "name": "Blocker 4",
+    "traceRegex": ".*Тест остановлен.*",
+    "matchedStatuses": ["failed"]
   }, 
   { 
     "name": "Ignored tests",
