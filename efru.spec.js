@@ -2,7 +2,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var { Allure } = require("allure-js-commons")
-console.log(Allure)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -12,7 +11,6 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 beforeEach(function() {
-  console.log(Allure)
 })
   before(async function() {
     var capabilities = {
