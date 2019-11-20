@@ -1,4 +1,4 @@
-declare const allure: any
+declare allure: any
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 require("mocha-allure-reporter")
