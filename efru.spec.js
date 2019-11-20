@@ -26,7 +26,7 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
 })
-const screenshot = allure.createStep("saveScreenshot", async name => {
+const screenshot = allure.createStep("saveScreenshot", async (name) => {
     const res = await driver.takeScreenshot();
     allure.createAttachment(name, new Buffer(res.value, "base64"))
 })
