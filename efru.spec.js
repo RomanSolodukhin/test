@@ -40,6 +40,12 @@ function screenshot(target, name) {
     allure.addEnvironment('platform:','Ubuntu 18.04')
     allure.addEnvironment('browser:', 'chrome 78.0')
     allure.addEnvironment('res:', '1920x1080')
+    /*альтернатива
+    touch allure-results/environment.properties
+    echo OS.version=Ubuntu 18.04 >> allure-results/environment.properties
+    echo browser=Google Chrome 78 >> allure-results/environment.properties
+    echo resolution=1920x1080 >> allure-results/environment.properties
+*/
   });
   after(async function() {
     await driver.quit()
