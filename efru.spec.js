@@ -28,7 +28,7 @@ describe('Eternal Fury RU', function() {
 })
 function screenshot(target, name) {
   return target.createStep("saveScreenshot", async name => {
-    const res = await browser.screenshot();
+    const res = await driver.takeScreenshot();
     target.createAttachment(name, new Buffer(res.value, "base64"))
   })
 }
