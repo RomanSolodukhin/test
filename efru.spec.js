@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var { Allure } = require('allure-js-commons')
-console.log(Allure)
+var Allure = require('allure-js-commons')
+
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -11,7 +11,8 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 beforeEach(function() {
-  //console.log(allure)
+  console.log(Allure)
+  console.log(Allure.Allure)
 })
   before(async function() {
     var capabilities = {
@@ -29,9 +30,9 @@ beforeEach(function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    /*await allure.addArgument('platform:','Ubuntu 18.04')
-    await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-    await allure.addArgument('resolution:', '1920x1080')
+    await addArgument('platform:','Ubuntu 18.04')
+    await Allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+    await allure.addArgument('res:', '1920x1080')
     const screenshot = Allure.createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
       await allure.createAttachment(name, new Buffer(res.value, "base64"));
