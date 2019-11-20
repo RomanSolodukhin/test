@@ -32,11 +32,11 @@ beforeEach(function() {
     await driver.manage().window().maximize()
     await addArgument('platform:','Ubuntu 18.04')
     await Allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-    await allure.addArgument('res:', '1920x1080')
-    const screenshot = Allure.createStep("saveScreenshot", async name => {
+    await Allure.Allure.addArgument('res:', '1920x1080')
+    const screenshot = createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
-      await allure.createAttachment(name, new Buffer(res.value, "base64"));
-    });*/
+      await createAttachment(name, new Buffer(res.value, "base64"));
+    });
   })
 
   after(async function() {
