@@ -26,12 +26,10 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
 })
-function screenshot(target, name) {
-  return target.createStep("saveScreenshot", async name => {
+const screenshot = allure.createStep("saveScreenshot", async name => {
     const res = await driver.takeScreenshot();
     target.createAttachment(name, new Buffer(res.value, "base64"))
-  })
-}
+})
   beforeEach(function () {
     allure.addEnvironment('platform:','Ubuntu 18.04')
     allure.addEnvironment('browser:', 'chrome 78.0')
@@ -51,7 +49,7 @@ describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) throw new Error(this.currentTest.err)
     let name = String(this.currentTest.title)
-    await screenshot(allure, name)
+    await screenshot(name)
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -108,7 +106,7 @@ describe('Сервер '+i, function(done) {
     afterEach(async function() {
       if(this.currentTest.err) throw new Error(this.currentTest.err)
       let name = String(this.currentTest.title)
-      await screenshot(allure, name)
+      await screenshot(name)
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
