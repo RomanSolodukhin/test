@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 require("mocha-allure-reporter")
+var allure2 = require("allure-js-commons")
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
