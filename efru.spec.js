@@ -29,8 +29,8 @@ beforeEach(function() {
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
     await allure.addArgument('platform:','Ubuntu 18.04')
-    await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
-    await allure.addArgument('resolution:', '1920x1080')
+    //await allure.addArgument('browser:', capabilities.browserName+' v.'+capabilities.version)
+    //await allure.addArgument('resolution:', '1920x1080')
     const screenshot = Allure.createStep("saveScreenshot", async name => {
       const res = await driver.takeScreenshot();
       await allure.createAttachment(name, new Buffer(res.value, "base64"));
