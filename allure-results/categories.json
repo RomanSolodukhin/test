@@ -16,12 +16,12 @@
   { 
     "name": "Timeout",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*Timeout of*"
+    "messageRegex": ".*Timeout of.*"
   }, 
   { 
     "name": "Blocker",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*Тест остановлен*"
+    "messageRegex": ".*Тест остановлен.*"
   }, 
   { 
     "name": "Blocker",
