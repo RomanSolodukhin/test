@@ -2,7 +2,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var { allure2 } = require("mocha-allure-reporter")
-console.log(allure2._allure)
+console.log(allure2)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -12,7 +12,7 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
 beforeEach(function() {
-  console.log(allure2._allure);
+  console.log(allure2);
 })
   before(async function() {
     var capabilities = {
