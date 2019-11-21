@@ -41,6 +41,9 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
+    //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
+})
+  afterEach(async function() {
     let currentCapabilities = await session.getCapabilities()
     allure.addEnvironment('platformName: ', currentCapabilities.getPlatform())
     allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -49,8 +52,7 @@ describe('Eternal Fury RU', function() {
     allure.addEnvironment('browserVersion: ', currentCapabilities.getBrowserVersion())
     allure.addEnvironment('session id: ', session.id_)
     allure.addEnvironment('proxy: ', currentCapabilities.getProxy())
-    //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
-})
+  })
 
 
 describe('Авторизация', function(done) {
