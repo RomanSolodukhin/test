@@ -12,15 +12,15 @@
   },
   {
     "name": "Нет данных",
-    "matchedStatuses": ["broken"],
+    "matchedStatuses": ["broken", "filed"],
     "traceRegex": ".*NullPointerException.*"
   },
   {
     "name": "Product defects",
-    "matchedStatuses": ["failed"]
+    "matchedStatuses": ["failed", "filed"]
   },
   {
     "name": "Test defects",
-    "matchedStatuses": ["broken"]
+    "matchedStatuses": ["broken", "filed"]
   }
 ]
