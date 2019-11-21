@@ -34,9 +34,6 @@ describe('Eternal Fury RU', function() {
 });
 
   beforeEach(function () {
-    allure.addEnvironment('OS:','Ubuntu 18.04')
-    allure.addEnvironment('resolution:', '1920x1080')
-
     /*альтернатива
     touch allure-results/environment.properties
     echo OS.version=Ubuntu 18.04 >> allure-results/environment.properties
@@ -52,6 +49,15 @@ describe('Eternal Fury RU', function() {
     })
     allure.createAttachment('Лог', file, 'text/xml')
     allure.createAttachment('capabilities: ',session.getCapabilities(), 'text/xml')
+
+    let currentCapabilities = await session.getCapabilities()
+    allure.addEnvironment('platformName: ', currentCapabilities.getPlatformName())
+    allure.addEnvironment('OS:','Ubuntu 18.04')
+    allure.addEnvironment('resolution:', '1920x1080')
+    allure.addEnvironment('browserName: ', currentCapabilities.getBrowserName())
+    allure.addEnvironment('browserVersion: ', currentCapabilities.getBrowserVersion())
+    allure.addEnvironment('session id: ', session.id_)
+    allure.addEnvironment('proxy: ', currentCapabilities.getProxy())
 })
 
 
