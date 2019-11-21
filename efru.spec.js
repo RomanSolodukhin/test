@@ -48,7 +48,7 @@ describe('Eternal Fury RU', function() {
     await driver.quit()
     var file = fs.createWriteStream("log.txt");
     var request = http.get('http://104.248.2.157:4444/logs/'+session.id_+'.log', function(response) {
-      response.text(file)
+      response.pipe(file)
     })
     allure.createAttachment('Лог', file, 'text/xml')
 })
