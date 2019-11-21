@@ -40,7 +40,6 @@ describe('Eternal Fury RU', function() {
 */
   });
   after(async function() {
-    await driver.quit()
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -48,6 +47,7 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
     await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
     await allure.addEnvironment('session id: ', String(session.id_))
+    await driver.quit()
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
