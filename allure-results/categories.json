@@ -3,7 +3,7 @@
     "name": "Блокирующий дефект",
     "messageRegex": ".*Test stopped.*",
     "matchedStatuses": ["failed"],
-    "flacky": true
+    "flacky": "true"
   },
   {
     "name": "Неизвестная проблема",
