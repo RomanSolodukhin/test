@@ -45,13 +45,13 @@ describe('Eternal Fury RU', function() {
 })
   afterEach(async function() {
     let currentCapabilities = await session.getCapabilities()
-    allure.addEnvironment('platformName: ', currentCapabilities.getPlatform())
+    allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     allure.addEnvironment('OS:','Ubuntu 18.04')
     allure.addEnvironment('resolution:', '1920x1080')
-    allure.addEnvironment('browserName: ', currentCapabilities.getBrowserName())
-    allure.addEnvironment('browserVersion: ', currentCapabilities.getBrowserVersion())
-    allure.addEnvironment('session id: ', session.id_)
-    allure.addEnvironment('proxy: ', currentCapabilities.getProxy())
+    allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
+    allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
+    allure.addEnvironment('session id: ', String(session.id_))
+    allure.addEnvironment('proxy: ', String(currentCapabilities.getProxy()))
   })
 
 
