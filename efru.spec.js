@@ -36,7 +36,7 @@ describe('Eternal Fury RU', function() {
   beforeEach(function () {
     allure.addEnvironment('OS:','Ubuntu 18.04')
     allure.addEnvironment('resolution:', '1920x1080')
-    allure.addEnvironment('capabilities: ',session.getCapabilities())
+
     /*альтернатива
     touch allure-results/environment.properties
     echo OS.version=Ubuntu 18.04 >> allure-results/environment.properties
@@ -51,6 +51,7 @@ describe('Eternal Fury RU', function() {
       response.pipe(file)
     })
     allure.createAttachment('Лог', file, 'text/xml')
+    allure.createAttachment('capabilities: ',session.getCapabilities(), 'text/xml')
 })
 
 
