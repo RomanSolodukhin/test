@@ -53,7 +53,6 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('session id: ', String(session.id_))
   })
 
-
 describe('Авторизация', function(done) {
   afterEach(async function() {
     if(this.currentTest.err) {
