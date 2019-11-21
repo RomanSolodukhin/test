@@ -1,7 +1,5 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-var http = require('http')
-var fs = require('fs')
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -43,21 +41,15 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
-    var file = fs.createWriteStream("log.txt");
-    var request = http.get('http://104.248.2.157:4444/logs/'+session.id_+'.log', function(response) {
-      response.pipe(file)
-    })
-    allure.createAttachment('Лог', file, 'text/xml')
-    allure.createAttachment('capabilities: ',session.getCapabilities(), 'text/xml')
-
     let currentCapabilities = await session.getCapabilities()
-    allure.addEnvironment('platformName: ', currentCapabilities.getPlatformName())
+    allure.addEnvironment('platformName: ', currentCapabilities.getPlatform())
     allure.addEnvironment('OS:','Ubuntu 18.04')
     allure.addEnvironment('resolution:', '1920x1080')
     allure.addEnvironment('browserName: ', currentCapabilities.getBrowserName())
     allure.addEnvironment('browserVersion: ', currentCapabilities.getBrowserVersion())
     allure.addEnvironment('session id: ', session.id_)
     allure.addEnvironment('proxy: ', currentCapabilities.getProxy())
+    //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
 
 
