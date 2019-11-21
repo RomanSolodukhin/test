@@ -8,6 +8,7 @@ describe('Eternal Fury RU', function() {
   let site = "https://www.creagames.com/"
   let MAX_SERVERS = 1
   let testName = String(this.title)
+  let session
 
   before(async function() {
     var capabilities = {
@@ -25,9 +26,9 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    let session = await driver.getSession()
-    let sessionid = await session.getId()
-    console.log(sessionid)
+    session = await driver.getSession()
+    //session.id = await session.getId()
+    console.log(session.id_)
 });
 
   beforeEach(function () {
