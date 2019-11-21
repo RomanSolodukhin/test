@@ -25,7 +25,7 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    console.log(await driver.getSession().getId())
+    console.log(await driver.getSession())
 });
 
   beforeEach(function () {
