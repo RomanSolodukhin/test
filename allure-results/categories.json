@@ -1,8 +1,9 @@
 [
   {
     "name": "Блокирующий дефект",
+    "messageRegex": ".*Test stopped.*",
     "matchedStatuses": ["failed"],
-    "messageRegex": "*Test stopped*"
+    "flacky": true
   },
   {
     "name": "Неизвестная проблема",
