@@ -41,17 +41,16 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
+    let currentCapabilities = await session.getCapabilities()
+    await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
+    await allure.addEnvironment('OS:','Ubuntu 18.04')
+    await allure.addEnvironment('resolution:', '1920x1080')
+    await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
+    await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
+    await allure.addEnvironment('session id: ', String(session.id_))
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
-    let currentCapabilities = await session.getCapabilities()
-    allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
-    allure.addEnvironment('OS:','Ubuntu 18.04')
-    allure.addEnvironment('resolution:', '1920x1080')
-    allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
-    allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
-    allure.addEnvironment('session id: ', String(session.id_))
-    allure.addEnvironment('proxy: ', String(currentCapabilities.getProxy()))
   })
 
 
