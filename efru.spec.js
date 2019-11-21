@@ -1,5 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
+var http = require('http')
+var fs = require('fs')
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -44,7 +46,13 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
-  })
+    var file = fs.createWriteStream("log.txt");
+    var request = http.get('http://104.248.2.157:4444/logs/'+session.id_+'.log', function(response) {
+      response.text(file)
+    })
+    allure.createAttachment('Лог', file, 'text/xml')
+})
+
 
 describe('Авторизация', function(done) {
   afterEach(async function() {
