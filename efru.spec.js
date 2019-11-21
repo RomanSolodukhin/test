@@ -34,9 +34,9 @@ describe('Eternal Fury RU', function() {
 });
 
   beforeEach(function () {
-    allure.addEnvironment('platform:','Ubuntu 18.04')
-    allure.addEnvironment('browser:', 'chrome 78.0')
-    allure.addEnvironment('res:', '1920x1080')
+    allure.addEnvironment('OS:','Ubuntu 18.04')
+    allure.addEnvironment('resolution:', '1920x1080')
+    allure.addEnvironment('capabilities: ',session.getCapabilities())
     /*альтернатива
     touch allure-results/environment.properties
     echo OS.version=Ubuntu 18.04 >> allure-results/environment.properties
