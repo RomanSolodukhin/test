@@ -2,7 +2,7 @@
   {
     "name": "Блокирующий дефект",
     "matchedStatuses": ["failed"],
-    "messageRegex": ".*Test stopped.*",
+    "messageRegex": "Test stopped",
     "traceRegex": ".*Context.<anonymous>.*"
   },
   {
