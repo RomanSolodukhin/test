@@ -123,7 +123,7 @@ describe('Сервер '+i, function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail('Тест остановлен')
+      assert.fail(this.currentTest.err+'. Test stopped')
   }
     })
     /*it('Загрузить сервер: '+link, async function() {
