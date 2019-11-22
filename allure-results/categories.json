@@ -1,7 +1,7 @@
 [
   {
     "name": "Блокирующий дефект",
-    "traceRegex": ".*Timeout of.*",
+    "traceRegex": ".*Error: Timeout of.*",
     "matchedStatuses": ["failed"],
     "flacky": "true"
   },
