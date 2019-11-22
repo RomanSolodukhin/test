@@ -56,7 +56,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail(this.currentTest.err.message+'. Test stopped')
+      assert.fail(this.currentTest.err.name+'. Test stopped')
   }
   })
   it('Загрузить страницу', async function() {
@@ -118,7 +118,7 @@ describe('Сервер '+i, function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail(this.currentTest.err.message+'. Test stopped')
+      assert.fail(this.currentTest.err.name+'. Test stopped')
   }
     })
     /*it('Загрузить сервер: '+link, async function() {
