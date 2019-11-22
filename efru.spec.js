@@ -126,9 +126,14 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.titleContains('Eternal Fury'))
     })*/
     it('Открыть окно выбора серверов', async function() {
+      try {
       await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
       await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
       await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
+      }
+      catch(err) {
+        assert.fail(err)
+      }
     });
     it('Выбрать сервер', async function() {
       await driver.findElement(By.xpath(serverselector)).click()
