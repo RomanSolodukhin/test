@@ -1,9 +1,15 @@
 [
   {
     "name": "Блокирующий дефект",
+    "messageRegex": "Error: Timeout of.*",
     "matchedStatuses": ["failed"],
-    "messageRegex": "Test stopped",
-    "traceRegex": ".*Context.<anonymous>.*"
+    "flacky": "true"
+  },
+  {
+    "name": "Блокирующий дефект",
+    "messageRegex": ".*Test stopped.*",
+    "matchedStatuses": ["failed"],
+    "flacky": "true"
   },
   {
     "name": "Неизвестная проблема",
@@ -12,15 +18,15 @@
   },
   {
     "name": "Нет данных",
-    "matchedStatuses": ["broken", "filed"],
+    "matchedStatuses": ["broken", "failed"],
     "traceRegex": ".*NullPointerException.*"
   },
   {
     "name": "Product defects",
-    "matchedStatuses": ["failed", "filed"]
+    "matchedStatuses": ["failed"]
   },
   {
     "name": "Test defects",
-    "matchedStatuses": ["broken", "filed"]
+    "matchedStatuses": ["failed","broken"]
   }
 ]
