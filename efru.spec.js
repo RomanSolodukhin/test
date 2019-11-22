@@ -32,12 +32,7 @@ describe('Eternal Fury RU', function() {
 });
 
   beforeEach(function () {
-    /*альтернатива
-    touch allure-results/environment.properties
-    echo OS.version=Ubuntu 18.04 >> allure-results/environment.properties
-    echo browser=Google Chrome 78 >> allure-results/environment.properties
-    echo resolution=1920x1080 >> allure-results/environment.properties
-*/
+
   });
   after(async function() {
     await driver.quit()
@@ -61,7 +56,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail(this.currentTest.err+'. Test stopped')
+      assert.fail(this.currentTest.err.message+'. Test stopped')
   }
   })
   it('Загрузить страницу', async function() {
@@ -123,7 +118,7 @@ describe('Сервер '+i, function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail(this.currentTest.err+'. Test stopped')
+      assert.fail(this.currentTest.err.message+'. Test stopped')
   }
     })
     /*it('Загрузить сервер: '+link, async function() {
