@@ -1,13 +1,13 @@
 [
   {
     "name": "Блокирующий дефект",
-    "messageRegex": "Error: Timeout of.*",
+    "traceRegex": ".*Timeout of.*",
     "matchedStatuses": ["failed"],
     "flacky": "true"
   },
   {
     "name": "Блокирующий дефект",
-    "messageRegex": ".*Test stopped.*",
+    "traceRegex": ".*Test stopped.*",
     "matchedStatuses": ["failed"],
     "flacky": "true"
   },
