@@ -1,7 +1,5 @@
 console.info("_Start");
 var scriptName = 'efbalens';
-var Xvfb = require('xvfb');
-var xvfb;
 var { testData, times, baseUrl } = require('./efbalens_ddt.js');
 //default data
 var iBrowser = 0, iUser = 0, iServer = 0, iAmount = 5, iRes = 0;
