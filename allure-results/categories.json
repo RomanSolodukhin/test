@@ -1,7 +1,7 @@
 [
   {
     "name": "Блокирующий дефект",
-    "traceRegex": ".*Error: Timeout of.*",
+    "traceRegex": "Error: Timeout of 10000ms exceeded. For async tests and hooks, ensure.дis called; if returning a Promise, ensure it resolves..*. Test stopped",
     "matchedStatuses": ["failed"],
     "flacky": "true"
   },
