@@ -61,7 +61,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
+      assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
@@ -93,15 +93,10 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
-    try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       assert.equal(false, await driver.findElement(By.id("loginform-password")).getAttribute('title'),await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-    }
-    catch(err) {
-      assert.fail('Авторизация выполнена', await driver.findElement(By.id("loginform-password")).getAttribute('title'), err)
-    }
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
