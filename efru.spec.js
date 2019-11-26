@@ -67,7 +67,6 @@ describe('Авторизация', function(done) {
   it('Загрузить страницу', async function() {
     await driver.get(site)
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
-    console.log(lang)
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
@@ -96,7 +95,7 @@ describe('Авторизация', function(done) {
   it('Авторизоваться', async function() {
     try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      assert.isFalse(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      assert.equal(false, await driver.findElement(By.id("loginform-password")).getAttribute('title'),await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
