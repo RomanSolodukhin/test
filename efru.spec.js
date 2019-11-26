@@ -69,22 +69,21 @@ describe('Авторизация', function(done) {
     console.log(lang)
   })
 
-  if(lang == 'icon icon_en') {
-    it('Найти переключатель языков', async function() {
-      await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
-    })
-    it('Открыть меню выбора языков', async function() {
-      await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
-      await driver.wait(until.elementLocated(By.linkText("Русский")))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
-    })
-    it('Сменить язык', async function() {
-      await driver.findElement(By.linkText("Русский")).click()
-      await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
-      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
-    })
-  }
+  lang == 'icon icon_en' ? setlang = it : setlang = it.skip  
+  setlang('Найти переключатель языков', async function() {
+    await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
+  })
+  setlang('Открыть меню выбора языков', async function() {
+    await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
+    await driver.wait(until.elementLocated(By.linkText("Русский")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+  })
+  setlang('Сменить язык', async function() {
+    await driver.findElement(By.linkText("Русский")).click()
+    await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
+  })
 
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
