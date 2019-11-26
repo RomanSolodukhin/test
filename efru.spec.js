@@ -101,10 +101,10 @@ describe('Авторизация', function(done) {
       await assert.rejects(async() => {
         try {
           await driver.wait(until.elementLocated(By.css(".form-error")))
-          return true
+          return false
         }
         catch(err) {
-          return false
+          return err
         }
       },
       {
