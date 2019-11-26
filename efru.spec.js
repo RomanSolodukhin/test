@@ -109,7 +109,7 @@ describe('Авторизация', function(done) {
                   })
         },
         {
-          name: 'Ошибка авторизации',
+          name: 'NoSuchSessionError',
         }
       )
     }
