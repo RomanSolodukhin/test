@@ -66,6 +66,7 @@ describe('Авторизация', function(done) {
   it('Загрузить страницу', async function() {
     await driver.get(site)
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+    console.log(lang)
   })
 
   if(lang == 'icon icon_en') {
