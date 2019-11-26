@@ -98,6 +98,7 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
+      console.log('Обработка ошибки авторизации')
       await assert.rejects(async() => {
         try {
           await driver.wait(until.elementLocated(By.css(".form-error")))
