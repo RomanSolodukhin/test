@@ -61,7 +61,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail('Test stopped. '+this.currentTest.err)
+      assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
@@ -128,11 +128,11 @@ describe('Сервер '+i, function(done) {
     afterEach(async function() {
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
-        var res = await driver.takeScreenshot()
+        var res = await driver.takeScreenshot();
         allure.createAttachment(name, new Buffer(res, 'base64'))
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
-        assert.fail('Test stopped. '+this.currentTest.err.name)
+        assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
     /*it('Загрузить сервер: '+link, async function() {
