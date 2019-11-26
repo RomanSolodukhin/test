@@ -53,7 +53,7 @@ describe('Eternal Fury RU', function() {
 
 describe('Авторизация', function(done) {
   let lang
-  let setlang
+  let setlang = it
   afterEach(async function() {
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
@@ -68,7 +68,7 @@ describe('Авторизация', function(done) {
     await driver.get(site)
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     console.log(lang)
-    (lang == 'icon icon_en') ? setlang = it : setlang = it.skip
+    if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
     await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
