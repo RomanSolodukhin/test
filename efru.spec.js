@@ -61,7 +61,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      //assert.fail('Тест остановлен. '+this.currentTest.err)
+      assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
@@ -99,12 +99,18 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       if(await driver.wait(until.elementLocated(By.css(".form-error")),30000)) {
-        console.log('Найден элемент с ошибкой формы')
-        err = await driver.findElement(By.id("loginform-password")).getAttribute('title')
+        await console.log('Найден элемент с ошибкой формы')
+        await assert.fail({
+                name: 'Ошибка авторизации',
+                message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
+              })
       }
       else {
-        console.log('Не найден элемент с ошибкой формы')
-        err = 'Не получилось найти элемент с ошибкой формы. '+err.message
+        await console.log('Не найден элемент с ошибкой формы')
+        await assert.fail({
+                  name: 'Ошибка авторизации',
+                  message: 'Не получилось найти элемент с ошибкой формы. '+err.message
+                })
       }
     }
   })
