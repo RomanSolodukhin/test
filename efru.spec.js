@@ -80,7 +80,7 @@ describe('Авторизация', function(done) {
   })
   setlang('Сменить язык', async function() {
     await driver.findElement(By.linkText("Русский")).click()
-    await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
+    await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
   it('Открыть форму авторизации', async function() {
