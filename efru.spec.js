@@ -112,7 +112,6 @@ describe('Авторизация', function(done) {
                   message: 'Не получилось найти элемент с ошибкой формы. '+err.message
                 })
       }
-      assert.fail(err)
     }
   })
   it('Выбрать игру', async function() {
