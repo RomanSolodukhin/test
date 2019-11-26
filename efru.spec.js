@@ -95,7 +95,8 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       let title = await driver.findElement(By.id("loginform-password")).getAttribute('title')
-      console.log(title)
+      console.log('title='+title)
+      console.log('placeholder='+await driver.findElement(By.id("loginform-password")).getAttribute('placeholder'))
       if(title) assert.fail(title)
       else assert.fail('Авторизация не удалась')
     }
