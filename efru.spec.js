@@ -103,7 +103,7 @@ describe('Авторизация', function(done) {
       },
       {
         name: 'Ошибка авторизации',
-        message: await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+        message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
       })
     }
   })
