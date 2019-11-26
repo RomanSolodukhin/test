@@ -69,7 +69,8 @@ describe('Авторизация', function(done) {
     console.log(lang)
   })
 
-  lang == 'icon icon_en' ? setlang = it : setlang = it.skip  
+  let setlang
+  lang == 'icon icon_en' ? setlang = it : setlang = it.skip
   setlang('Найти переключатель языков', async function() {
     await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
