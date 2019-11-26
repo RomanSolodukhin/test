@@ -99,9 +99,10 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       console.log('Обработка ошибки авторизации')
+      console.log('1: '+await driver.findElement(By.css(".form-error")).getText())
       async() => {
         try {
-          console.log(await driver.findElement(By.css(".form-error")).getText())
+          console.log('2: '+await driver.findElement(By.css(".form-error")).getText())
           await driver.wait(until.elementLocated(By.css(".form-error")),30000)
           console.log('Форма авторизации вернула ошибку')
           await assert.fail({
@@ -110,7 +111,6 @@ describe('Авторизация', function(done) {
                 })
         }
         catch(err) {
-          return true
         }
       }
     }
