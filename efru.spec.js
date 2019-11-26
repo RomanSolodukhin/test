@@ -99,20 +99,19 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       console.log('Обработка ошибки авторизации')
-      await assert.rejects(async() => {
+      async() => {
         try {
           await driver.wait(until.elementLocated(By.css(".form-error")))
           console.log('Форма авторизации вернула ошибку')
-          return false
+          assert.fail({
+                  name: 'Ошибка авторизации',
+                  message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
+                })
         }
         catch(err) {
           return err
         }
-      },
-      {
-        name: 'Ошибка авторизации',
-        message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
-      })
+      }
     }
   })
   it('Выбрать игру', async function() {
