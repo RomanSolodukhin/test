@@ -117,7 +117,7 @@ describe('Авторизация', function(done) {
         }
 
       }
-      await assert.fail(err)
+      assert.fail(err)
     }
   })
   it('Выбрать игру', async function() {
