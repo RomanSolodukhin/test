@@ -109,7 +109,7 @@ describe('Авторизация', function(done) {
                 })
         }
         catch(err) {
-          return err
+          return true
         }
       }
     }
