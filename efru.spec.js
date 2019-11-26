@@ -61,7 +61,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail('Test stopped. '+this.currentTest.err.name)
+      assert.fail('Test stopped. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
