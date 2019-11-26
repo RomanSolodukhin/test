@@ -99,7 +99,7 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       console.log('Обработка ошибки авторизации')
-      async() => {
+      {
         try {
           console.log('Функция поиска элемента с ошибками в форме атворизации')
           console.log('2: '+await driver.findElement(By.css(".form-error")).getText())
