@@ -108,10 +108,10 @@ describe('Авторизация', function(done) {
                     message: message
                   })
         },
-        new Error({
+        {
           name: 'Ошибка авторизации',
           message: 'Неизвестная ошибка: '+err.message
-        })
+        }
       )
     }
   })
