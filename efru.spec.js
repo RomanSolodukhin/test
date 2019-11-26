@@ -100,11 +100,11 @@ describe('Авторизация', function(done) {
     catch(err) {
       if(await driver.wait(until.elementLocated(By.css(".form-error")),30000)) {
         console.log('Найден элемент с ошибкой формы')
-        assert.fail(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+        throw new Error(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       }
       else {
         console.log('Не найден элемент с ошибкой формы')
-        assert.fail('Не получилось найти элемент с ошибкой формы. '+err.message)
+        throw new Error('Не получилось найти элемент с ошибкой формы. '+err.message)
       }
     }
   })
