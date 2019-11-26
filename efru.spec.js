@@ -98,6 +98,9 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
   })
+  it('Проверка аттрибута', async function() {
+    console.log(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+  })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
