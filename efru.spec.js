@@ -102,11 +102,14 @@ describe('Авторизация', function(done) {
         async() => {
           console.log('Обработка ошибки с неправильным паролем')
           await driver.wait(until.elementLocated(By.css(".form-error")),30000)
-          return promise
+          throw new Error({
+                    name: 'Ошибка авторизации',
+                    message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
+                  })
         },
         new Error({
           name: 'Ошибка авторизации',
-          message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
+          message: 'Неизвестная ошибка: '+err.message
         })
       )
     }
