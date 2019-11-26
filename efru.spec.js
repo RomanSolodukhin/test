@@ -96,11 +96,12 @@ describe('Авторизация', function(done) {
   it('Авторизоваться', async function() {
     try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      assert.isFalse(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
-      assert.isFalse(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      assert.fail('Авторизация выполнена', await driver.findElement(By.id("loginform-password")).getAttribute('title'), err)
     }
   })
   it('Выбрать игру', async function() {
