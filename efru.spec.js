@@ -59,7 +59,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      //assert.fail('Test stopped. '+this.currentTest.err.name)
+      assert.fail('Test stopped. '+this.currentTest.err.name)
     }
   })
   it('Загрузить страницу', async function() {
@@ -95,6 +95,7 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       let title = await driver.findElement(By.id("loginform-password")).getAttribute('title')
+      console.log(title)
       if(title) assert.fail(title)
       else assert.fail('Авторизация не удалась')
     }
