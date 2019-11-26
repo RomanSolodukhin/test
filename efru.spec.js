@@ -100,17 +100,11 @@ describe('Авторизация', function(done) {
     catch(err) {
       if(await driver.wait(until.elementLocated(By.css(".form-error")),30000)) {
         console.log('Найден элемент с ошибкой формы')
-        throw new Error({
-                name: 'Ошибка авторизации',
-                message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
-              })
+        assert.fail(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       }
       else {
         console.log('Не найден элемент с ошибкой формы')
-        throw new Error({
-                  name: 'Ошибка авторизации',
-                  message: 'Не получилось найти элемент с ошибкой формы. '+err.message
-                })
+        assert.fail('Не получилось найти элемент с ошибкой формы. '+err.message)
       }
     }
   })
