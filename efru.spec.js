@@ -101,6 +101,7 @@ describe('Авторизация', function(done) {
       await assert.rejects(async() => {
         try {
           await driver.wait(until.elementLocated(By.css(".form-error")))
+          console.log('Форма авторизации вернула ошибку')
           return false
         }
         catch(err) {
