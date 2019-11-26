@@ -92,16 +92,26 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
+    try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      assert.rejects(async() => {
-        await driver.wait(until.elementLocated(By.css(".form-error")))
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    }
+    catch(err) {
+      await assert.rejects(async() => {
+        try {
+          await driver.wait(until.elementLocated(By.css(".form-error")))
+          return true
+        }
+        catch(err) {
+          return false
+        }
       },
       {
         name: 'Ошибка авторизации',
         message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
       })
-      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    }
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
