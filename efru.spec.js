@@ -36,9 +36,9 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
-    if(!this.currentTest.err) {
+    /*if(!this.currentTest.err) {
 
-    }
+    }*/
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
@@ -94,7 +94,7 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
-      let title = await driver.findElement(By.id("loginform-password")).getTitle()
+      let title = await driver.findElement(By.id("loginform-password")).getAttribute('title')
       if(title) assert.fail(title)
       else assert.fail('Авторизация не удалась')
     }
