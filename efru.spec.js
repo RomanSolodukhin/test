@@ -99,7 +99,6 @@ describe('Авторизация', function(done) {
     }
     catch(err) {
       console.log('Обработка ошибки авторизации')
-      console.log('1: '+await driver.findElement(By.xpath("//form[@id='LoginForm']/div[2]/div")).getText())
       async() => {
         try {
           console.log('2: '+await driver.findElement(By.css(".form-error")).getText())
@@ -111,6 +110,7 @@ describe('Авторизация', function(done) {
                 })
         }
         catch(err) {
+          console.log('Не получилось найти элемент с ошибкой формы')
         }
       }
     }
