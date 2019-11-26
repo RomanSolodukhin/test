@@ -112,7 +112,7 @@ describe('Авторизация', function(done) {
         catch(err) {
           err = {
                   name: 'Ошибка авторизации',
-                  message: Не получилось найти элемент с ошибкой формы. '+err.message
+                  message: 'Не получилось найти элемент с ошибкой формы. '+err.message
                 }
         }
 
