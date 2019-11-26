@@ -29,11 +29,11 @@ describe('Eternal Fury RU', function() {
     session = await driver.getSession()
     //session.id = await session.getId()
     console.log(session.id_)
-});
+})
 
   beforeEach(function () {
 
-  });
+  })
   after(async function() {
     await driver.quit()
     /*if(!this.currentTest.err) {
@@ -83,7 +83,6 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.linkText("Вход"))) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
-
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
@@ -102,11 +101,11 @@ describe('Авторизация', function(done) {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
     await driver.findElement(By.linkText('Eternal Fury')).click()
-  });
+  })
   it('Загрузить страницу игры', async function() {
     await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Играть бесплатно')]")))
     await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]"))))
-  });
+  })
 })
 
 for(i = 1; i <= MAX_SERVERS;i++) {
