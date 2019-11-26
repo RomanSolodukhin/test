@@ -90,16 +90,13 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      assert.strictEqual('', await driver.findElement(By.id("loginform-password")).getAttribute('title'), 'Неправильный логин или пароль')
+      assert.strictNotEqual(true, await driver.wait(until.elementLocated(By.css(".form-error"))), await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-  })
-  it('Проверка аттрибута', async function() {
-    console.log(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
