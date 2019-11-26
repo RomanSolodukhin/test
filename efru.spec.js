@@ -103,6 +103,7 @@ describe('Авторизация', function(done) {
         async() => {
           console.log('Обработка ошибки с неправильным паролем')
           await driver.wait(until.elementLocated(By.css(".form-error")),30000)
+          console.log('Найден элемент уведомления об ошибке в форме авторизации')
           await driver.wait(until.elementIsVisible(driver.findElement(By.css(".form-error"))),30000)
           let message = await driver.findElement(By.css(".form-error")).getText()
           console.log(message)
