@@ -100,11 +100,7 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
-      let title = await driver.findElement(By.id("loginform-password")).getAttribute('title')
-      console.log('title='+title)
-      console.log('placeholder='+await driver.findElement(By.id("loginform-password")).getAttribute('placeholder'))
-      if(title) assert.fail(title)
-      else assert.fail('Авторизация не удалась')
+      assert.isFalse(await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
   it('Выбрать игру', async function() {
