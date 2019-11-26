@@ -98,24 +98,16 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
-      console.log('Обработка ошибки авторизации')
-      {
-        try {
-          console.log('Функция поиска элемента с ошибками в форме атворизации')
-          await driver.wait(until.elementLocated(By.css(".form-error")),30000)
-          console.log('Обнаружен текст ошибки в форме авторизации')
-          throw new Error({
-                  name: 'Ошибка авторизации',
-                  message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
-                })
-        }
-        catch(err) {
-          throw new Error({
-                  name: 'Ошибка авторизации',
-                  message: 'Не получилось найти элемент с ошибкой формы. '+err.message
-                })
-        }
+      if(await driver.wait(until.elementLocated(By.css(".form-error")),30000)) {
+        throw new Error({
+                name: 'Ошибка авторизации',
+                message: await driver.findElement(By.id("loginform-password")).getAttribute('title')
+              })
       }
+      else throw new Error({
+                name: 'Ошибка авторизации',
+                message: 'Не получилось найти элемент с ошибкой формы. '+err.message
+              })
     }
   })
   it('Выбрать игру', async function() {
