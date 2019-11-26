@@ -6,27 +6,21 @@
     "flacky": "true"
   },
   {
-    "name": "Блокирующий дефект",
-    "messageRegex": ".*Test stopped.*",
-    "matchedStatuses": ["failed"],
-    "flacky": "true"
-  },
-  {
     "name": "Неизвестная проблема",
-    "matchedStatuses": ["broken", "failed"],
+    "matchedStatuses": ["broken"],
     "messageRegex": ".*что-то пошло не так.*"
   },
   {
     "name": "Нет данных",
-    "matchedStatuses": ["broken", "failed"],
+    "matchedStatuses": ["broken"],
     "traceRegex": ".*NullPointerException.*"
   },
   {
     "name": "Product defects",
-    "matchedStatuses": ["failed"]
+    "matchedStatuses": ["broken"]
   },
   {
     "name": "Test defects",
-    "matchedStatuses": ["failed","broken"]
+    "matchedStatuses": ["broken"]
   }
 ]

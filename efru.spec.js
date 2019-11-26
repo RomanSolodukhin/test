@@ -36,6 +36,9 @@ describe('Eternal Fury RU', function() {
   });
   after(async function() {
     await driver.quit()
+    if(!this.currentTest.err) {
+
+    }
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
@@ -56,8 +59,8 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
-      assert.fail(this.currentTest.err.name+'. Test stopped')
-  }
+      assert.fail('Test stopped. '+this.currentTest.err.name)
+    }
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
@@ -85,9 +88,16 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
-    await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    try {
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    }
+    catch(err) {
+      let title = await driver.findElement(By.id("loginform-password")).getTitle()
+      if(title) assert.fail(title)
+      else assert.fail('Авторизация не удалась')
+    }
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
@@ -113,13 +123,13 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       if(this.currentTest.err) {
-    let name = String(this.currentTest.title)
-      var res = await driver.takeScreenshot();
-      allure.createAttachment(name, new Buffer(res, 'base64'))
-      allure.createAttachment('Отчёт', String(this.currentTest.err))
-      allure.severity('blocker')
-      assert.fail(this.currentTest.err+'. Test stopped')
-  }
+      let name = String(this.currentTest.title)
+        var res = await driver.takeScreenshot()
+        allure.createAttachment(name, new Buffer(res, 'base64'))
+        allure.createAttachment('Отчёт', String(this.currentTest.err))
+        allure.severity('blocker')
+        assert.fail('Test stopped. '+this.currentTest.err.name)
+      }
     })
     /*it('Загрузить сервер: '+link, async function() {
       await driver.get(link)
@@ -127,9 +137,9 @@ describe('Сервер '+i, function(done) {
     })*/
     it('Открыть окно выбора серверов', async function() {
       try {
-      await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
-      await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
+        await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
+        await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
       }
       catch(err) {
         assert.fail(err)
