@@ -66,7 +66,7 @@ describe('Авторизация', function(done) {
     await driver.get(site)
   })
 
-  let lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+  let lang = driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
   if(class != 'icon icon_ru') {
     it('Найти переключатель языков', async function() {
       await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
