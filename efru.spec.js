@@ -255,10 +255,7 @@ function RemoveVideo(sessionId) {
   let counter = 500;
   let timer = setInterval(function () {
     request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
-          console.log('error:', error)
-          console.log('statusCode:', response.statusCode)
-          console.log('body:', body)
-          if(response.statusCode == '200') return true
+          if(!body) return true
         });
     counter+=500
     if(counter > 5000) {
