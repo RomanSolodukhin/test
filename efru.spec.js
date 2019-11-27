@@ -46,7 +46,7 @@ describe('Eternal Fury RU', function() {
         console.log('body:', body);
         sleep(500)
       });
-    } while(!error)
+    } while(error)
 
     if(removeVideo) {
       await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+session.id_+'.mp4'}, function (error, response, body) {
