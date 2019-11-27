@@ -49,7 +49,7 @@ describe('Eternal Fury RU', function() {
                 if(response && response.statusCode != 404) waitingVideo = false
               });
             },500);
-      } while(!waitingVideo)
+      } while(waitingVideo)
     }
     else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
