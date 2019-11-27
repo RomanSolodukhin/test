@@ -37,10 +37,9 @@ describe('Eternal Fury RU', function() {
 
   })
   after(async function() {
-    await driver.quit()
+    if(driver) await driver.quit()
 
     if(removeVideo) await RemoveVideo(session.id_)
-    else await allure.createAttachment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
 
     }*/
@@ -67,6 +66,9 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
+      await driver.quit()
+      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
+      allure.createAttachment('video', new Buffer(file, 'video/mp4'))
       assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
