@@ -58,6 +58,9 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
+  let step1 = await allure.createStep('Открыть страницу', await driver.get(site))
+  let step2 = await allure.createStep('Проверить язык',lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class'))
+
   afterEach(function() {
     if(this.currentTest.err) {
       allure.createStep('Тест остановлен', async function() {
@@ -77,8 +80,8 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    await allure.createStep('Открыть страницу', await driver.get(site))
-    allure.createStep('Проверить язык',lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class'))
+    step1()
+    step2()
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
@@ -105,7 +108,7 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await allure.createStep('Ввести логин (почту)', await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com"))
-    allure.createStep('Ввести пароль', await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG"))
+    await allure.createStep('Ввести пароль', await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG"))
   })
   it('Авторизоваться', async function() {
     try {
