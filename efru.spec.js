@@ -75,7 +75,7 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    testStep(this.currentTest.title, await driver.get(site))
+    testStep(this.title, await driver.get(site))
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
