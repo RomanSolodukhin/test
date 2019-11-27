@@ -74,37 +74,43 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    await driver.get(site)
-    lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+    allure.createStep('Открыть страницу', await driver.get(site))
+    allure.createStep('Проверить язык',lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class'))
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
-    await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
+    allure.createStep('Поиск переключателя языков',await driver.wait(until.elementLocated(By.css(".lang-list")),30000))
+    allure.createStep('Проверка на видимость переключателя языков', await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list")))))
   })
   setlang('Открыть меню выбора языков', async function() {
-    await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
-    await driver.wait(until.elementLocated(By.linkText("Русский")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+    allure.createStep('Навести указатель на переключатель языков', await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform())
+    allure.createStep('Проверить, что есть "Русский"', async function() {
+      await driver.wait(until.elementLocated(By.linkText("Русский")))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+    }
   })
   setlang('Сменить язык', async function() {
-    await driver.findElement(By.linkText("Русский")).click()
-    await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
-    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
+    allure.createStep('Кликнуть по флагу "Русский"', await driver.findElement(By.linkText("Русский")).click())
+    allure.createStep('Проверить, что кнопка login сменилась на Вход', async function() {
+      await driver.wait(until.elementLocated(By.linkText("Вход")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
+    })
   })
   it('Открыть форму авторизации', async function() {
-    await driver.findElement(By.linkText("Вход")).click()
-    await driver.wait(until.elementLocated(By.id("loginform-username")))
+    allure.createStep('Кликнуть по кнопке "Вход"', await driver.findElement(By.linkText("Вход")).click())
+    allure.createStep('Найти поле ввода пароля', await driver.wait(until.elementLocated(By.id("loginform-username"))))
   })
   it('Ввести учетные данные', async function() {
-    await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
+    allure.createStep('Ввести логин (почту)', await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+    allure.createStep('Ввести пароль', await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG"))
   })
   it('Авторизоваться', async function() {
     try {
-      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+      allure.createStep('Нажать ENTER на клавиатуре в поле ввода пароля', await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER))
+      allure.createStep('Найти ник пользователя', async function() {
+        await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+      })
     }
     catch(err) {
 
