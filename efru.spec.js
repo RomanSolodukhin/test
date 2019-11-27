@@ -244,16 +244,19 @@ describe('Сервер '+i, function(done) {
     it('Открыть окно пополнения', async function() {
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
+
     })
     })
   }
 });
 
 function RemoveVideo(sessionId) {
+
   let counter = 500;
   let timer = setInterval(function () {
     request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
-          if(response.statusCode == 200 && response.statusCode == '200') return true
+          console.log('statusCode:', response.statusCode)
+          if(String(response.statusCode) == '200') return true
         });
     counter+=500
     if(counter > 5000) {
