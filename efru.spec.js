@@ -38,6 +38,7 @@ describe('Eternal Fury RU', function() {
   })
   after(async function() {
     await driver.quit()
+    console.log('Браузер закрыт')
     let waitingVideo = true
     if(removeVideo) {
       do {
