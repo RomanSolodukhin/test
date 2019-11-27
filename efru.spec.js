@@ -58,7 +58,7 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  let testStep = (function(fn) => { allure.createStep(this.currentTest.title, fn) })
+  let testStep = (function(fn) { allure.createStep(this.currentTest.title, fn) })
 
   afterEach(async function() {
     if(this.currentTest.err) {
