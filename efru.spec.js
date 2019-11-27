@@ -45,6 +45,7 @@ describe('Eternal Fury RU', function() {
         console.log('statusCode:', response && response.statusCode);
         console.log('body:', body);
       });
+      else await allure.addEnvironment('platformName: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     }
 
     /*if(!this.currentTest.err) {
