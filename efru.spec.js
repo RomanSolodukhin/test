@@ -262,7 +262,7 @@ function RemoveVideo(sessionId) {
           if(response.statusCode == 200) return true
         });
     counter+=500
-    else if(counter > 5000) {
+    if(counter > 5000) {
       clearInterval(timer)
       console.log('Ожидание в  '+counter+'мс превышено.')
     }
