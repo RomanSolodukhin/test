@@ -102,7 +102,7 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
   })
   it('Авторизоваться', async function() {
     try {
