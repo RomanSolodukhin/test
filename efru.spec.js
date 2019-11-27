@@ -58,8 +58,8 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  let step1 = await allure.createStep('Открыть страницу', await driver.get(site))
-  let step2 = await allure.createStep('Проверить язык',lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class'))
+  let step1 = allure.createStep('Открыть страницу', await driver.get(site))
+  let step2 = allure.createStep('Проверить язык',lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class'))
 
   afterEach(function() {
     if(this.currentTest.err) {
