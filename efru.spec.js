@@ -87,7 +87,7 @@ describe('Авторизация', function(done) {
     allure.createStep('Проверить, что есть "Русский"', async function() {
       await driver.wait(until.elementLocated(By.linkText("Русский")))
       await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
-    }
+    })
   })
   setlang('Сменить язык', async function() {
     allure.createStep('Кликнуть по флагу "Русский"', await driver.findElement(By.linkText("Русский")).click())
