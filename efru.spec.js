@@ -58,9 +58,6 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  let step1 = allure.createStep('Открыть страницу', async function() { await driver.get(site) })
-  let step2 = allure.createStep('Проверить язык', async function() { lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class') } )
-
   afterEach(function() {
     if(this.currentTest.err) {
       allure.feature("fail")
@@ -81,8 +78,8 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    step1()
-    step2()
+    allure.createStep('Открыть страницу', async function() { await driver.get(site) })
+    allure.createStep('Проверить язык', async function() { lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class') } )
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
