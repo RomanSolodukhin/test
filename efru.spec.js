@@ -67,7 +67,8 @@ describe('Авторизация', function(done) {
       allure.severity('blocker')
       removeVideo = false
       await driver.quit()
-      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
+      let file
+      await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe(file)
       allure.createAttachment('video', new Buffer(file, 'video/mp4'))
       assert.fail('Тест остановлен. '+this.currentTest.err)
     }
