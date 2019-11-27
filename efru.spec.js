@@ -58,7 +58,6 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  let testStep = (function(name, fn) { allure.createStep(name, fn) });
 
   afterEach(async function() {
     if(this.currentTest.err) {
@@ -75,7 +74,7 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    testStep(this.title, await driver.get(site))
+    await driver.get(site)
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
