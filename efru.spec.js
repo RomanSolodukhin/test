@@ -101,7 +101,7 @@ describe('Авторизация', function(done) {
     allure.createStep('Найти поле ввода пароля', await driver.wait(until.elementLocated(By.id("loginform-username"))))
   })
   it('Ввести учетные данные', async function() {
-    allure.createStep('Ввести логин (почту)', await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+    allure.createStep('Ввести логин (почту)', await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com"))
     allure.createStep('Ввести пароль', await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG"))
   })
   it('Авторизоваться', async function() {
