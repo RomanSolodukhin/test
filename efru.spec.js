@@ -38,25 +38,20 @@ describe('Eternal Fury RU', function() {
   })
   after(async function() {
     await driver.quit()
-    let videoStatus
-    do {
-      setTimeout(async function(){
-        await request({method: 'GET', uri: 'http://104.248.2.157:4444/video/'+session.id_+'.mp4'}, function (error, response, body) {
-              console.log('error:', error);
-              console.log('statusCode:', response && response.statusCode);
-              console.log('body:', body);
-            });
-          },500);
-    } while(error)
-
+    let waitingVideo = true
     if(removeVideo) {
-      await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+session.id_+'.mp4'}, function (error, response, body) {
-        console.log('error:', error);
-        console.log('statusCode:', response && response.statusCode);
-        console.log('body:', body);
-      });
+      do {
+        setTimeout(async function(){
+          await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+session.id_+'.mp4'}, function (error, response, body) {
+                console.log('error:', error);
+                console.log('statusCode:', response && response.statusCode);
+                console.log('body:', body);
+                if(response && response.statusCode != 404) waitingVideo = false
+              });
+            },500);
+      } while(!waitingVideo)
     }
-    else await allure.addEnvironment('platformName: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
+    else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
 
     }*/
