@@ -40,7 +40,6 @@ describe('Eternal Fury RU', function() {
     await driver.quit()
     let waitingVideo = true
     if(removeVideo) {
-      do {
         setTimeout(async function(){
           await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+session.id_+'.mp4'}, function (error, response, body) {
                 console.log('error:', error);
@@ -48,9 +47,8 @@ describe('Eternal Fury RU', function() {
                 console.log('body:', body);
                 if(response && response.statusCode != 404) waitingVideo = false
               });
-            },500);
-      } while(waitingVideo)
-    }
+            },3000);
+          }
     else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
 
