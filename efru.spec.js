@@ -39,7 +39,7 @@ describe('Eternal Fury RU', function() {
     await driver.quit()
 
     if(removeVideo) {
-      await request('-X DELETE http://104.248.2.157:4444/video/'+session.id_+'.mp4'', function (error, response, body) {
+      await request('-X DELETE http://104.248.2.157:4444/video/'+session.id_+'.mp4', function (error, response, body) {
         console.log('error:', error);
         console.log('statusCode:', response && response.statusCode);
         console.log('body:', body);
