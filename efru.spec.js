@@ -58,63 +58,54 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  afterEach(function() {
-    if(this.currentTest.err) {
-      allure.feature("fail")
-      allure.createStep('Тест остановлен', async function() {
-        let name = String(this.currentTest.title)
-          var res = await driver.takeScreenshot();
-          await allure.createAttachment(name, new Buffer(res, 'base64'))
-          await allure.createAttachment('Отчёт', String(this.currentTest.err))
-          await allure.severity('blocker')
-          removeVideo = false
-          /*await driver.quit()
-          let file
-          await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe(file)
-          allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
-          await assert.fail('Тест остановлен. '+this.currentTest.err)
-      })
+  let testStep = (function(fn) => { allure.createStep(this.currentTest.title, fn) })
 
+  afterEach(async function() {
+    if(this.currentTest.err) {
+    let name = String(this.currentTest.title)
+      var res = await driver.takeScreenshot();
+      allure.createAttachment(name, new Buffer(res, 'base64'))
+      allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.severity('blocker')
+      removeVideo = false
+      /*await driver.quit()
+      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
+      allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
+      assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
-    allure.createStep('Открыть страницу', async function() { await driver.get(site) })
-    allure.createStep('Проверить язык', async function() { lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class') } )
+    testStep(await driver.get(site))
+    lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
-    await allure.createStep('Поиск переключателя языков',await driver.wait(until.elementLocated(By.css(".lang-list")),30000))
-    await allure.createStep('Проверка на видимость переключателя языков', await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list")))))
+    await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
   })
   setlang('Открыть меню выбора языков', async function() {
-    await allure.createStep('Навести указатель на переключатель языков', await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform())
-    await allure.createStep('Проверить, что есть "Русский"', async function() {
-      await driver.wait(until.elementLocated(By.linkText("Русский")))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
-    })
+    await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
+    await driver.wait(until.elementLocated(By.linkText("Русский")))
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
   })
   setlang('Сменить язык', async function() {
-    await allure.createStep('Кликнуть по флагу "Русский"', await driver.findElement(By.linkText("Русский")).click())
-    await allure.createStep('Проверить, что кнопка login сменилась на Вход', async function() {
-      await driver.wait(until.elementLocated(By.linkText("Вход")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
-    })
+    await driver.findElement(By.linkText("Русский")).click()
+    await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
+    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
   it('Открыть форму авторизации', async function() {
-    await allure.createStep('Кликнуть по кнопке "Вход"', await driver.findElement(By.linkText("Вход")).click())
-    await allure.createStep('Найти поле ввода пароля', await driver.wait(until.elementLocated(By.id("loginform-username"))))
+    await driver.findElement(By.linkText("Вход")).click()
+    await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
   it('Ввести учетные данные', async function() {
-    await allure.createStep('Ввести логин (почту)', await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com"))
-    await allure.createStep('Ввести пароль', await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG"))
+    await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Авторизоваться', async function() {
     try {
-      await allure.createStep('Нажать ENTER на клавиатуре в поле ввода пароля', await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER))
-      await allure.createStep('Найти ник пользователя', async function() {
-        await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-      })
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
 
