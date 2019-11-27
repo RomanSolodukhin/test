@@ -46,7 +46,7 @@ describe('Eternal Fury RU', function() {
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
-    console.log(allure)
+    
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
