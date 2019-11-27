@@ -38,12 +38,9 @@ describe('Eternal Fury RU', function() {
   })
   after(async function() {
     await driver.quit()
-    console.log('Браузер закрыт')
-    let waitingVideo = true
-    if(removeVideo) {
-      await RemoveVideo(session.id_)
-    }
-    else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
+
+    if(removeVideo) await RemoveVideo(session.id_)
+    else await allure.createAttachment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
 
     }*/
