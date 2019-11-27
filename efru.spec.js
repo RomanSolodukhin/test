@@ -251,9 +251,10 @@ describe('Сервер '+i, function(done) {
 });
 
 function RemoveVideo(sessionId) {
-
-  let counter = 500;
-  let timer = setInterval(function () {
+  let runningTime = 0,
+  sleep = 500,
+  maxTime = 5000
+    let timer = setInterval(function () {
     request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
           console.log('statusCode:', response.statusCode)
           if(response.statusCode == 200) {
@@ -261,10 +262,10 @@ function RemoveVideo(sessionId) {
             return true
           }
         });
-    counter+=500
-    if(counter > 5000) {
+    runningTime+=sleep
+    if(runningTime > maxTime) {
       clearInterval(timer)
-      console.log('Ожидание в  '+counter+'мс превышено.')
+      throw new Error('Ожидание в  '+counter+'мс превышено.')
     }
-  }, 500);
+  }, sleep);
 }
