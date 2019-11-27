@@ -41,11 +41,7 @@ describe('Eternal Fury RU', function() {
     console.log('Браузер закрыт')
     let waitingVideo = true
     if(removeVideo) {
-      await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/7ee736591901f64575d5df6f34fb0ed9.mp4'}, function (error, response, body) {
-            console.log('error:', error);
-            console.log('statusCode:', response && response.statusCode);
-            console.log('body:', body);
-          });
+      await removeVideo(session.id_)
     }
     else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
@@ -253,3 +249,13 @@ describe('Сервер '+i, function(done) {
     })
   }
 });
+
+async function RemoveVideo(sessionId) {
+    await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
+          console.log('error:', error)
+          console.log('statusCode:', response && response.statusCode)
+          console.log('body:', body)
+        });
+        if(response.statusCode == 200) return true
+        else setTimeout(this(sessionId),1000)
+}
