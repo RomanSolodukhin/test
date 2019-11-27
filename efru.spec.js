@@ -60,17 +60,20 @@ describe('Авторизация', function(done) {
   let setlang = it
   afterEach(async function() {
     if(this.currentTest.err) {
-    let name = String(this.currentTest.title)
-      var res = await driver.takeScreenshot();
-      allure.createAttachment(name, new Buffer(res, 'base64'))
-      allure.createAttachment('Отчёт', String(this.currentTest.err))
-      allure.severity('blocker')
-      removeVideo = false/*
-      await driver.quit()
-      let file
-      await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe(file)
-      allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
-      assert.fail('Тест остановлен. '+this.currentTest.err)
+      await allure.createStep('Тест остановлен', async function() {
+        let name = String(this.currentTest.title)
+          var res = await driver.takeScreenshot();
+          allure.createAttachment(name, new Buffer(res, 'base64'))
+          allure.createAttachment('Отчёт', String(this.currentTest.err))
+          allure.severity('blocker')
+          removeVideo = false
+          /*await driver.quit()
+          let file
+          await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe(file)
+          allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
+          assert.fail('Тест остановлен. '+this.currentTest.err)
+      })
+
     }
   })
   it('Загрузить страницу', async function() {
