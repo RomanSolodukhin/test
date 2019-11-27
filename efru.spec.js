@@ -63,6 +63,7 @@ describe('Авторизация', function(done) {
 
   afterEach(function() {
     if(this.currentTest.err) {
+      allure.feature("fail")
       allure.createStep('Тест остановлен', async function() {
         let name = String(this.currentTest.title)
           var res = await driver.takeScreenshot();
