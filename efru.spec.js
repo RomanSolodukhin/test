@@ -41,7 +41,7 @@ describe('Eternal Fury RU', function() {
     console.log('Браузер закрыт')
     let waitingVideo = true
     if(removeVideo) {
-      await removeVideo(session.id_)
+      await RemoveVideo(session.id_)
     }
     else await allure.addEnvironment('video: ', 'http://104.248.2.157:4444/video/'+session.id_+'.mp4')
     /*if(!this.currentTest.err) {
