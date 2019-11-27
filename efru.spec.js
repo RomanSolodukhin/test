@@ -1,6 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-
+var request = require('request')
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
@@ -9,6 +9,7 @@ describe('Eternal Fury RU', function() {
   let MAX_SERVERS = 1
   let testName = String(this.title)
   let session
+  let removeVideo = true
 
   before(async function() {
     var capabilities = {
@@ -36,6 +37,15 @@ describe('Eternal Fury RU', function() {
   })
   after(async function() {
     await driver.quit()
+
+    if(removeVideo) {
+      await request('-X DELETE http://104.248.2.157:4444/video/'+session.id_+'.mp4'', function (error, response, body) {
+        console.log('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+        console.log('body:', body);
+      });
+    }
+
     /*if(!this.currentTest.err) {
 
     }*/
@@ -61,6 +71,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
+      removeVideo = false
       assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
@@ -146,6 +157,7 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment(name, new Buffer(res, 'base64'))
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
+        removeVideo = false
         assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
