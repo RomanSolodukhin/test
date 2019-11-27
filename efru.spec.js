@@ -250,12 +250,21 @@ describe('Сервер '+i, function(done) {
   }
 });
 
-async function RemoveVideo(sessionId) {
-    await request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
+
+function RemoveVideo(sessionId) {
+
+  let counter = 500;
+  let timer = setInterval(function () {
+    request({method: 'DELETE', uri: 'http://104.248.2.157:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
           console.log('error:', error)
           console.log('statusCode:', response && response.statusCode)
           console.log('body:', body)
         });
-        if(response.statusCode == 200) return true
-        else setTimeout(this(sessionId),1000)
+    counter+=500
+    if(response.statusCode == 200) return true
+    else if(counter > 5000) {
+      clearInterval(timer)
+      console.log('Ожидание в  '+counter+'мс превышено.')
+    }
+  }, 500);
 }
