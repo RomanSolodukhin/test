@@ -80,7 +80,7 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    await driver.get(site)
+    await allure.createStep('Открыть страницу: '+site, async function() {await driver.get(site)} )
     testSteps.push('Открыть страницу: '+site)
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
