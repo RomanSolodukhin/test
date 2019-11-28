@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
+/*
 var jenkinsEnv = {
   jenkins_url: process.env.JENKINS_URL,
   build_url: process.env.BUILD_URL,
@@ -13,7 +14,7 @@ var jenkinsEnv = {
   git_committer_email: process.env.GIT_COMMITTER_EMAIL
 };
 console.log(JSON.stringify(jenkinsEnv))
-
+*/
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
