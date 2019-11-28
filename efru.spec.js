@@ -1,7 +1,17 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-console.log(process.end)
+)
+console.log('JENKINS_URL='+process.env.JENKINS_URL)
+console.log('BUILD_URL='+process.env.BUILD_URL)
+console.log('BUILD_NUMBER'+process.env.BUILD_NUMBER)
+console.log('BUILD_DISPLAY_NAME='+process.env.BUILD_DISPLAY_NAME)
+console.log('JOB_NAME='+process.env.JOB_NAME)
+console.log('EXECUTOR_NUMBER='+process.env.EXECUTOR_NUMBER)
+console.log('GIT_BRANCH='+process.env.GIT_BRANCH)
+console.log('GIT_COMMIT='+process.env.GIT_COMMIT)
+console.log('GIT_COMMITTER_NAME='+process.env.GIT_COMMITTER_NAME)
+console.log('GIT_COMMITTER_EMAIL='+process.env.GIT_COMMITTER_EMAIL)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
