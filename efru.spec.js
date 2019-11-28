@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-)
+
 console.log('JENKINS_URL='+process.env.JENKINS_URL)
 console.log('BUILD_URL='+process.env.BUILD_URL)
 console.log('BUILD_NUMBER'+process.env.BUILD_NUMBER)
