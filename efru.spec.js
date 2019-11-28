@@ -61,12 +61,9 @@ describe('Авторизация', function(done) {
   let setlang = it
   let testSteps = []
 
-  function testStep(desc, func) {
-    allure.createStep(desc, func)
-  }
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
-      testStep(testSteps[i], console.log(testSteps[i]))
+      allure.createStep(testSteps[i], console.log(testSteps[i]))
     }
     testSteps.length = 0
     if(this.currentTest.err) {
