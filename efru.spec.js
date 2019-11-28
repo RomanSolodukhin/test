@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-
+var jObject = require('executor-allure');
 /*
 var jenkinsEnv = {
   jenkins_url: process.env.JENKINS_URL,
@@ -54,6 +54,19 @@ describe('Eternal Fury RU', function() {
     if(driver) await driver.quit()
     await allure.addExecutor('jenkins')
     console.log('Запуск addExecutor')
+    var jenkinsEnv = {
+      jenkins_url: process.env.JENKINS_URL,
+      build_url: process.env.BUILD_URL,
+      build_number: process.env.BUILD_NUMBER,
+      build_display_name: process.env.BUILD_DISPLAY_NAME,
+      job_name: process.env.JOB_NAME,
+      git_branch: process.env.GIT_BRANCH,
+      git_commit: process.env.GIT_COMMIT,
+      git_committer_name: process.env.GIT_COMMITTER_NAME,
+      git_committer_email: process.env.GIT_COMMITTER_EMAIL
+    };
+    await jObject.Executor('allure-results', jenkinsEnv)
+    console.log('Альтернативный скрипт')
     if(removeVideo) await RemoveVideo(session.id_)
     /*if(!this.currentTest.err) {
 
