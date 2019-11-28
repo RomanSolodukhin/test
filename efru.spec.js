@@ -63,7 +63,7 @@ describe('Авторизация', function(done) {
 
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
-      allure.createAttachment(testSteps[i], 'Выполнено')
+      allure.createStep(testSteps[i], function() {console.log(testSteps[i])})
     }
     testSteps.length = 0
     if(this.currentTest.err) {
