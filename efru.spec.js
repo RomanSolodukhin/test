@@ -1,17 +1,18 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-
-console.log('JENKINS_URL='+process.env.JENKINS_URL)
-console.log('BUILD_URL='+process.env.BUILD_URL)
-console.log('BUILD_NUMBER'+process.env.BUILD_NUMBER)
-console.log('BUILD_DISPLAY_NAME='+process.env.BUILD_DISPLAY_NAME)
-console.log('JOB_NAME='+process.env.JOB_NAME)
-console.log('EXECUTOR_NUMBER='+process.env.EXECUTOR_NUMBER)
-console.log('GIT_BRANCH='+process.env.GIT_BRANCH)
-console.log('GIT_COMMIT='+process.env.GIT_COMMIT)
-console.log('GIT_COMMITTER_NAME='+process.env.GIT_COMMITTER_NAME)
-console.log('GIT_COMMITTER_EMAIL='+process.env.GIT_COMMITTER_EMAIL)
+var jenkinsEnv = {
+  jenkins_url: process.env.JENKINS_URL,
+  build_url: process.env.BUILD_URL,
+  build_number: process.env.BUILD_NUMBER,
+  build_display_name: process.env.BUILD_DISPLAY_NAME,
+  job_name: process.env.JOB_NAME,
+  git_branch: process.env.GIT_BRANCH,
+  git_commit: process.env.GIT_COMMIT,
+  git_committer_name: process.env.GIT_COMMITTER_NAME,
+  git_committer_email: process.env.GIT_COMMITTER_EMAIL
+};
+console.log(jenkinsEnv.toJSON())
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
