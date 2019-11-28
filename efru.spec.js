@@ -12,7 +12,7 @@ var jenkinsEnv = {
   git_committer_name: process.env.GIT_COMMITTER_NAME,
   git_committer_email: process.env.GIT_COMMITTER_EMAIL
 };
-console.log(jenkinsEnv.toJSON())
+console.log(JSON.stringify(jenkinsEnv))
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
