@@ -4,7 +4,8 @@ var fs = require('fs-extra'),
 
 exports = {
   Executor: function(targetDir, execData) {
-    if(exec.jenkins_url) {
+    console.log('executor-allure вызван')
+    if(execData.jenkins_url) {
       fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(execData));
     }
   }
