@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
+console.log(process.end)
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
