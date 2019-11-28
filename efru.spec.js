@@ -53,6 +53,7 @@ describe('Eternal Fury RU', function() {
   after(async function() {
     if(driver) await driver.quit()
     await allure.addExecutor('jenkins')
+    console.log('Запуск addExecutor')
     if(removeVideo) await RemoveVideo(session.id_)
     /*if(!this.currentTest.err) {
 
