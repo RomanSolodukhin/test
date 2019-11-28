@@ -59,7 +59,7 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-  let testSteps
+  let testSteps = []
 
   function testStep(desc, func) {
     allure.createStep(desc, func)
