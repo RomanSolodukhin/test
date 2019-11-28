@@ -46,7 +46,7 @@ describe('Eternal Fury RU', function() {
     //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
-    
+
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -59,7 +59,9 @@ describe('Eternal Fury RU', function() {
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
-
+  async function testStep(desc, func) {
+    await allure.createStep(desc, func)
+  }
   afterEach(async function() {
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
@@ -75,13 +77,13 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    await driver.get(site)
+    await testStep('Открыть страницу: '+site, await driver.get(site))
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
   setlang('Найти переключатель языков', async function() {
-    await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
+    await testStep('Найти элемент css=.lang-list', await driver.wait(until.elementLocated(By.css(".lang-list")),30000))
+    await testStep('Проверить видимость элемента css=.lang-list', await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list")))))
   })
   setlang('Открыть меню выбора языков', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
