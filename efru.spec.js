@@ -16,7 +16,6 @@ var jenkinsEnv = {
 };
 console.log(JSON.stringify(jenkinsEnv))
 */
-
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
