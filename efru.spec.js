@@ -89,7 +89,7 @@ describe('Eternal Fury RU', function() {
     },
     {
       name: 'Github webhooks, author: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')',
-      type: "git",
+      type: 'git',
       url: process.env.JENKINS_URL,
       buildOrder: process.env.GIT_COMMIT,
       buildName: process.env.GIT_BRANCH,
