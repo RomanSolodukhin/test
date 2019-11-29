@@ -93,7 +93,7 @@ describe('Eternal Fury RU', function() {
       url: process.env.JENKINS_URL,
       buildOrder: process.env.GIT_COMMIT,
       buildName: process.env.GIT_BRANCH,
-      buildUrl: process.env.GIT_URL,
+      buildUrl: process.env.GIT_URL
     }
   ]
     var fs = require('fs-extra'),
