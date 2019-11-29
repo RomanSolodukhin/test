@@ -90,7 +90,13 @@ describe('Eternal Fury RU', function() {
   await allure.addLabel('testLabel1','testLabelValue1')
   await allure.addLabel('testLabel2','testLabelValue2')
   await allure.addLabel('testLabel2','testLabelValue2')
-  allure.createExecutor(jenkinsEnv)
+  try {
+    allure.createExecutor(jenkinsEnv)
+  }
+  catch(err) {
+    console.warn(err)
+  }
+
 
 
   //await jObject.Executor('allure-results', jenkinsEnv)
