@@ -83,7 +83,7 @@ describe('Eternal Fury RU', function() {
       buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
       buildUrl: process.env.BUILD_URL,
       reportUrl: process.env.GIT_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME.
+      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       name: 'Github webhooks, author: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')',
       type: 'git',
       url: process.env.JENKINS_URL,
