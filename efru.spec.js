@@ -1,20 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-/*
-var jenkinsEnv = {
-  jenkins_url: process.env.JENKINS_URL,
-  build_url: process.env.BUILD_URL,
-  build_number: process.env.BUILD_NUMBER,
-  build_display_name: process.env.BUILD_DISPLAY_NAME,
-  job_name: process.env.JOB_NAME,
-  git_branch: process.env.GIT_BRANCH,
-  git_commit: process.env.GIT_COMMIT,
-  git_committer_name: process.env.GIT_COMMITTER_NAME,
-  git_committer_email: process.env.GIT_COMMITTER_EMAIL
-};
-console.log(JSON.stringify(jenkinsEnv))
-*/
+
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
@@ -62,7 +49,6 @@ describe('Eternal Fury RU', function() {
       reportUrl: process.env.GIT_URL
   };
     try {
-      console.log(allure)
       allure.createExecutor(jenkinsEnv)
     }
     catch(err) {
@@ -111,7 +97,6 @@ describe('Eternal Fury RU', function() {
   await allure.addLabel('testLabel2','testLabelValue2')
   await allure.addLabel('testLabel2','testLabelValue2')
   try {
-    console.log(allure)
     allure.createExecutor(jenkinsEnv)
   }
   catch(err) {
@@ -331,20 +316,19 @@ describe('Сервер '+i, function(done) {
 });
 
 function RemoveVideo(sessionId) {
-  let runningTime = 0,
-  sleep = 500,
-  maxTime = 5000
+  let sleep = 500,
+  maxTime = sleep*10;
     let timer = setInterval(function () {
     request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
           if(response.statusCode == 200) {
-            clearInterval(timer)
-            return true
+            clearInterval(timer);
+            return true;
           }
+          else if(0 >= maxTime) {
+            clearInterval(timer);
+            throw new Error('Ожидание в  '+counter+'мс превышено.');
+          }
+          else maxTime-=sleep;
         });
-    runningTime+=sleep
-    if(runningTime > maxTime) {
-      clearInterval(timer)
-      throw new Error('Ожидание в  '+counter+'мс превышено.')
-    }
   }, sleep);
-}
+};
