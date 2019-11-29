@@ -1,7 +1,6 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-var jObject = require('./executor-allure.js');
 /*
 var jenkinsEnv = {
   jenkins_url: process.env.JENKINS_URL,
@@ -88,8 +87,9 @@ describe('Eternal Fury RU', function() {
       reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       reportUrl: process.env.GIT_URL
   };
-  console.log(allure._allure.allure.options.targetDir)
-  await jObject.Executor('allure-results', jenkinsEnv)
+
+  allure.AddExecutor('jenkins')
+  //await jObject.Executor('allure-results', jenkinsEnv)
   /*
     var fs = require('fs-extra'),
         path = require('path');
