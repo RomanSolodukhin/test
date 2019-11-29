@@ -64,7 +64,7 @@ describe('Eternal Fury RU', function() {
       await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
     }
   try {
-    jObject.addExecutor("/allure-results", execName)
+    jObject.addExecutor("allure-results", execName)
   }
   catch(err) {
     console.warn(err)
