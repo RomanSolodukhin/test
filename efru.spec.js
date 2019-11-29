@@ -70,8 +70,14 @@ describe('Eternal Fury RU', function() {
     //allure.addExecutor('jenkins')
     //console.log('Запуск addExecutor')
     let execName = 'Jenkins (manual)'
-    if(process.env.GIT_BRANCH) execName = 'Jenkins (from Git commit)\n'+'branch: '+process.env.GIT_BRANCH+'\ncommit: '+process.env.GIT_COMMIT+'\nAuthor: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')'
-    var jenkinsEnv = {
+    if(process.env.GIT_BRANCH) {
+      execName = 'Jenkins (from Git commit)'
+      //+'branch: '+process.env.GIT_BRANCH+'\ncommit: '+process.env.GIT_COMMIT+'\nAuthor: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')'
+
+
+    }
+    var jenkinsEnv = [
+      {
       name: execName,
       type: "jenkins",
       url: process.env.JENKINS_URL,
@@ -80,7 +86,16 @@ describe('Eternal Fury RU', function() {
       buildUrl: process.env.BUILD_URL,
       reportUrl: process.env.GIT_URL,
       reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME
-    };
+    },
+    {
+      name: 'Github webhooks, author: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')',
+      type: "git",
+      url: process.env.JENKINS_URL,
+      buildOrder: process.env.GIT_COMMIT,
+      buildName: process.env.GIT_BRANCH,
+      buildUrl: process.env.GIT_URL,
+    }
+  ]
     var fs = require('fs-extra'),
         path = require('path');
         fs.outputFileSync('./allure-results/executor.json', JSON.stringify(jenkinsEnv));
