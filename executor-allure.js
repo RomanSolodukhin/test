@@ -1,6 +1,6 @@
 'use strict';
 var fs = require('fs-extra'),
-    path = require('path'),
+    path = require('path');
 
 exports = {
   Executor: function(targetDir, execData) {
