@@ -82,7 +82,7 @@ describe('Eternal Fury RU', function() {
     };
     var fs = require('fs-extra'),
         path = require('path');
-        fs.outputJsonSync('./executor.json'), jenkinsEnv);
+        fs.outputJsonSync('./executor.json', jenkinsEnv);
     console.log('Альтернативный скрипт')
   })
 
