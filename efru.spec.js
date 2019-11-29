@@ -71,7 +71,7 @@ describe('Eternal Fury RU', function() {
     //console.log('Запуск addExecutor')
     let execName = 'Jenkins (manual)'
     if(process.env.GIT_BRANCH) {
-      execName = 'Jenkins (from Git commit)\n'+'branch: '+process.env.GIT_BRANCH+'\n'+'commit: '+process.env.GIT_COMMIT+'\n'+'Author: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')'
+      execName = 'Jenkins (from Git commit)'+'\n'+'branch: '+process.env.GIT_BRANCH+'\n'+'commit: '+process.env.GIT_COMMIT+'\n'+'Author: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')'
     }
 
     var jenkinsEnv = {
