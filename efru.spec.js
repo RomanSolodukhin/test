@@ -69,18 +69,6 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('session id: ', String(session.id_))
     //allure.addExecutor('jenkins')
     //console.log('Запуск addExecutor')
-
-{
-"name": "Jenkins",
-"type": "jenkins",
-
-"url": "http://example.org",
-"buildOrder": 13,
-"buildName": "allure-report_deploy#13",
-"buildUrl": "http://example.org/build#13",
-"reportUrl": "http://example.org/build#13/AllureReport",
-"reportName": "Demo allure report"
-}
     var jenkinsEnv = {
       name: "Jenkins",
       type: "jenkins",
