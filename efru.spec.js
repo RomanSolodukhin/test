@@ -89,7 +89,7 @@ describe('Eternal Fury RU', function() {
       reportUrl: process.env.GIT_URL
   };
   console.log(allure._allure.allure.options.targetDir)
-  await jObject.Executor(allure._allure.allure.options.targetDir, jenkinsEnv)
+  await jObject.Executor('allure-results', jenkinsEnv)
   /*
     var fs = require('fs-extra'),
         path = require('path');
