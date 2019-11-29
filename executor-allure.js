@@ -12,9 +12,8 @@ var fs = require('fs-extra'),
       reportUrl: process.env.GIT_URL
   };
 
-exports = {
-  addExecutor: function(targetDir, execName) {
-    jenkinsEnv.name = execName
-    fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(jenkinsEnv));
-  }
+function addExecutor(targetDir, execName) {
+  jenkinsEnv.name = execName
+  fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(jenkinsEnv));
 };
+module.exports = addExecutor();
