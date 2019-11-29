@@ -88,7 +88,20 @@ describe('Eternal Fury RU', function() {
       reportUrl: process.env.GIT_URL
   };
   await allure.addLabel('testLabel','testLabelValue')
-  await allure.createExecutor(jenkinsEnv)
+  try {
+    await allure.createExecutor(jenkinsEnv)
+  }
+  catch(err) {
+    console.log(err)
+    try {
+      await allure.toJSON(jenkinsEnv)
+    }
+    catch(error) {
+      console.log(error)
+      await allure.addExecutor(jenkinsEnv)
+    }
+  }
+
   //await jObject.Executor('allure-results', jenkinsEnv)
   /*
     var fs = require('fs-extra'),
