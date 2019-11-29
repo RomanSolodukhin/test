@@ -47,6 +47,13 @@ describe('Eternal Fury RU', function() {
 })
 
   beforeEach(function () {
+    let execName = 'Jenkins (manual)'
+    if(process.env.GIT_BRANCH) {
+      execName = 'Jenkins (from Git commit)'
+      await allure.addEnvironment('git branch: ', process.env.GIT_BRANCH)
+      await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
+      await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
+    }
     var jenkinsEnv = {
       name: execName,
       type: "jenkins",
