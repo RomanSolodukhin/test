@@ -73,10 +73,9 @@ describe('Eternal Fury RU', function() {
     if(process.env.GIT_BRANCH) {
       execName = 'Jenkins (from Git commit)'
       //+'branch: '+process.env.GIT_BRANCH+'\ncommit: '+process.env.GIT_COMMIT+'\nAuthor: '+process.env.GIT_COMMITTER_NAME+'('+process.env.GIT_COMMITTER_EMAIL+')'
-
-
     }
-    var jenkinsEnv = [
+
+    var jenkinsEnv = {
       {
       name: execName,
       type: "jenkins",
@@ -95,7 +94,7 @@ describe('Eternal Fury RU', function() {
       buildName: process.env.GIT_BRANCH,
       buildUrl: process.env.GIT_URL
     }
-  ]
+  };
     var fs = require('fs-extra'),
         path = require('path');
         fs.outputFileSync('./allure-results/executor.json', JSON.stringify(jenkinsEnv));
