@@ -47,7 +47,12 @@ describe('Eternal Fury RU', function() {
 })
 
   beforeEach(function () {
-
+    try {
+      allure.createExecutor(jenkinsEnv)
+    }
+    catch(err) {
+      console.warn(this+'//'+err)
+    }
   })
   after(async function() {
     if(driver) await driver.quit()
@@ -94,7 +99,7 @@ describe('Eternal Fury RU', function() {
     allure.createExecutor(jenkinsEnv)
   }
   catch(err) {
-    console.warn(err)
+    console.warn(this+'//'+err)
   }
 
 
