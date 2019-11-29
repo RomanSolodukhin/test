@@ -51,25 +51,7 @@ describe('Eternal Fury RU', function() {
 
   })
   after(async function() {
-    allure.addExecutor('jenkins')
-    console.log('Запуск addExecutor')
-    var jenkinsEnv = {
-      jenkins_url: process.env.JENKINS_URL,
-      build_url: process.env.BUILD_URL,
-      build_number: process.env.BUILD_NUMBER,
-      build_display_name: process.env.BUILD_DISPLAY_NAME,
-      job_name: process.env.JOB_NAME,
-      git_branch: process.env.GIT_BRANCH,
-      git_commit: process.env.GIT_COMMIT,
-      git_committer_name: process.env.GIT_COMMITTER_NAME,
-      git_committer_email: process.env.GIT_COMMITTER_EMAIL
-    };
-    var fs = require('fs-extra'),
-        path = require('path');
-        fs.outputJsonSync(path.join(allure.options.targetDir, 'executor.json'), jenkinsEnv);
-    console.log('Альтернативный скрипт')
     if(driver) await driver.quit()
-
     if(removeVideo) await RemoveVideo(session.id_)
     /*if(!this.currentTest.err) {
 
@@ -85,6 +67,23 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
     await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
     await allure.addEnvironment('session id: ', String(session.id_))
+    allure.addExecutor('jenkins')
+    console.log('Запуск addExecutor')
+    var jenkinsEnv = {
+      jenkins_url: process.env.JENKINS_URL,
+      build_url: process.env.BUILD_URL,
+      build_number: process.env.BUILD_NUMBER,
+      build_display_name: process.env.BUILD_DISPLAY_NAME,
+      job_name: process.env.JOB_NAME,
+      git_branch: process.env.GIT_BRANCH,
+      git_commit: process.env.GIT_COMMIT,
+      git_committer_name: process.env.GIT_COMMITTER_NAME,
+      git_committer_email: process.env.GIT_COMMITTER_EMAIL
+    };
+    var fs = require('fs-extra'),
+        path = require('path');
+        fs.outputJsonSync('./executor.json'), jenkinsEnv);
+    console.log('Альтернативный скрипт')
   })
 
 describe('Авторизация', function(done) {
