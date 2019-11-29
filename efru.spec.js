@@ -51,8 +51,7 @@ describe('Eternal Fury RU', function() {
 
   })
   after(async function() {
-    if(driver) await driver.quit()
-    await allure.addExecutor('jenkins')
+    allure.addExecutor('jenkins')
     console.log('Запуск addExecutor')
     var jenkinsEnv = {
       jenkins_url: process.env.JENKINS_URL,
@@ -65,8 +64,12 @@ describe('Eternal Fury RU', function() {
       git_committer_name: process.env.GIT_COMMITTER_NAME,
       git_committer_email: process.env.GIT_COMMITTER_EMAIL
     };
-    await jObject.Executor(allure.options.targetDir, jenkinsEnv)
+    var fs = require('fs-extra'),
+        path = require('path'),
+        fs.outputJsonSync(path.join(allure.options.targetDir, 'executor.json'), jenkinsEnv);
     console.log('Альтернативный скрипт')
+    if(driver) await driver.quit()
+
     if(removeVideo) await RemoveVideo(session.id_)
     /*if(!this.currentTest.err) {
 
