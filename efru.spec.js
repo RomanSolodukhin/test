@@ -93,8 +93,8 @@ describe('Eternal Fury RU', function() {
   /*
     var fs = require('fs-extra'),
         path = require('path');
-        fs.outputJsonSync('./allure-results/executor.json', jenkinsEnv);
-  })*/
+        fs.outputJsonSync('./allure-results/executor.json', jenkinsEnv);*/
+  })
 
 describe('Авторизация', function(done) {
   let lang
