@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-
+var jObject = require('./executor-allure.js');
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
@@ -34,26 +34,7 @@ describe('Eternal Fury RU', function() {
 })
 
   beforeEach(function () {
-    let execName = 'Jenkins (manual)'
-    if(process.env.GIT_BRANCH) {
-      execName = 'Jenkins (from Git commit)'
-    }
-    var jenkinsEnv = {
-      name: execName,
-      type: "jenkins",
-      url: process.env.JENKINS_URL,
-      buildOrder: process.env.BUILD_NUMBER,
-      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-      buildUrl: process.env.BUILD_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-      reportUrl: process.env.GIT_URL
-  };
-    try {
-      allure.createExecutor(jenkinsEnv)
-    }
-    catch(err) {
-      console.warn(err)
-    }
+
   })
   after(async function() {
     if(driver) await driver.quit()
@@ -82,28 +63,12 @@ describe('Eternal Fury RU', function() {
       await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
       await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
     }
-
-    var jenkinsEnv = {
-      name: execName,
-      type: "jenkins",
-      url: process.env.JENKINS_URL,
-      buildOrder: process.env.BUILD_NUMBER,
-      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-      buildUrl: process.env.BUILD_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-      reportUrl: process.env.GIT_URL
-  };
-  await allure.addLabel('testLabel1','testLabelValue1')
-  await allure.addLabel('testLabel2','testLabelValue2')
-  await allure.addLabel('testLabel2','testLabelValue2')
   try {
-    allure.createExecutor(jenkinsEnv)
+    jObject.addExecutor("/allure-results", execName)
   }
   catch(err) {
     console.warn(err)
   }
-
-
 
   //await jObject.Executor('allure-results', jenkinsEnv)
   /*
