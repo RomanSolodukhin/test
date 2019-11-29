@@ -89,6 +89,7 @@ describe('Eternal Fury RU', function() {
   };
   await allure.addLabel('testLabel','testLabelValue')
   await allure.AddExecutor(jenkinsEnv)
+  
   //await jObject.Executor('allure-results', jenkinsEnv)
   /*
     var fs = require('fs-extra'),
