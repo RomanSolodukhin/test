@@ -69,12 +69,14 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('session id: ', String(session.id_))
     //allure.addExecutor('jenkins')
     //console.log('Запуск addExecutor')
+    let execName = 'Jenkins (manual)'
+    if(process.env.GIT_BRANCH) "Jenkins (from Git commit: "+process.env.GIT_BRANCH/process.env.GIT_COMMIT/process.env.GIT_COMMITTER_NAME+')'
     var jenkinsEnv = {
-      name: "Jenkins",
+      name: execName,
       type: "jenkins",
       url: process.env.JENKINS_URL,
       buildOrder: process.env.BUILD_NUMBER,
-      buildName: process.env.BUILD_DISPLAY_NAME,
+      buildName: process.env.BUILD_NAME+' '+process.env.BUILD_DISPLAY_NAME,
       buildUrl: process.env.BUILD_URL,
       reportName: process.env.GIT_BRANCH/process.env.GIT_COMMIT/process.env.GIT_COMMITTER_NAME,
       git_branch: process.env.GIT_BRANCH,
