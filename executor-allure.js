@@ -15,5 +15,5 @@ module.exports = {
   addExecutor: function(targetDir, execName) {
     jenkinsEnv.name = execName
     fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(jenkinsEnv));
-  };
+  }
 };
