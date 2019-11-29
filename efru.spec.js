@@ -87,8 +87,8 @@ describe('Eternal Fury RU', function() {
       reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       reportUrl: process.env.GIT_URL
   };
-
-  allure.AddExecutor('jenkins')
+  await allure.addLabel('testLabel','testLabelValue')
+  await allure.AddExecutor(jenkinsEnv)
   //await jObject.Executor('allure-results', jenkinsEnv)
   /*
     var fs = require('fs-extra'),
