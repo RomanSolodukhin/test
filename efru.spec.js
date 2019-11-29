@@ -68,7 +68,7 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
     await allure.addEnvironment('session id: ', String(session.id_))
     //allure.addExecutor('jenkins')
-    console.log('Запуск addExecutor')
+    //console.log('Запуск addExecutor')
     var jenkinsEnv = {
       jenkins_url: process.env.JENKINS_URL,
       build_url: process.env.BUILD_URL,
