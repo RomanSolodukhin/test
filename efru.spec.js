@@ -65,7 +65,7 @@ describe('Eternal Fury RU', function() {
       git_committer_email: process.env.GIT_COMMITTER_EMAIL
     };
     var fs = require('fs-extra'),
-        path = require('path'),
+        path = require('path');
         fs.outputJsonSync(path.join(allure.options.targetDir, 'executor.json'), jenkinsEnv);
     console.log('Альтернативный скрипт')
     if(driver) await driver.quit()
