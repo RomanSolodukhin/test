@@ -87,20 +87,11 @@ describe('Eternal Fury RU', function() {
       reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       reportUrl: process.env.GIT_URL
   };
-  await allure.addLabel('testLabel','testLabelValue')
-  try {
-    await allure.createExecutor(jenkinsEnv)
-  }
-  catch(err) {
-    console.log(err)
-    try {
-      await allure.toJSON(jenkinsEnv)
-    }
-    catch(error) {
-      console.log(error)
-      await allure.addExecutor(jenkinsEnv)
-    }
-  }
+  await allure.addLabel('testLabel1','testLabelValue1')
+  await allure.addLabel('testLabel2','testLabelValue2')
+  await allure.addLabel('testLabel2','testLabelValue2')
+  allure.createExecutor(jenkinsEnv)
+
 
   //await jObject.Executor('allure-results', jenkinsEnv)
   /*
