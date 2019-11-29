@@ -11,9 +11,9 @@ var fs = require('fs-extra'),
       reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       reportUrl: process.env.GIT_URL
   };
-
-function addExecutor(targetDir, execName) {
-  jenkinsEnv.name = execName
-  fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(jenkinsEnv));
+module.exports = {
+  addExecutor: function(targetDir, execName) {
+    jenkinsEnv.name = execName
+    fs.outputFileSync(path.join(targetDir, 'executor.json'), JSON.stringify(jenkinsEnv));
+  };
 };
-module.exports = addExecutor();
