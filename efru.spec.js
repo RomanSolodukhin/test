@@ -65,7 +65,7 @@ describe('Eternal Fury RU', function() {
       git_committer_name: process.env.GIT_COMMITTER_NAME,
       git_committer_email: process.env.GIT_COMMITTER_EMAIL
     };
-    await jObject.Executor('allure-results', jenkinsEnv)
+    await jObject.Executor(allure.options.targetDir, jenkinsEnv)
     console.log('Альтернативный скрипт')
     if(removeVideo) await RemoveVideo(session.id_)
     /*if(!this.currentTest.err) {
