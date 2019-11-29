@@ -47,7 +47,18 @@ describe('Eternal Fury RU', function() {
 })
 
   beforeEach(function () {
+    var jenkinsEnv = {
+      name: execName,
+      type: "jenkins",
+      url: process.env.JENKINS_URL,
+      buildOrder: process.env.BUILD_NUMBER,
+      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
+      buildUrl: process.env.BUILD_URL,
+      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+      reportUrl: process.env.GIT_URL
+  };
     try {
+      console.log(allure)
       allure.createExecutor(jenkinsEnv)
     }
     catch(err) {
@@ -96,6 +107,7 @@ describe('Eternal Fury RU', function() {
   await allure.addLabel('testLabel2','testLabelValue2')
   await allure.addLabel('testLabel2','testLabelValue2')
   try {
+    console.log(allure)
     allure.createExecutor(jenkinsEnv)
   }
   catch(err) {
