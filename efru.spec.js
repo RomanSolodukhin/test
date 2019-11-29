@@ -85,13 +85,16 @@ describe('Eternal Fury RU', function() {
       buildOrder: process.env.BUILD_NUMBER,
       buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
       buildUrl: process.env.BUILD_URL,
-      reportUrl: process.env.GIT_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME
+      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+      reportUrl: process.env.GIT_URL
   };
+
+  await jObject.Executor(allure.options.targetDir, jenkinsEnv)
+  /*
     var fs = require('fs-extra'),
         path = require('path');
         fs.outputJsonSync('./allure-results/executor.json', jenkinsEnv);
-  })
+  })*/
 
 describe('Авторизация', function(done) {
   let lang
