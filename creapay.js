@@ -93,7 +93,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-      assert.fail('Тест остановлен. '+this.currentTest.err)
+      if(this.currentTest.title == "Авторизоваться") assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
