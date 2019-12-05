@@ -1,218 +1,202 @@
-var scriptName = 'paymentTest';
-var {testData,times,baseUrl} = require('./efbalens_ddt.js');
+var {testData,times,baseUrl} = require('./efbalens_ddt.js')
+let iUser = 6
+var login = testData.users.username[iUser], pass = testData.users.pass[iUser]
 
-//default data
-var iBrowser = 0, iUser = 6, iServer = 0, iAmount = 5, iRes = 0;
-var paymentSetId = 17;
-var paymentSet = "a.c-pay-col:nth-child("+paymentSetId+")";
-var browserName = testData.browsers[iBrowser];
-var login = testData.users.username[iUser], pass = testData.users.pass[iUser];
-var resolution = testData.resolutions[iRes];
+const { Builder, By, Key, until } = require('selenium-webdriver')
+const assert = require('assert')
+var request = require('request')
+const { toMatchImageSnapshot } = require('jest-image-snapshot')
 
-const readline = require('readline');
-const colors = require('colors/safe');
-const {Builder, By, Key, until, Capabilities, Options} = require('selenium-webdriver');
-const fs = require('fs');
-const assert = require('assert');
-const {performance} = require('perf_hooks');
+describe('dev.creagames.ru — пополнение счёта', function() {
+  this.timeout(10000)
+  this.slow(1000)
+  let driver
+  let site = "https://crea:Deifiey3@dev.creagames.ru/"
+  let testName = String(this.title)
+  let session
+  let removeVideo = true
 
-let driver
-//var paymentset = By.css("a.b-translation-table-item__btn.im-popup-link");
+  before(async function() {
+    var capabilities = {
+      browserName: 'chrome',
+      version: '78.0',
+      enableVNC: true,
+      enableLog: true,
+      name: testName,
+      enableVideo: true
+    }
+    driver = await new Builder()
+    .usingServer('http://localhost:4444/wd/hub')
+    .withCapabilities(capabilities)
+    .setAlertBehavior()
+    .build();
+    await driver.manage().window().setRect(1920, 1080)
+    await driver.manage().window().maximize()
+    session = await driver.getSession()
+    //session.id = await session.getId()
+    console.log(session.id_)
+})
 
-var lineNum = 1;
+  beforeEach(function () {
 
-describe('dev.creagames.ru — Пополнение счёта ЛК', function() {
-	  this.timeout(30000)
-	  //let driver
-	  let vars
-	  let site = "https://creagames.com/ru"
-	  before(async function() {
-	    var capabilities = {
-	      browserName: 'chrome',
-	      version: '78.0',
-	      enableVNC: true,
-	      enableVideo: false
-	    };
-	    driver = await new Builder()
-	    .usingServer('http://localhost:4444/wd/hub')
-	    .withCapabilities(capabilities)
-	    .setAlertBehavior()
-	    .build();
-	    vars = {}
-	  })
-	  after(async function() {
-	    await shot('screen finish', driver)
-	    await driver.quit()
-	  })
-	  afterEach(function() {
-	    shot(String(this.currentTest.title)+'. Отчёт', driver)
-	  })
+  })
+  after(async function() {
+    if(driver) await driver.quit()
+    if(removeVideo) await RemoveVideo(session.id_)
+    /*if(!this.currentTest.err) {
 
-		it('Авторизация', async function(){
-		try {
-					report("UserAgent: "+String(await driver.executeScript("return navigator.userAgent;")));
-				  await driver.manage().window().setRect(resolution.x,resolution.y);
-					await driver.manage().window().maximize();
-					resolution = await driver.manage().window().getRect();
-					await report("*** Current resolution: "+resolution.width+"x"+resolution.height+" ***");
-					await logWaiting("*** Page loading ...");
-					var time = performance.now();
-				  result = await driver.get(baseUrl);
-					time = performance.now() - time;
-		      await logResult("...Page is loaded. Perfomance: "+parseFloat(time/1000).toPrecision(3)+"s ***");
-					await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-					await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
-					await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
-					await driver.wait(until.elementLocated(By.linkText("Русский")))
-					await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
-					await driver.findElement(By.linkText("Русский")).click()
-					await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
-					await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
-			    await WaitForDisplay(By.id("loginform-username"),'',"Authorization attempt");
-			    await Type(By.id("loginform-username"),login);
-			    await Type(By.id("loginform-password"),pass);
-			    await Click(By.xpath("//*[.='Войти']"));
-			    await WaitForDisplay(By.css('.g-header_profile_data_name'));
-					assert.ok(true)
-					return true
-				}
-		catch(error)
-				{
-					assert.fail(error)
-					return false
-				}
-			});
-	 describe('Пополнение', function() {
-		  for(let i = 0; i < times; i++) {
-				it(' '+i, async function() {
-					try {
-						await WaitForDisplay(By.css('.g-header_profile_data_name'));
-						await Click(By.css('.g-header_profile_data_item'));
-						await WaitForDisplay(By.css(paymentSet));
-						await Click(By.css(paymentSet));
-						await WaitForDisplay(By.css(".b-translation-tabs-pay-tabl-item__btn"));
-						await Click(By.css(".b-translation-tabs-pay-tabl-item__btn"),"Visa/Mastercard. ");
-						await WaitForDisplay(By.css(".b-translation-tabs-confirm-form__row > .b-btn"));
-						await Click(By.css(".b-translation-tabs-confirm-form__row > .b-btn"));
-						await WaitForDisplay(By.id("iframePaymentContainer"));
-						await driver.switchTo().frame(0);
-						await WaitForDisplay(By.id("tiCNumber"));
-						await Type(By.id("tiCNumber"),"4652035440667037");
-						await Click(By.id("cbExpMounth"));
-						await WaitForDisplay(By.css("#cbExpMounth > option:nth-child(9)"));
-						await Click(By.css("#cbExpMounth > option:nth-child(9)"));
-						await Click(By.id("cbExpYear"));
-						await WaitForDisplay(By.css("#cbExpYear > option:nth-child(3)"));
-						await Click(By.css("#cbExpYear > option:nth-child(3)"));
-						await Type(By.id("cvv2"),"971");
-						await Type(By.id("nameoncard"),"Tester");
-						await WaitForDisplay(By.id("AuthorizeButton"));
-						await Click(By.id("AuthorizeButton"));
-						await driver.switchTo().defaultContent();
-						var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")));
-						await WaitForDisplay(By.linkText("OK"));
-						await Click(By.linkText("OK"));
-						var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")));
-						var cgvar = cgvar2-cgvar1;
-						assert.ok(colors.gray("Баланс: "+cgvar1+" + "+cgvar+" = "+cgvar2+"\n"))
-						return true
-					}
-		    catch(error) {
-					console.error(colors.red("===== Fail Report ====="));
-					console.error("Exeption: "+String(await driver.executeScript("return navigator.userAgent;"))+". Resolution: "+resolution.width+"x"+resolution.height);
-					console.error(String(error));
-					assert.fail(error)
-					return false
-				}
-		});
-	}
+    }*/
+    //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
+})
+  afterEach(async function() {
+
+    let currentCapabilities = await session.getCapabilities()
+    await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
+    await allure.addEnvironment('OS:','Ubuntu 18.04')
+    await allure.addEnvironment('resolution:', '1920x1080')
+    await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
+    await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
+    await allure.addEnvironment('session id: ', String(session.id_))
+
+    //allure.addExecutor('jenkins')
+    //console.log('Запуск addExecutor')
+    let execName = 'Jenkins (manual)'
+    if(process.env.GIT_BRANCH) {
+      execName = 'Jenkins (from Git commit)'
+      await allure.addEnvironment('git branch: ', process.env.GIT_BRANCH)
+      await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
+      await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
+    }
+  try {
+    jenkinsEnv = {
+      name: execName,
+      type: "jenkins",
+      url: process.env.JENKINS_URL,
+      buildOrder: process.env.BUILD_NUMBER,
+      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
+      buildUrl: process.env.BUILD_URL,
+      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+      reportUrl: process.env.GIT_URL
+  };
+    allure.createExecutor(jenkinsEnv)
+  }
+  catch(err) {
+    console.warn(err)
+  }
+  })
+
+describe('Авторизация', function(done) {
+  afterEach(async function() {
+    if(this.currentTest.err) {
+    let name = String(this.currentTest.title)
+      var res = await driver.takeScreenshot();
+      allure.createAttachment(name, new Buffer(res, 'base64'))
+      allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.severity('blocker')
+      removeVideo = false
+      /*await driver.quit()
+      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
+      allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
+      assert.fail('Тест остановлен. '+this.currentTest.err)
+    }
+  })
+  it('Загрузить страницу', async function() {
+    await allure.createStep('Открыть страницу: '+site, await driver.get(site))
+    await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+  })
+  it('Открыть форму авторизации', async function() {
+    await driver.findElement(By.linkText("Вход")).click()
+    await driver.wait(until.elementLocated(By.id("loginform-username")))
+  })
+  it('Ввести учетные данные', async function() {
+    await driver.findElement(By.id("loginform-username")).sendKeys(login)
+    await driver.findElement(By.id("loginform-password")).sendKeys(pass)
+  })
+  it('Авторизоваться', async function() {
+    try {
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    }
+    catch(err) {
+
+      assert.rejects(
+        async() => {
+          console.log('Обработка ошибки с неправильным паролем') //debug
+          let classAttr = await driver.findElement(By.id('loginform-password')).getAttribute('class')
+          if(classAttr) console.log('Найден элемент уведомления об ошибке в форме авторизации') //debug
+          let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
+          console.log(message)
+          throw new Error({
+                    name: 'Ошибка авторизации',
+                    message: titleAttr
+                  })
+        },
+        {
+          name: 'NoSuchSessionError',
+        }
+      )
+    }
+  })
+})
+
+for(i = 1; i <= 2;i++) {
+describe('Платёж '+i, function(done) {
+    this.timeout(15000)
+    this.slow(4000)
+    after(async function() {
+      await driver.switchTo().defaultContent()
+      await driver.navigate().back()
+    })
+    afterEach(async function() {
+      if(this.currentTest.err) {
+      let name = String(this.currentTest.title)
+        var res = await driver.takeScreenshot();
+        allure.createAttachment(name, new Buffer(res, 'base64'))
+        allure.createAttachment('Отчёт', String(this.currentTest.err))
+        allure.severity('blocker')
+        removeVideo = false
+        assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
+      }
+    })
+
+    it('Открыть окно пополнения', async function() {
+			await driver.findElement(By.linkText("Пополнить")).click()
+			await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(17)")))
+    })
+		it('Выбрать пакет 15 000', async function() {
+			await driver.findElement(By.css("a.c-pay-col:nth-child(13)")).click()
+			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-pay-tabl-item__btn")))
+			await driver.findElement(By.css(".b-translation-tabs-pay-tabl-item__btn"),"Visa/Mastercard. ").click()
+			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-confirm-form__row > .b-btn")))
+			await driver.findElement(By.css(".b-translation-tabs-confirm-form__row > .b-btn")).click()
+			await driver.wait(until.elementLocated(By.id("iframePaymentContainer")))
+			await driver.switchTo().frame(0)
+			await driver.wait(until.elementLocated(By.id("tiCNumber")))
+			await driver.findElement(By.id("tiCNumber")).type("4652035440667037")
+			await driver.findElement(By.id("cbExpMounth")).click()
+			await driver.wait(until.elementLocated(By.css("#cbExpMounth > option:nth-child(9)")))
+			await driver.findElement(By.css("#cbExpMounth > option:nth-child(9)")).click()
+			await driver.findElement(By.id("cbExpYear")).click()
+			await driver.wait(until.elementLocated(By.css("#cbExpYear > option:nth-child(3)"))).click()
+			await driver.findElement(By.css("#cbExpYear > option:nth-child(3)")).click()
+			await driver.findElement(By.id("cvv2")).type("971")
+			await driver.findElement(By.id("nameoncard")).type("Tester")
+			await driver.wait(until.elementLocated(By.id("AuthorizeButton")))
+			await driver.findElement(By.id("AuthorizeButton")).click()
+			await driver.switchTo().defaultContent()
+			var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
+			await driver.wait(until.elementLocated(By.linkText("OK")))
+			await driver.findElement(By.linkText("OK"))
+			var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
+			var cgvar = cgvar2-cgvar1;
+		})
+    })
+  }
 });
-});
 
-
-async function WaitForDisplay(el, timeout, description) {
-	//var time = performance.now();
-	timeout ? timeout : timeout = 30000; //default param1
-	description ? description : description = ""; //default param2
-	try{
-		//logResult(lineNum+". *** Searching for an element: "+colors.gray(String(el))+". "+description+"...");
-		await driver.wait(until.elementLocated(el),timeout);
-		await driver.wait(until.elementIsVisible(driver.findElement(el)),timeout);
-		//time = performance.now() - time;
-		//logResult(lineNum+". *** Searching for an element: "+colors.green("Passed. ")+"("+colors.gray(String(el)+"). Performance: "+parseFloat(time/1000).toPrecision(3)+" s ***\n"));
-		return true;
-	}
-	catch(error) {
-		//time = performance.now() - time;
-		//await logResult(lineNum+". *** Searching for an element: "+colors.red("FAIL! Element isn't display ")+"("+colors.gray(String(el))+"). "+description+"Timeout: "+parseFloat(time/1000).toPrecision(3)+" s ***\n");
-		if(timeout < 60000) {
-			//console.log("*** Let's try to increase the timeout! ***");
-			timeout*=2;
-			return WaitForDisplay(el,timeout,"(retry with timeout: "+timeout+" ms). ");
-		}
-		throw new Error(colors.red("CRIT: ")+error.message+"("+error.lineNumber+")");
-	}
-	finally {
-		lineNum++;
-	}
-};
-
-async function Click(el, description, timeout) {
-	timeout ? timeout : timeout = 30000; //default param1
-	description ? description : description = ""; //default param2
-	try{
-		//var time = performance.now();
-		await driver.wait(until.elementIsVisible(driver.findElement(el)),timeout);
-		await driver.findElement(el).click();
-		//time = performance.now() - time;
-		//await console.log(lineNum+". *** "+colors.green("Action successful:")+" Clicked at the element: "+colors.gray(String(el)+". "+description+"performance: "+parseFloat(time/1000).toPrecision(3)+" s ***"));
-		return true;
-		}
-	catch(error) {
-		//console.error(colors.red(lineNum+". *** FAIL. Element is not clickable: ")+colors.gray(String(el))+". "+description+colors.red("Check the selector or use WaitForDisplay(). ***"));
-		throw new Error(colors.red("CRIT: ")+error.message+"("+error.lineNumber+")");
-	}
-	finally {
-		lineNum++;
-	}
-};
-
-async function ClickElement(el,description) {
-	description ? description : description = ""; //default param2
-	try{
-		//var time = performance.now();
-		await el.click();
-		//time = performance.now() - time;
-		//await console.log(lineNum+". *** "+colors.green("Action successful:")+" Clicked at the element: "+colors.gray('class: '+String(await el.getAttribute('class'))+". "+description+"performance: "+parseFloat(time/1000).toPrecision(3)+" s ***"));
-		return true;
-		}
-	catch(error) {
-		//onsole.error(colors.red(lineNum+". *** FAIL. Element is not clickable: ")+colors.gray(String(await el.getAttribute('class')))+". "+description+colors.red("Check the selector or use WaitForDisplay(). ***"));
-		throw new Error(colors.red("CRIT: ")+error.message+"("+error.lineNumber+")");
-	}
-	finally {
-		lineNum++;
-	}
-};
-
-async function Type(el, string, timeout, description) {
-	timeout ? timeout : timeout = 30000; //default param1
-	description ? description : description = ""; //default param2
-	try{
-		//var time = performance.now();
-		await driver.wait(until.elementIsVisible(driver.findElement(el)),timeout);
-		await driver.findElement(el).sendKeys(string);
-		//time = performance.now() - time;
-		//await console.log(lineNum+". *** Action: Typed to the input field: "+colors.gray(String(el)+". "+description+"Content: '"+colors.gray(string)+"'. "+"performance: "+parseFloat(time/1000).toPrecision(3)+" s ***"));
-		return true;
-		}
-	catch(error) {
-		//console.error(colors.yellow(lineNum+". *** WARN! Input failed: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
-		throw new Error(colors.yellow("WARN: ")+error.message+"("+error.lineNumber+")");
-	}
-	finally {
-		lineNum++;
-	}
+function ExtractInt(string) {
+	return parseInt(String(string).replace(/ /g, ''),10);
 };
 
 async function GetString(el, timeout, description) {
@@ -223,68 +207,25 @@ async function GetString(el, timeout, description) {
 		return string;
 		}
 	catch(error) {
-		//console.error(colors.yellow("*** WARN! Failed to get string: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
+		console.error(colors.yellow("*** WARN! Failed to get string: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
 		throw new Error(colors.yellow("WARN: ")+error.message+"("+error.lineNumber+")");
 	}
 };
 
-async function shot(name,target) {
-	target ? target : target = driver; //default param
-	try{
-		var fileName = String(name)+testData.resolutions[iRes].x+'x'+testData.resolutions[iRes].y+'.png';
-		fs.writeFile(fileName,await target.takeScreenshot(), 'base64', function(){});
-		return true;
-	}
-	catch(error){
-		throw new Error(error);
-	}
+function RemoveVideo(sessionId) {
+  let sleep = 500,
+  maxTime = sleep*10;
+    let timer = setInterval(function () {
+    request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
+          if(response.statusCode == 200) {
+            clearInterval(timer);
+            return true;
+          }
+          else if(0 >= maxTime) {
+            clearInterval(timer);
+            throw new Error('Ожидание в  '+counter+'мс превышено.');
+          }
+          else maxTime-=sleep;
+        });
+  }, sleep);
 };
-
-function ExtractInt(string) {
-	return parseInt(String(string).replace(/ /g, ''),10);
-};
-
-function report(message) {
-	//console.log(colors.white(message));
-	return true;
-};
-
-function logResult(string) {
-    /*readline.clearLine(process.stdout, 0);
-    readline.cursorTo(process.stdout, 0, null);
-    let text = string;
-    process.stdout.write(text);*/
-};
-
-function logWaiting(string) {
-	//process.stdout.write(string);
-};
-
-async function findByAttr(elems,attribute,target) {
-	try{
-		for(let i = 0; i < elems.length; i++) {
-		if(await elems[i].getAttribute(attribute) == target) {
-			return i;
-			}
-		}
-		throw new Error("Element not found");
-	}
-	catch(error){
-		throw new Error(error);
-	}
-};
-
-async function resolutionsEnum(){
-	try{
-		for(let i = 0; i < testData.resolutions.length; i++){
-			iRes = i;
-			resolution = testData.resolutions[i];
-			console.log(iRes,testData.resolutions[i].x,testData.resolutions[i].y);
-			await testRunner();
-		}
-		console.log('resolutions over');
-	}
-	catch(error){
-		console.log(error);
-	}
-}
