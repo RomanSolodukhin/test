@@ -162,7 +162,7 @@ describe('Платёж '+i, function(done) {
 		it('Выбрать пакет 15 000', async function() {
 			await driver.findElement(By.css("a.c-pay-col:nth-child(13)")).click()
 			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-pay-tabl-item__btn")))
-			await driver.findElement(By.css(".b-translation-tabs-pay-tabl-item__btn"),"Visa/Mastercard. ").click()
+			await driver.findElement(By.css(".b-translation-tabs-pay-tabl-item__btn")).click()
 			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-confirm-form__row > .b-btn")))
 			await driver.findElement(By.css(".b-translation-tabs-confirm-form__row > .b-btn")).click()
 			await driver.wait(until.elementLocated(By.id("iframePaymentContainer")))
