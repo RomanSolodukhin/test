@@ -97,7 +97,7 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
-    await allure.createStep('Открыть страницу: '+site, await driver.get(site))
+    await driver.get(site)
   })
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
