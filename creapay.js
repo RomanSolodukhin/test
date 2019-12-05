@@ -199,7 +199,7 @@ describe('Платёж '+i, function(done) {
 				await driver.findElement(By.id("AuthorizeButton")).click()
 				await driver.switchTo().defaultContent()
 			})
-			it('Баланс CG пополнен на '+15 000, async function() {
+			it('Баланс CG пополнен на 15 000', async function() {
 				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
 				await driver.wait(until.elementLocated(By.linkText("OK")))
 				await driver.findElement(By.linkText("OK"))
