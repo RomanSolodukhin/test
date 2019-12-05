@@ -1,7 +1,7 @@
 var testData = new Object();
 testData = {
 	users: {
-		username: ["mauvaistonn@gmail.com","tester.jopsky@test.tst","tester4.tk@test.tst","tester30.tk@test.tst","tester55.tk@test.tst", "tester5.tk@test.tst", " tester74.tk@test.tst"],
+		username: ["mauvaistonn@gmail.com","tester.jopsky@test.tst","tester4.tk@test.tst","tester30.tk@test.tst","tester55.tk@test.tst", "tester5.tk@test.tst", "tester74.tk@test.tst"],
 		pass: ["kjgfnjxrf777","kjgfnjxrf","123456","123456","123456","kjgfnjxrf", "123456"]
 	},
 	browsers: ["chrome", "firefox"],
