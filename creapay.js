@@ -213,10 +213,10 @@ async function GetString(el, timeout) {
 				await driver.switchTo().defaultContent()
 			})
 			it('Баланс CG пополнен на 15 000', async function() {
-				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")),,driver)
+				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
 				await driver.wait(until.elementLocated(By.linkText("OK")))
 				await driver.findElement(By.linkText("OK"))
-				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")),,driver)
+				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
 				var cgvar = cgvar2-cgvar1;
 				assert.equal(cgvar, 15000)
 			})
