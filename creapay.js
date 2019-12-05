@@ -98,6 +98,7 @@ describe('Авторизация', function(done) {
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
+		await driver.wait(until.elementLocated(By.linkText("Вход")))
   })
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
@@ -111,7 +112,7 @@ describe('Авторизация', function(done) {
     try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))),30000)
     }
     catch(err) {
 
