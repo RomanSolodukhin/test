@@ -200,10 +200,10 @@ describe('Платёж '+i, function(done) {
 				await driver.switchTo().defaultContent()
 			})
 			it('Баланс CG пополнен на 15 000', async function() {
-				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
+				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")),,driver)
 				await driver.wait(until.elementLocated(By.linkText("OK")))
 				await driver.findElement(By.linkText("OK"))
-				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
+				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")),,driver)
 				var cgvar = cgvar2-cgvar1;
 				assert.equal(cgvar, 15000)
 			})
@@ -215,7 +215,7 @@ function ExtractInt(string) {
 	return parseInt(String(string).replace(/ /g, ''),10);
 };
 
-async function GetString(el, timeout, description) {
+async function GetString(el, timeout, driver) {
 	timeout ? timeout : timeout = 30000; //default param1
 	description ? description : description = ""; //default param2
 	try{
@@ -223,8 +223,8 @@ async function GetString(el, timeout, description) {
 		return string;
 		}
 	catch(error) {
-		console.error(colors.yellow("*** WARN! Failed to get string: ")+colors.gray(String(el))+". "+description+colors.yellow("Check the selector or use WaitForDisplay(). ***"));
-		throw new Error(colors.yellow("WARN: ")+error.message+"("+error.lineNumber+")");
+		console.error("*** WARN! Failed to get string: "+String(el)+". "+description+"Check the selector or use WaitForDisplay(). ***");
+		throw new Error("WARN: "+error.message+"("+error.lineNumber+")");
 	}
 };
 
