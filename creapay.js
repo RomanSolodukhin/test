@@ -159,7 +159,7 @@ describe('Платёж '+i, function(done) {
     it('Открыть окно пополнения', async function() {
 			await driver.wait(until.elementLocated(By.css(".g-header_profile_data .b-btn")))
 			await driver.findElement(By.css(".g-header_profile_data .b-btn")).click()
-			await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(17)")))
+			await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(13)")))
     })
 		it('Выбрать пакет 15 000', async function() {
 			await driver.findElement(By.css("a.c-pay-col:nth-child(13)")).click()
