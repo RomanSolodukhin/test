@@ -156,40 +156,58 @@ describe('Платёж '+i, function(done) {
       }
     })
 
-    it('Открыть окно пополнения', async function() {
-			await driver.wait(until.elementLocated(By.css(".g-header_profile_data .b-btn")))
-			await driver.findElement(By.css(".g-header_profile_data .b-btn")).click()
-			await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(13)")))
-    })
-		it('Выбрать пакет 15 000', async function() {
-			await driver.findElement(By.css("a.c-pay-col:nth-child(13)")).click()
-			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-pay-tabl-item__btn")))
-			await driver.findElement(By.css(".b-translation-tabs-pay-tabl-item__btn")).click()
-			await driver.wait(until.elementLocated(By.css(".b-translation-tabs-confirm-form__row > .b-btn")))
-			await driver.findElement(By.css(".b-translation-tabs-confirm-form__row > .b-btn")).click()
-			await driver.wait(until.elementLocated(By.id("iframePaymentContainer")))
-			await driver.switchTo().frame(0)
-			await driver.wait(until.elementLocated(By.id("tiCNumber")))
-			await driver.findElement(By.id("tiCNumber")).sendKeys("4652035440667037")
-			await driver.findElement(By.id("cbExpMounth")).click()
-			await driver.wait(until.elementLocated(By.css("#cbExpMounth > option:nth-child(9)")))
-			await driver.findElement(By.css("#cbExpMounth > option:nth-child(9)")).click()
-			await driver.findElement(By.id("cbExpYear")).click()
-			await driver.wait(until.elementLocated(By.css("#cbExpYear > option:nth-child(3)"))).click()
-			await driver.findElement(By.css("#cbExpYear > option:nth-child(3)")).click()
-			await driver.findElement(By.id("cvv2")).sendKeys("971")
-			await driver.findElement(By.id("nameoncard")).sendKeys("Tester")
-			await driver.wait(until.elementLocated(By.id("AuthorizeButton")))
-			await driver.findElement(By.id("AuthorizeButton")).click()
-			await driver.switchTo().defaultContent()
-			var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
-			await driver.wait(until.elementLocated(By.linkText("OK")))
-			await driver.findElement(By.linkText("OK"))
-			var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
-			var cgvar = cgvar2-cgvar1;
-			assert.equal(cgvar, 17000)
-		})
-    })
+	    it('Открыть окно пополнения', async function() {
+				await driver.wait(until.elementLocated(By.css(".g-header_profile_data .b-btn")))
+				await driver.findElement(By.css(".g-header_profile_data .b-btn")).click()
+				await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(13)")))
+	    })
+			it('Выбрать пакет 15 000', async function() {
+				await driver.findElement(By.css("a.c-pay-col:nth-child(13)")).click()
+				await driver.wait(until.elementLocated(By.css(".b-translation-tabs-pay-tabl-item__btn")))
+				await driver.findElement(By.css(".b-translation-tabs-pay-tabl-item__btn")).click()
+			})
+			it('Подтвердить пакет', async function() {
+				await driver.wait(until.elementLocated(By.css(".b-translation-tabs-confirm-form__row > .b-btn")))
+				await driver.findElement(By.css(".b-translation-tabs-confirm-form__row > .b-btn")).click()
+				await driver.wait(until.elementLocated(By.id("iframePaymentContainer")))
+			})
+			it('Перейти в окно платёжного партнера', async function() {
+				await driver.switchTo().frame(0)
+				await driver.wait(until.elementLocated(By.id("tiCNumber")))
+			})
+			it('Ввести номер карты', async function() {
+				await driver.findElement(By.id("tiCNumber")).sendKeys("4652035440667037")
+			})
+			it('Выбрать месяц окончания срока действия', async function() {
+				await driver.findElement(By.id("cbExpMounth")).click()
+				await driver.wait(until.elementLocated(By.css("#cbExpMounth > option:nth-child(9)")))
+				await driver.findElement(By.css("#cbExpMounth > option:nth-child(9)")).click()
+			})
+			it('Ввести год окончания срока действия', async function() {
+				await driver.findElement(By.id("cbExpYear")).click()
+				await driver.wait(until.elementLocated(By.css("#cbExpYear > option:nth-child(3)"))).click()
+				await driver.findElement(By.css("#cbExpYear > option:nth-child(3)")).click()
+			})
+			it('Ввести защитный код', async function() {
+				await driver.findElement(By.id("cvv2")).sendKeys("971")
+			})
+			it('Ввести имя держателя карты', async function() {
+				await driver.findElement(By.id("nameoncard")).sendKeys("Tester")
+			})
+			it('Подтвердить данные и отправить форму', async function() {
+				await driver.wait(until.elementLocated(By.id("AuthorizeButton")))
+				await driver.findElement(By.id("AuthorizeButton")).click()
+				await driver.switchTo().defaultContent()
+			})
+			it('Баланс CG пополнен на '+15 000, async function() {
+				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
+				await driver.wait(until.elementLocated(By.linkText("OK")))
+				await driver.findElement(By.linkText("OK"))
+				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
+				var cgvar = cgvar2-cgvar1;
+				assert.equal(cgvar, 15000)
+			})
+  	})
   }
 });
 
