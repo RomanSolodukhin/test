@@ -140,7 +140,7 @@ for(i = 1; i <= 2;i++) {
 describe('Платёж '+i, function(done) {
     this.timeout(15000)
     this.slow(4000)
-
+    let balance
 async function GetString(el, timeout) {
 	timeout ? timeout : timeout = 30000; //default param1
 	try{
@@ -212,12 +212,9 @@ async function GetString(el, timeout) {
 				await driver.switchTo().defaultContent()
 			})
 			it('Баланс CG пополнен на 15 000', async function() {
-				var cgvar1 = ExtractInt(await GetString(By.id("balanceInGame")))
+				balance = ExtractInt(await GetString(By.id("balanceInGame")))
 				await driver.wait(until.elementLocated(By.linkText("OK")))
-				await driver.findElement(By.linkText("OK"))
-				var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
-				var cgvar = cgvar2-cgvar1;
-				assert.equal(cgvar, 15000)
+				await driver.findElement(By.linkText("OK")).click()	assert.equal(balance-ExtractInt(await GetString(By.id("balanceInGame"))), 15000)
 			})
   	})
   }
