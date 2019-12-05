@@ -98,7 +98,7 @@ describe('Авторизация', function(done) {
   })
   it('Загрузить страницу', async function() {
     await driver.get(site)
-		await driver.wait(until.elementLocated(By.linkText("Вход")), 40000)
+		await driver.wait(until.elementLocated(By.linkText("Вход")), 30000)
   })
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
