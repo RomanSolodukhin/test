@@ -60,8 +60,14 @@ describe('dev.creagames.ru — Пополнение счёта ЛК', function()
 				  result = await driver.get(baseUrl);
 					time = performance.now() - time;
 		      await logResult("...Page is loaded. Perfomance: "+parseFloat(time/1000).toPrecision(3)+"s ***");
-			    await WaitForDisplay(By.css("a.g-header_profile_data_item:nth-child(1)"),60000);
-			    await Click(By.css("a.g-header_profile_data_item:nth-child(1)"));
+					await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
+					await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
+					await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
+					await driver.wait(until.elementLocated(By.linkText("Русский")))
+					await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+					await driver.findElement(By.linkText("Русский")).click()
+					await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
+					await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
 			    await WaitForDisplay(By.id("loginform-username"),'',"Authorization attempt");
 			    await Type(By.id("loginform-username"),login);
 			    await Type(By.id("loginform-password"),pass);
@@ -121,45 +127,8 @@ describe('dev.creagames.ru — Пополнение счёта ЛК', function()
 		});
 	}
 });
-
-/*
-	try{
-		report('_Loading test: '+scriptName);
-		await testRunner();
-		//await resolutionsEnum();
-		report("_End");
-	}
-	catch(error){
-		report(error);
-	}*/
 });
-/*
-async function testRunner(){
-	try{
-		//var options = {xvfb_args: ['-screen'+' 0 '+WxHxD]};
-		lineNum=1;
-		var XARGS = ['-screen','0',testData.resolutions[iRes].x+'x'+testData.resolutions[iRes].y+'x'+'24'];
-		var options = new Object();
-		options = {
-			server_Num: 99,
-			xvfb_args: XARGS
-			};
-		report(options);
-		xvfb = new Xvfb(options);
-		xvfb.startSync();
-		driver = new Builder()
-			.forBrowser(browserName)
-			.build();
-		report("*** Browser is launched ***");
-		await test();
-		await driver.quit();
-		xvfb.stopSync();
-	}
-	catch(error){
-		throw new Error(error);
-	}
-}
-*/
+
 
 async function WaitForDisplay(el, timeout, description) {
 	//var time = performance.now();
