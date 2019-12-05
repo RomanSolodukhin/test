@@ -5,7 +5,6 @@ var login = testData.users.username[iUser], pass = testData.users.pass[iUser]
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-const { toMatchImageSnapshot } = require('jest-image-snapshot')
 
 describe('dev.creagames.ru — пополнение счёта', function() {
   this.timeout(10000)
