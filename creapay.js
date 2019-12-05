@@ -143,7 +143,6 @@ describe('Платёж '+i, function(done) {
 
 async function GetString(el, timeout) {
 	timeout ? timeout : timeout = 30000; //default param1
-	description ? description : description = ""; //default param2
 	try{
 		var string = await driver.findElement(el).getText();
 		return string;
