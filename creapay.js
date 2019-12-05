@@ -1,9 +1,8 @@
 var scriptName = 'paymentTest';
-var Xvfb = require('xvfb');
 var {testData,times,baseUrl} = require('./efbalens_ddt.js');
 
 //default data
-var iBrowser = 0, iUser = 0, iServer = 0, iAmount = 5, iRes = 0;
+var iBrowser = 0, iUser = 6, iServer = 0, iAmount = 5, iRes = 0;
 var paymentSetId = 17;
 var paymentSet = "a.c-pay-col:nth-child("+paymentSetId+")";
 var browserName = testData.browsers[iBrowser];
@@ -26,7 +25,6 @@ describe('dev.creagames.ru — Пополнение счёта ЛК', function()
 	  this.timeout(30000)
 	  //let driver
 	  let vars
-	  let xvfb
 	  let site = "https://creagames.com/ru"
 	  before(async function() {
 	    var capabilities = {
