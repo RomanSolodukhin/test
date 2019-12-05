@@ -214,7 +214,10 @@ async function GetString(el, timeout) {
 			it('Баланс CG пополнен на 15 000', async function() {
 				balance = ExtractInt(await GetString(By.id("balanceInGame")))
 				await driver.wait(until.elementLocated(By.linkText("OK")))
-				await driver.findElement(By.linkText("OK")).click()	assert.equal(balance-ExtractInt(await GetString(By.id("balanceInGame"))), 15000)
+				await driver.findElement(By.linkText("OK")).click()
+ balance=ExtractInt(await GetString(By.id("balanceInGame")))-balance
+
+	assert.equal(balance, 15000, 'Баланс пополнен на '+balance)
 			})
   	})
   }
