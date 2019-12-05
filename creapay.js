@@ -140,6 +140,19 @@ for(i = 1; i <= 2;i++) {
 describe('Платёж '+i, function(done) {
     this.timeout(15000)
     this.slow(4000)
+
+async function GetString(el, timeout) {
+	timeout ? timeout : timeout = 30000; //default param1
+	description ? description : description = ""; //default param2
+	try{
+		var string = await driver.findElement(el).getText();
+		return string;
+		}
+	catch(error) {
+		console.error("*** WARN! Failed to get string: "+String(el)+". "+description+"Check the selector or use WaitForDisplay(). ***");
+		throw new Error("WARN: "+error.message+"("+error.lineNumber+")");
+	}
+};
     after(async function() {
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
@@ -215,18 +228,7 @@ function ExtractInt(string) {
 	return parseInt(String(string).replace(/ /g, ''),10);
 };
 
-async function GetString(el, timeout, driver) {
-	timeout ? timeout : timeout = 30000; //default param1
-	description ? description : description = ""; //default param2
-	try{
-		var string = await driver.findElement(el).getText();
-		return string;
-		}
-	catch(error) {
-		console.error("*** WARN! Failed to get string: "+String(el)+". "+description+"Check the selector or use WaitForDisplay(). ***");
-		throw new Error("WARN: "+error.message+"("+error.lineNumber+")");
-	}
-};
+
 
 function RemoveVideo(sessionId) {
   let sleep = 500,
