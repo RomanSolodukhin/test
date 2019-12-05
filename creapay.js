@@ -157,6 +157,7 @@ describe('Платёж '+i, function(done) {
     })
 
     it('Открыть окно пополнения', async function() {
+			await driver.wait(until.elementLocated(By.linkText("Пополнить")))
 			await driver.findElement(By.linkText("Пополнить")).click()
 			await driver.wait(until.elementLocated(By.css("a.c-pay-col:nth-child(17)")))
     })
