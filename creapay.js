@@ -93,15 +93,11 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-      /*await driver.quit()
-      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
-      allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
       assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
     await allure.createStep('Открыть страницу: '+site, await driver.get(site))
-    await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
   })
   it('Открыть форму авторизации', async function() {
     await driver.findElement(By.linkText("Вход")).click()
