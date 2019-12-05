@@ -185,6 +185,7 @@ describe('Платёж '+i, function(done) {
 			await driver.findElement(By.linkText("OK"))
 			var cgvar2 = ExtractInt(await GetString(By.id("balanceInGame")))
 			var cgvar = cgvar2-cgvar1;
+			assert.equal(cgvar, 17000)
 		})
     })
   }
