@@ -1,13 +1,20 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
+<<<<<<< HEAD
 var request = require('request')
+=======
+>>>>>>> b50d096a6f286c6fd0dac0217e01e609e6b95f69
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
+<<<<<<< HEAD
   let MAX_SERVERS = 10
+=======
+  let MAX_SERVERS = 9
+>>>>>>> b50d096a6f286c6fd0dac0217e01e609e6b95f69
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -156,6 +163,7 @@ describe('Авторизация', function(done) {
   })
 })
 
+<<<<<<< HEAD
 for(i = 1; i <= MAX_SERVERS;i++) {
 describe('Сервер '+i, function(done) {
     this.timeout(15000)
@@ -237,6 +245,76 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
     })
+=======
+  for(i = 1; i <= MAX_SERVERS;i++) {
+    describe('Сервер '+i, function(done) {
+      this.timeout(15000)
+      this.slow(4000)
+      let serverid = i
+      let link = site+"games/ef/server/"+serverid
+      let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
+      after(async function() {
+        await driver.switchTo().defaultContent()
+        await driver.navigate().back()
+      })
+      afterEach(async function() {
+        if(this.currentTest.err) throw new Error(this.currentTest.err)
+      })
+      it('Открыть окно выбора серверов', async function() {
+        await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
+        await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
+      });
+      it('Выбрать сервер', async function() {
+        await driver.findElement(By.xpath(serverselector)).click()
+        await driver.wait(until.elementLocated(By.id('container')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
+      });
+      it('Проверка gameHeader (creabar)', async function() {
+        await driver.wait(until.elementLocated(By.id('gameHeader')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+      });
+      it('Скрыть gameHeader', async function() {
+        await driver.switchTo().defaultContent()
+        await driver.findElement(By.id("hide-menu")).click()
+        try {
+          await driver.wait(until.elementLocated(By.id('gameHeader')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+        }
+        catch(error) {
+          assert.ok(true)
+        }
+      });
+      it('Переключиться в XDM', async function() {
+        await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
+        frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
+        await driver.switchTo().frame(frame)
+      });
+      it('Переключиться в gameFrame', async function() {
+        await driver.wait(until.elementLocated(By.id('gameFrame')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
+        frame = await driver.findElement(By.id('gameFrame'))
+        await driver.switchTo().frame(frame)
+      });
+      it('Найти canvas', async function() {
+        await driver.wait(until.elementLocated(By.id('GameCanvas')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
+      });
+      it('Вернуться в основной frame', async function() {
+        await driver.switchTo().defaultContent()
+        await driver.wait(until.elementLocated(By.id('container')))
+      });
+      it('Открыть gameHeader', async function() {
+        await driver.findElement(By.id("hide-menu")).click()
+        await driver.wait(until.elementLocated(By.id('gameHeader')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+      });
+      it('Открыть окно пополнения', async function() {
+        await driver.wait(until.elementLocated(By.id('gameHeader')))
+        await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
+      })
+>>>>>>> b50d096a6f286c6fd0dac0217e01e609e6b95f69
     })
   }
 });
