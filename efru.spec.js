@@ -136,7 +136,8 @@ describe('Авторизация', function(done) {
     catch(err) {
       let classAttr = await driver.findElement(By.id("loginform-password")).getAttribute('class')
       console.log(classAttr)
-      assert.rejects(
+      assert.notEqual(classAttr, 'b-input error', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      /*assert.rejects(
         async() => {
 
           let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
@@ -149,7 +150,7 @@ describe('Авторизация', function(done) {
         {
           name: 'NoSuchSessionError',
         }
-      )
+      )*/
     }
   })
   it('Выбрать игру', async function() {
