@@ -132,6 +132,7 @@ describe('Авторизация', function(done) {
       console.log(await driver.findElement(By.id("loginform-password")).getAttribute('class'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+      console.log(await driver.findElement(By.id("loginform-password")).getAttribute('class'))
       assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       /*assert.rejects(
         async() => {
