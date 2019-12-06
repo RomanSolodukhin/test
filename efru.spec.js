@@ -134,8 +134,11 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
+      let classAttr = await driver.findElement(By.id("loginform-password")).getAttribute('class')
+      console.log(classAttr)
       assert.rejects(
         async() => {
+
           let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
           console.log(message)
           throw new Error({
@@ -182,7 +185,7 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
         removeVideo = false
-        scriptBlocker = true
+
         //assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
