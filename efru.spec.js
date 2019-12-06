@@ -76,6 +76,11 @@ describe('Авторизация', function(done) {
   let lang
   let setlang = it
   let testSteps = []
+  let scriptBlocker = false
+
+  beforeEach(function() {
+    if(scriptBlocker) this.skip()
+  })
 
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
@@ -89,7 +94,8 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-      assert.fail('Тест остановлен. '+this.currentTest.err)
+      scriptBlocker = true
+      //assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
@@ -166,6 +172,9 @@ describe('Сервер '+i, function(done) {
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
     })
+    beforeEach(function() {
+      if(scriptBlocker) this.skip()
+    })
     afterEach(async function() {
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
@@ -174,7 +183,8 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
         removeVideo = false
-        assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
+        scriptBlocker = true
+        //assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
     it('Открыть окно выбора серверов', async function() {
