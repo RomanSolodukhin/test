@@ -136,7 +136,7 @@ describe('Авторизация', function(done) {
     catch(err) {
       let classAttr = await driver.findElement(By.id("loginform-password")).getAttribute('class')
       console.log(classAttr)
-      assert.notEqual(classAttr, 'b-input error', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      assert.equal(classAttr, 'b-input', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       /*assert.rejects(
         async() => {
 
