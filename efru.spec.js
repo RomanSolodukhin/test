@@ -132,9 +132,6 @@ describe('Авторизация', function(done) {
 
       assert.rejects(
         async() => {
-          console.log('Обработка ошибки с неправильным паролем') //debug
-          let classAttr = await driver.findElement(By.id('loginform-password')).getAttribute('class')
-          if(classAttr) console.log('Найден элемент уведомления об ошибке в форме авторизации') //debug
           let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
           console.log(message)
           throw new Error({
