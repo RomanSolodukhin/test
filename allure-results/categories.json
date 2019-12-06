@@ -1,6 +1,7 @@
 [
   {
     "name": "Блокирующий дефект",
+    "messageRegex": ".*Error.*",
     "traceRegex": ".*Error.*",
     "matchedStatuses": ["failed"],
     "flacky": "true"
