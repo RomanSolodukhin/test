@@ -1,17 +1,13 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
-<<<<<<< HEAD
-
-=======
 var request = require('request')
-var jObject = require('./executor-allure.js');
->>>>>>> f94d65cb6f0277724b18aba18a49d07e95c1e0ee
+
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 9
+  let MAX_SERVERS = 10
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -33,7 +29,6 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
     session = await driver.getSession()
-    //session.id = await session.getId()
     console.log(session.id_)
 })
 
@@ -43,13 +38,8 @@ describe('Eternal Fury RU', function() {
   after(async function() {
     if(driver) await driver.quit()
     if(removeVideo) await RemoveVideo(session.id_)
-    /*if(!this.currentTest.err) {
-
-    }*/
-    //allure.addEnvironment('log: ', 'http://104.248.2.157:4444/logs/'+session.id_+'.log')
 })
   afterEach(async function() {
-
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -57,9 +47,6 @@ describe('Eternal Fury RU', function() {
     await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
     await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
     await allure.addEnvironment('session id: ', String(session.id_))
-
-    //allure.addExecutor('jenkins')
-    //console.log('Запуск addExecutor')
     let execName = 'Jenkins (manual)'
     if(process.env.GIT_BRANCH) {
       execName = 'Jenkins (from Git commit)'
@@ -79,17 +66,10 @@ describe('Eternal Fury RU', function() {
       reportUrl: process.env.GIT_URL
   };
     allure.createExecutor(jenkinsEnv)
-    //jObject.addExecutor("allure-results", execName)
   }
   catch(err) {
     console.warn(err)
   }
-
-  //await jObject.Executor('allure-results', jenkinsEnv)
-  /*
-    var fs = require('fs-extra'),
-        path = require('path');
-        fs.outputJsonSync('./allure-results/executor.json', jenkinsEnv);*/
   })
 
 describe('Авторизация', function(done) {
@@ -109,9 +89,6 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-      /*await driver.quit()
-      let file = await request('http://104.248.2.157:4444/video/'+session.id_+'.mp4').pipe()
-      allure.createAttachment('video', new Buffer(file, 'video/mp4'))*/
       assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
@@ -143,7 +120,7 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
   })
   it('Авторизоваться', async function() {
     try {
@@ -152,12 +129,8 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     }
     catch(err) {
-
       assert.rejects(
         async() => {
-          console.log('Обработка ошибки с неправильным паролем') //debug
-          let classAttr = await driver.findElement(By.id('loginform-password')).getAttribute('class')
-          if(classAttr) console.log('Найден элемент уведомления об ошибке в форме авторизации') //debug
           let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
           console.log(message)
           throw new Error({
@@ -182,33 +155,6 @@ describe('Авторизация', function(done) {
   })
 })
 
-<<<<<<< HEAD
-  for(i = 1; i <= MAX_SERVERS;i++) {
-    describe('Сервер '+i, function(done) {
-      this.timeout(15000)
-      this.slow(4000)
-      let serverid = i
-      let link = site+"games/ef/server/"+serverid
-      let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
-      after(async function() {
-        await driver.switchTo().defaultContent()
-        await driver.navigate().back()
-      })
-      afterEach(async function() {
-        if(this.currentTest.err) throw new Error(this.currentTest.err)
-      })
-      it('Открыть окно выбора серверов', async function() {
-        await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
-        await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
-      });
-      it('Выбрать сервер', async function() {
-        await driver.findElement(By.xpath(serverselector)).click()
-        await driver.wait(until.elementLocated(By.id('container')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
-      });
-      it('Проверка gameHeader (creabar)', async function() {
-=======
 for(i = 1; i <= MAX_SERVERS;i++) {
 describe('Сервер '+i, function(done) {
     this.timeout(15000)
@@ -231,10 +177,6 @@ describe('Сервер '+i, function(done) {
         assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
-    /*it('Загрузить сервер: '+link, async function() {
-      await driver.get(link)
-      await driver.wait(until.titleContains('Eternal Fury'))
-    })*/
     it('Открыть окно выбора серверов', async function() {
       try {
         await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
@@ -258,50 +200,42 @@ describe('Сервер '+i, function(done) {
       await driver.switchTo().defaultContent()
       await driver.findElement(By.id("hide-menu")).click()
       try {
->>>>>>> f94d65cb6f0277724b18aba18a49d07e95c1e0ee
         await driver.wait(until.elementLocated(By.id('gameHeader')))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-      });
-      it('Скрыть gameHeader', async function() {
-        await driver.switchTo().defaultContent()
-        await driver.findElement(By.id("hide-menu")).click()
-        try {
-          await driver.wait(until.elementLocated(By.id('gameHeader')))
-          await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-        }
-        catch(error) {
-          assert.ok(true)
-        }
-      });
-      it('Переключиться в XDM', async function() {
-        await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
-        await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
-        frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
-        await driver.switchTo().frame(frame)
-      });
-      it('Переключиться в gameFrame', async function() {
-        await driver.wait(until.elementLocated(By.id('gameFrame')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
-        frame = await driver.findElement(By.id('gameFrame'))
-        await driver.switchTo().frame(frame)
-      });
-      it('Найти canvas', async function() {
-        await driver.wait(until.elementLocated(By.id('GameCanvas')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
-      });
-      it('Вернуться в основной frame', async function() {
-        await driver.switchTo().defaultContent()
-        await driver.wait(until.elementLocated(By.id('container')))
-      });
-      it('Открыть gameHeader', async function() {
-        await driver.findElement(By.id("hide-menu")).click()
-        await driver.wait(until.elementLocated(By.id('gameHeader')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-      });
-      it('Открыть окно пополнения', async function() {
-        await driver.wait(until.elementLocated(By.id('gameHeader')))
-        await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
-      })
+      }
+      catch(error) {
+        assert.ok(true)
+      }
+    });
+    it('Переключиться в XDM', async function() {
+      await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
+      frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
+      await driver.switchTo().frame(frame)
+    });
+    it('Переключиться в gameFrame', async function() {
+      await driver.wait(until.elementLocated(By.id('gameFrame')))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
+      frame = await driver.findElement(By.id('gameFrame'))
+      await driver.switchTo().frame(frame)
+    });
+    it('Найти canvas', async function() {
+      await driver.wait(until.elementLocated(By.id('GameCanvas')))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
+    });
+    it('Вернуться в основной frame', async function() {
+      await driver.switchTo().defaultContent()
+      await driver.wait(until.elementLocated(By.id('container')))
+    });
+    it('Открыть gameHeader', async function() {
+      await driver.findElement(By.id("hide-menu")).click()
+      await driver.wait(until.elementLocated(By.id('gameHeader')))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+    });
+    it('Открыть окно пополнения', async function() {
+      await driver.wait(until.elementLocated(By.id('gameHeader')))
+      await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
+    })
     })
   }
 });
