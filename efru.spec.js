@@ -71,12 +71,11 @@ describe('Eternal Fury RU', function() {
     console.warn(err)
   }
   })
-
+let scriptBlocker = false
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
   let testSteps = []
-  let scriptBlocker = false
 
   beforeEach(function() {
     if(scriptBlocker) this.skip()
