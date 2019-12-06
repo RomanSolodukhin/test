@@ -94,6 +94,8 @@ describe('Авторизация', function(done) {
       allure.severity('blocker')
       removeVideo = false
       scriptBlocker = true
+      if(this.currentTest.title == 'Авторизоваться') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+
       //assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
@@ -128,27 +130,14 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG") //  неправильный пароль установлен (правильный 123456qQ)
   })
   it('Авторизоваться', async function() {
+    try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      console.log(await driver.findElement(By.id("loginform-password")).getAttribute('class'))
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-      console.log(await driver.findElement(By.id("loginform-password")).getAttribute('class'))
-      assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-      /*assert.rejects(
-        async() => {
-
-          let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
-          console.log(message)
-          throw new Error({
-                    name: 'Ошибка авторизации',
-                    message: titleAttr
-                  })
-        },
-        {
-          name: 'NoSuchSessionError',
-        }
-      )*/
-    //}
+    }
+    catch(err) {
+      assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input', await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+    }
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
