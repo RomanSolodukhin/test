@@ -130,12 +130,10 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG") //  неправильный пароль установлен (правильный 123456qQ)
   })
   it('Авторизоваться', async function() {
-    try {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-    }
-    catch(err) {
+    if(err) {
       assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
