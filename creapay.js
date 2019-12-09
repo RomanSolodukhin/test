@@ -215,10 +215,13 @@ async function GetString(el, timeout) {
 				balance = ExtractInt(await GetString(By.id("balanceInGame")))
 				await driver.wait(until.elementLocated(By.linkText("OK")))
 				await driver.findElement(By.linkText("OK")).click()
- balance=ExtractInt(await GetString(By.id("balanceInGame")))-balance
-
-	assert.equal(balance, 15000, 'Баланс пополнен на '+balance)
+        balance=ExtractInt(await GetString(By.id("balanceInGame")))-balance
+	      assert.equal(balance, 15000, 'Баланс пополнен на '+balance)
 			})
+      it('Дождаться загрузки истории платежей', async function() {
+        await driver.wait(until.elementLocated(By.css(".c-pay-history")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".c-pay-history"))))
+      })
   	})
   }
 });
