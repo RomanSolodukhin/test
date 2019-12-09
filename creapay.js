@@ -1,5 +1,5 @@
 var {testData,times,baseUrl} = require('./efbalens_ddt.js')
-let iUser = 6
+let iUser = 7
 var login = testData.users.username[iUser], pass = testData.users.pass[iUser]
 
 const { Builder, By, Key, until } = require('selenium-webdriver')
