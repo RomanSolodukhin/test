@@ -92,8 +92,9 @@ describe('Авторизация', function(done) {
       var res = await driver.takeScreenshot();
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
-      allure.severity('blocker')
+      allure.severity(this.currentTest.severity)
       removeVideo = false
+      if(this.currentTest.severity == 'blocker') scriptBlocker = true
       //if(this.currentTest.title == 'Проверка авторизации') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
@@ -132,11 +133,10 @@ describe('Авторизация', function(done) {
     assert.equal(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))), true, 'Окно всё ещё открыто')
   })
   it('Авторизация успешна', async function() {
-    scriptBlocker = true
+    this.currentTest.severity = 'blocker'
     assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-    scriptBlocker = false
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
