@@ -35,31 +35,18 @@ var lineNum = 1;
 
 async function testRunner(){
 	try{
-		//var options = {xvfb_args: ['-screen'+' 0 '+WxHxD]};
-		lineNum=1;/*
-		var xvfb_options = {
-			server_Num: 99,
-			xvfb_args: ['-screen','0',testData.resolutions[iRes].x+'x'+testData.resolutions[iRes].y+'x'+'24']
-			};
-		console.log(xvfb_options);
-		xvfb = await new Xvfb(xvfb_options);
-		await xvfb.startSync();/*
-		/*driver = await new Builder()
-			.forBrowser(browserName)
-			.build();*/
-/*===========================================*/
-var capabilities = {
-  browserName: 'opera',
-  version: '64.0',
-  enableVNC: true,
-  enableVideo: false
-};
+    lineNum=1;
+    var capabilities = {
+      browserName: 'opera',
+      version: '64.0',
+      enableVNC: true,
+      enableVideo: false
+    };
 driver = await new Builder()
 .usingServer('http://localhost:4444/wd/hub')
 .withCapabilities(capabilities)
 .setAlertBehavior()
 .build();
-/*===========================================*/
 		report("*** Browser is launched ***");
 		var time = performance.now();
 		await test();

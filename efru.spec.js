@@ -7,7 +7,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 2
+  let MAX_SERVERS = 10
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -70,8 +70,9 @@ describe('Eternal Fury RU', function() {
   catch(err) {
     console.warn(err)
   }
-  })
+})
 let scriptBlocker = false
+
 describe('Авторизация', function(done) {
   let lang
   let setlang = it
@@ -95,8 +96,6 @@ describe('Авторизация', function(done) {
       removeVideo = false
       scriptBlocker = true
       if(this.currentTest.title == 'Авторизоваться') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-
-      //assert.fail('Тест остановлен. '+this.currentTest.err)
     }
   })
   it('Загрузить страницу', async function() {
@@ -127,7 +126,7 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG") //  неправильный пароль установлен (правильный 123456qQ)
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
   })
   it('Авторизоваться', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
@@ -170,8 +169,6 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
         removeVideo = false
-
-        //assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
       }
     })
     it('Открыть окно выбора серверов', async function() {
