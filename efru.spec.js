@@ -95,7 +95,7 @@ describe('Авторизация', function(done) {
       allure.severity('blocker')
       removeVideo = false
       scriptBlocker = true
-      if(this.currentTest.title == 'Авторизоваться') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      if(this.currentTest.title == 'Проверка авторизации') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
   it('Загрузить страницу', async function() {
