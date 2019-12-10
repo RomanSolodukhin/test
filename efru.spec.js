@@ -148,7 +148,7 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
     await driver.findElement(By.linkText('Eternal Fury')).click()
   })
-  it('Загрузить страницу игры', async function() {
+  it('Открыть страницу игры', async function() {
     await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Играть бесплатно')]")))
     await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]"))))
   })
