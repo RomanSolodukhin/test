@@ -130,7 +130,7 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-  )}
+  })
   it('Проверка авторизации', async function() {
     assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
