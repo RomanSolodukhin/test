@@ -133,7 +133,7 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-username"))))
     }
     catch(err) {
-      await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      throw await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
       scriptBlocker = true
     }
   })
