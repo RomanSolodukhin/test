@@ -95,7 +95,6 @@ describe('Авторизация', function(done) {
       allure.severity(this.currentTest.severity)
       removeVideo = false
       if(this.currentTest.severity == 'blocker') scriptBlocker = true
-      //if(this.currentTest.title == 'Проверка авторизации') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
   it('Загрузить страницу', async function() {
@@ -124,6 +123,7 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
   it('Открыть форму авторизации', async function() {
+    this.test.severity = 'blocker'
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
@@ -133,6 +133,7 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+    console.log(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))))
     assert.equal(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))), true, 'Окно всё ещё открыто')
   })
   it('Авторизация успешна', async function() {
