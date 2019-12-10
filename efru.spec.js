@@ -133,8 +133,12 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    console.log(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))))
-    assert.equal(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))), true, 'Окно всё ещё открыто')
+    let formSubmission = new Promise(function(resolve, reject) {
+      async function(resolve) {
+        await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
+      }
+    })
+    await formSubmission.assert.equal(value, true, 'Форма авторизации не закрыта автоматически')
   })
   it('Авторизация успешна', async function() {
     this.test.severity = 'blocker'
