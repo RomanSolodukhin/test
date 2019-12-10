@@ -33,7 +33,7 @@ describe('Eternal Fury RU', function() {
 })
 
   beforeEach(function () {
-
+    this.currentTest.severity = 'normal'
   })
   after(async function() {
     if(driver) await driver.quit()
