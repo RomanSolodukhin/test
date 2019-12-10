@@ -34,45 +34,6 @@ describe('Eternal Fury RU', function() {
 
   beforeEach(function () {
 
-<<<<<<< HEAD
-=======
-  })
-  after(async function() {
-    if(driver) await driver.quit()
-    if(removeVideo) await RemoveVideo(session.id_)
-})
-  afterEach(async function() {
-    let currentCapabilities = await session.getCapabilities()
-    await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
-    await allure.addEnvironment('OS:','Ubuntu 18.04')
-    await allure.addEnvironment('resolution:', '1920x1080')
-    await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
-    await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
-    await allure.addEnvironment('session id: ', String(session.id_))
-    let execName = 'Jenkins (manual)'
-    if(process.env.GIT_BRANCH) {
-      execName = 'Jenkins (from Git commit)'
-      await allure.addEnvironment('git branch: ', process.env.GIT_BRANCH)
-      await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
-      await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
-    }
-  try {
-    jenkinsEnv = {
-      name: execName,
-      type: "jenkins",
-      url: process.env.JENKINS_URL,
-      buildOrder: process.env.BUILD_NUMBER,
-      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-      buildUrl: process.env.BUILD_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-      reportUrl: process.env.GIT_URL
-  };
-    allure.createExecutor(jenkinsEnv)
-  }
-  catch(err) {
-    console.warn(err)
-  }
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
   })
   after(async function() {
     if(driver) await driver.quit()
@@ -117,13 +78,10 @@ describe('Авторизация', function(done) {
   let setlang = it
   let testSteps = []
 
-<<<<<<< HEAD
   beforeEach(function() {
     if(scriptBlocker) this.skip()
   })
 
-=======
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
       await allure.createStep(testSteps[i], function() {} )
@@ -136,12 +94,8 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-<<<<<<< HEAD
       scriptBlocker = true
       if(this.currentTest.title == 'Авторизоваться') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-=======
-      assert.fail('Тест остановлен. '+this.currentTest.err)
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
     }
   })
   it('Загрузить страницу', async function() {
@@ -175,33 +129,11 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
   })
   it('Авторизоваться', async function() {
-<<<<<<< HEAD
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     if(err) {
       assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-=======
-    try {
-      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-    }
-    catch(err) {
-      assert.rejects(
-        async() => {
-          let titleAttr = await driver.findElement(By.id("loginform-password")).getAttribute('title')
-          console.log(message)
-          throw new Error({
-                    name: 'Ошибка авторизации',
-                    message: titleAttr
-                  })
-        },
-        {
-          name: 'NoSuchSessionError',
-        }
-      )
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
     }
   })
   it('Выбрать игру', async function() {
@@ -226,12 +158,9 @@ describe('Сервер '+i, function(done) {
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
     })
-<<<<<<< HEAD
     beforeEach(function() {
       if(scriptBlocker) this.skip()
     })
-=======
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
     afterEach(async function() {
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
@@ -240,10 +169,6 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
         removeVideo = false
-<<<<<<< HEAD
-=======
-        assert.fail('Прошлый тест должен быть выполнен', 'Тест остановлен', this.currentTest.err)
->>>>>>> e7012f09697366fa38d4925ab1be8490912531f3
       }
     })
     it('Открыть окно выбора серверов', async function() {
