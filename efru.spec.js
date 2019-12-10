@@ -129,17 +129,12 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    try {
-      await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
-    }
-    catch(err) {
-      //await allure.createAttachment('Ответ драйвера: ', err)
-    }
+    assert.equal(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))), true, 'Окно всё ещё открыто')
+  })
+  it('Авторизация успешна', async function() {
     if(assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))) {
       scriptBlocker = true
     }
-  })
-  it('Авторизация успешна', async function() {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
   })
