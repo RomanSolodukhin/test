@@ -99,8 +99,11 @@ describe('Авторизация', function(done) {
     }
   })
   it('Загрузить страницу', async function() {
+    this.test.severity = 'blocker'
     await allure.createStep('Открыть страницу: '+site, await driver.get(site))
     testSteps.push('Открыть страницу: '+site)
+  })
+  it('Проверка языка', async function() {
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
@@ -134,7 +137,6 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация успешна', async function() {
     this.test.severity = 'blocker'
-    allure.severity('blocker')
     assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
