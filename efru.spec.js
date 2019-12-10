@@ -7,7 +7,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 10
+  let MAX_SERVERS = 2
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -128,13 +128,13 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
   })
-  it('Авторизоваться', async function() {
-      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-    if(err) {
-      assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-    }
+  it('Отправить форму', async function() {
+    await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+  )}
+  it('Проверка авторизации', async function() {
+    assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+    await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
