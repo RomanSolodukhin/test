@@ -94,8 +94,7 @@ describe('Авторизация', function(done) {
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity('blocker')
       removeVideo = false
-      scriptBlocker = true
-      if(this.currentTest.title == 'Проверка авторизации') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      //if(this.currentTest.title == 'Проверка авторизации') assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
   it('Загрузить страницу', async function() {
@@ -133,6 +132,9 @@ describe('Авторизация', function(done) {
   })
   it('Проверка авторизации', async function() {
     await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+    if(this.currentTest.err) scriptBlocker = true
+  })
+  it('Поиск ссылки на профиль', async function() {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
   })
