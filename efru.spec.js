@@ -169,6 +169,7 @@ describe('Сервер '+i, function(done) {
         allure.createAttachment('Отчёт', String(this.currentTest.err))
         allure.severity('blocker')
         removeVideo = false
+        if(this.currentTest.title == 'Выбрать сервер' || this.currentTest.title == 'Переключиться в XDM') scriptBlocker = true
       }
     })
     it('Открыть окно выбора серверов', async function() {
