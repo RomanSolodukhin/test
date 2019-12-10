@@ -129,21 +129,15 @@ describe('Авторизация', function(done) {
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-  })
-  it('Авторизация успешна', async function() {
     try {
       await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-username"))))
     }
     catch(err) {
-      scriptBlocker = true
       await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-    }
-    finally{
       scriptBlocker = true
-      await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
   })
-  it('Поиск ссылки на профиль', async function() {
+  it('Авторизация успешна', async function() {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
   })
