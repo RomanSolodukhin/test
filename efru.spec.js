@@ -125,16 +125,15 @@ describe('Авторизация', function(done) {
   })
   it('Ввести учетные данные', async function() {
     await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    let authError
     try {
       await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
     }
     catch(err) {
-      authError = err
+      allure.createAttachment('Ответ драйвера: ', err)
     }
     if(assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))) {
       scriptBlocker = true
