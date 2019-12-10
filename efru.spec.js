@@ -138,6 +138,10 @@ describe('Авторизация', function(done) {
       scriptBlocker = true
       await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }
+    finally{
+      scriptBlocker = true
+      await assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+    }
   })
   it('Поиск ссылки на профиль', async function() {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
