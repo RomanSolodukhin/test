@@ -132,11 +132,11 @@ describe('Авторизация', function(done) {
     assert.equal(await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))), true, 'Окно всё ещё открыто')
   })
   it('Авторизация успешна', async function() {
-    if(assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))) {
-      scriptBlocker = true
-    }
+    scriptBlocker = true
+    assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))) {
     await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
     await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    scriptBlocker = false
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
