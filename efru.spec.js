@@ -183,9 +183,15 @@ describe('Сервер '+i, function(done) {
       }
     });
     it('Выбрать сервер', async function() {
-      await driver.findElement(By.xpath(serverselector)).click()
-      await driver.wait(until.elementLocated(By.id('container')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
+      try{
+        await driver.findElement(By.xpath(serverselector)).click()
+        await driver.wait(until.elementLocated(By.id('container')))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
+      }
+      catch(err) {
+        let pageTitle = await driver.getTitle()
+        assert.equal('Bad request (#400)', pageTitle, pageTitle)
+      }
     });
     it('Проверка gameHeader (creabar)', async function() {
       await driver.wait(until.elementLocated(By.id('gameHeader')))
