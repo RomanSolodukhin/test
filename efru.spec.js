@@ -132,7 +132,7 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
     })
-    it('Отправить форму', async function() {
+    it('Отправить форму (с ошибкой)', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       assert.equal(async() => {
               await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
@@ -149,7 +149,7 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
-    it('Отправить форму', async function() {
+    it('Отправить форму (верную)', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       assert.equal(async() => {
