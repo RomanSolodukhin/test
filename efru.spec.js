@@ -155,10 +155,14 @@ describe('Авторизация', function(done) {
       let formSubmission = new Promise(
         function(resolve, reject) {
           (async()=> {
-            await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password")))) {
+            try {
+              await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
+            }
+            catch(err) {
               reject(true)
             }
           })
+
       })
       formSubmission.catch(function(err) {
         assert.equal(err, true, 'Форма авторизации не закрыта автоматически')
