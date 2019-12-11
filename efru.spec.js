@@ -134,10 +134,21 @@ describe('Авторизация', function(done) {
     })
     it('Отправить форму (с ошибкой)', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      assert.equal(async() => {
+      let formSubmission = new Promise(
+        function(resolve, reject) {
+          (async()=> {
+            try {
               await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
-              return true
-            }, true, 'Форма авторизации была закрыта без уведомления об ошибке')
+              resolve(true)
+            }
+            catch(err) {
+              resolve(false)
+            }
+          })
+      })
+      formSubmission.then(function(value) {
+        assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
+      })
     })
     it('Получено уведомление об ошибке', async function() {
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
@@ -157,14 +168,15 @@ describe('Авторизация', function(done) {
           (async()=> {
             try {
               await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
+              resolve(false)
             }
             catch(err) {
-              reject(true)
+              resolve(true)
             }
           })
 
       })
-      formSubmission.catch(function(err) {
+      formSubmission.then(function(err) {
         assert.equal(err, true, 'Форма авторизации не закрыта автоматически')
       })
     })
