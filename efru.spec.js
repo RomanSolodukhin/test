@@ -128,9 +128,9 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
 
-  driver.elementIsNotLocated = async function(element) {
+  let elementIsNotLocated = async function(element) {
     try {
-      await this.wait(until.elementLocated(element))
+      await driver.wait(until.elementLocated(element))
       return false
     }
     catch(err) {
@@ -147,7 +147,7 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       let formSubmission = new Promise(
         function(resolve, reject) {
-          if(driver.elementIsNotLocated(By.id("loginform-password"))) resolve(true)
+          if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
         assert.notEqual(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
@@ -170,7 +170,7 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       let formSubmission = new Promise(
         function(resolve, reject) {
-          if(driver.elementIsNotLocated(By.id("loginform-password"))) resolve(true)
+          if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
         assert.equal(value, true, 'Форма авторизации не была закрыта')
