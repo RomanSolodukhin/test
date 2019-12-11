@@ -134,8 +134,7 @@ describe('Авторизация', function(done) {
       return false
     }
     catch(err) {
-      if(err.contains('no such element')) return true
-      else return err
+      return true
     }
   }
 
