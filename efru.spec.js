@@ -145,6 +145,8 @@ describe('Авторизация', function(done) {
   })
   describe('Правильные учётные данные', async function() {
     it('Ввести учетные данные', async function() {
+      await driver.findElement(By.id("loginform-username")).clear()
+      await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
