@@ -129,13 +129,22 @@ describe('Авторизация', function(done) {
   })
 
   let elementIsNotLocated = async function(element) {
-    try {
-      await driver.wait(until.elementLocated(element))
-      return false
-    }
-    catch(err) {
-      return true
-    }
+    let sleep = 500,
+    maxTime = currentTest.timeout;
+    let timer = setInterval(function(){
+      try {
+        await driver.wait(until.elementLocated(element))
+        maxTime-=sleep
+        if(0 >= maxTime) {
+          clearInterval(timer)
+          return false
+        }
+      }
+      catch(err) {
+        clearInterval(timer);
+        return true
+      }
+    },sleep)
   }
 
     it('Ввести учетные данные (заведомо неправильные)', async function() {
