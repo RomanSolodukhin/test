@@ -149,7 +149,7 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        assert.notEqual(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
+        assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
       })
     })
     it('Получено уведомление об ошибке', async function() {
@@ -170,9 +170,9 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        async function() {
+        (async() => {
           assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-        }
+        })
       })
     })
     it('Авторизация успешна', async function() {
