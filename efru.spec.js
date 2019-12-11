@@ -134,9 +134,9 @@ describe('Авторизация', function(done) {
   it('Отправить форму', async function() {
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
     let formSubmission = new Promise(function(resolve, reject) {
-      async(done) {
+      async() {
         await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
-        resolve(done)
+        resolve(true)
       }
     })
     await formSubmission.then(function(value) {
