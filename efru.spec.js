@@ -132,6 +132,7 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
   })
   it('Отправить форму', async function() {
+    this.test.severity = 'blocker'
     await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
     assert.equal(async() => {
             await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
