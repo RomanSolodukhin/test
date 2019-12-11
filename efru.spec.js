@@ -131,7 +131,7 @@ describe('Авторизация', function(done) {
   let elementIsNotLocated = async function(element) {
     let sleep = 500,
     maxTime = currentTest.timeout;
-    let timer = setInterval(async function(){
+    let timer = setInterval((async() => {
       try {
         await driver.wait(until.elementLocated(element))
         maxTime-=sleep
@@ -144,7 +144,7 @@ describe('Авторизация', function(done) {
         clearInterval(timer);
         return true
       }
-    },sleep)
+    }),sleep)
   }
 
     it('Ввести учетные данные (заведомо неправильные)', async function() {
