@@ -153,14 +153,7 @@ describe('Авторизация', function(done) {
     })
     it('Отправить форму (с ошибкой)', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      let formSubmission = new Promise(
-        function(resolve, reject) {
-          if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
-          else resolve(false)
-      })
-      formSubmission.then(function(value) {
-        assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
-      })
+        if(elementIsNotLocated(By.id("loginform-password"))) assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
     })
     it('Получено уведомление об ошибке', async function() {
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
