@@ -153,8 +153,7 @@ describe('Авторизация', function(done) {
       })
     })
     it('Получено уведомление об ошибке', async function() {
-      let authError = await driver.findElement(By.id("loginform-password")).getAttribute('class')
-      assert.equal(authError, 'b-input error', 'Error: Уведомление об ошибке не было получено')
+      assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
     })
 
     it('Ввести учетные данные (корректные)', async function() {
@@ -171,9 +170,9 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        let inputClass = await driver.findElement(By.id("loginform-password")).getAttribute('class')
-        let errorMsg = await driver.findElement(By.id("loginform-password")).getAttribute('title')
-        assert.notEqual(inputClass, 'b-input error', 'Error: '+errorMsg)
+        (async() => {
+          assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+        })
       })
     })
     it('Авторизация успешна', async function() {
