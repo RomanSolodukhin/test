@@ -127,23 +127,43 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
-  it('Ввести учетные данные', async function() {
-    await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-    await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
+  describe('Неправильные учётные данные', async function() {
+    it('Ввести учетные данные', async function() {
+      await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
+    })
+    it('Отправить форму', async function() {
+      this.test.severity = 'blocker'
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      assert.equal(async() => {
+              await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
+              return true
+            }, false, 'Форма авторизации была закрыта без уведомления об ошибке')
+    })
+    it('Получено уведомление об ошибке', async function() {
+      this.test.severity = 'blocker'
+      assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
+    })
   })
-  it('Отправить форму', async function() {
-    this.test.severity = 'blocker'
-    await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-    assert.equal(async() => {
-            await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
-            return true
-          }, true, 'Форма авторизации не закрыта автоматически')
-  })
-  it('Авторизация успешна', async function() {
-    this.test.severity = 'blocker'
-    assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-    await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+  describe('Правильные учётные данные', async function() {
+    it('Ввести учетные данные', async function() {
+      await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+    })
+    it('Отправить форму', async function() {
+      this.test.severity = 'blocker'
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+      assert.equal(async() => {
+              await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
+              return true
+            }, true, 'Форма авторизации не закрыта автоматически')
+    })
+    it('Авторизация успешна', async function() {
+      this.test.severity = 'blocker'
+      assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    })
   })
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
