@@ -128,6 +128,17 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
 
+  driver.prototype.elementIsNotLocated = async function(element) {
+    try {
+      await this.wait(until.elementLocated(element))
+      return false
+    }
+    catch(err) {
+      if(err.contains('timeout')) return true
+      else return err
+    }
+  }
+
     it('Ввести учетные данные (заведомо неправильные)', async function() {
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
@@ -136,18 +147,10 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       let formSubmission = new Promise(
         function(resolve, reject) {
-          (async()=> {
-            try {
-              await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
-              resolve(true)
-            }
-            catch(err) {
-              resolve(false)
-            }
-          })
+          if(driver.elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
+        assert.notEqual(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
       })
     })
     it('Получено уведомление об ошибке', async function() {
@@ -160,24 +163,17 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
+
+
     it('Отправить форму (верную)', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       let formSubmission = new Promise(
         function(resolve, reject) {
-          (async()=> {
-            try {
-              await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-password"))))
-              resolve(false)
-            }
-            catch(err) {
-              resolve(true)
-            }
-          })
-
+          if(driver.elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
-      formSubmission.then(function(err) {
-        assert.equal(err, true, 'Форма авторизации не закрыта автоматически')
+      formSubmission.then(function(value) {
+        assert.equal(value, true, 'Форма авторизации не была закрыта')
       })
     })
     it('Авторизация успешна', async function() {
