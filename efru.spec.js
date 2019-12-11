@@ -149,7 +149,7 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        assert.notEqual(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
+        assert.notEqual(value, false, 'Форма авторизации была закрыта без уведомления об ошибке')
       })
     })
     it('Получено уведомление об ошибке', async function() {
