@@ -137,7 +137,7 @@ describe('Авторизация', function(done) {
       driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
       resolve(true)
     })
-    await formSubmission.catch(function(value) {
+    await formSubmission.then(function(value) {
       assert.equal(value, true, 'Форма авторизации не закрыта автоматически')
     })
   })
