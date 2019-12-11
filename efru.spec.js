@@ -127,8 +127,8 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
-  describe('Неправильные учётные данные', async function() {
-    it('Ввести учетные данные', async function() {
+
+    it('Ввести учетные данные (заведомо неправильные)', async function() {
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
     })
@@ -142,9 +142,8 @@ describe('Авторизация', function(done) {
     it('Получено уведомление об ошибке', async function() {
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
     })
-  })
-  describe('Правильные учётные данные', async function() {
-    it('Ввести учетные данные', async function() {
+
+    it('Ввести учетные данные (корректные)', async function() {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
@@ -164,7 +163,7 @@ describe('Авторизация', function(done) {
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     })
-  })
+
   it('Выбрать игру', async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
