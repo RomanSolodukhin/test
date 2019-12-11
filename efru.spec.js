@@ -131,7 +131,7 @@ describe('Авторизация', function(done) {
   let elementIsNotLocated = async function(element) {
     let sleep = 500,
     maxTime = currentTest.timeout;
-    let timer = setInterval(function(){
+    let timer = setInterval(async function(){
       try {
         await driver.wait(until.elementLocated(element))
         maxTime-=sleep
