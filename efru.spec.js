@@ -133,7 +133,6 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
     })
     it('Отправить форму', async function() {
-      this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       assert.equal(async() => {
               await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
@@ -141,7 +140,6 @@ describe('Авторизация', function(done) {
             }, true, 'Форма авторизации была закрыта без уведомления об ошибке')
     })
     it('Получено уведомление об ошибке', async function() {
-      this.test.severity = 'blocker'
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
     })
   })
