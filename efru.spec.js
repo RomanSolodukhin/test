@@ -128,7 +128,7 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
 
-  driver.prototype.elementIsNotLocated = async function(element) {
+  driver.elementIsNotLocated = async function(element) {
     try {
       await this.wait(until.elementLocated(element))
       return false
