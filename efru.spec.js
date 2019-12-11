@@ -138,7 +138,7 @@ describe('Авторизация', function(done) {
       assert.equal(async() => {
               await driver.wait(until.elementIsNotVisible(driver.findElement(By.id("loginform-password"))))
               return true
-            }, false, 'Форма авторизации была закрыта без уведомления об ошибке')
+            }, true, 'Форма авторизации была закрыта без уведомления об ошибке')
     })
     it('Получено уведомление об ошибке', async function() {
       this.test.severity = 'blocker'
