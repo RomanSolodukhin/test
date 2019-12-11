@@ -149,6 +149,7 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
+        console.log('Форма авторизация не была закрыта')
         assert.equal(value, true, 'Форма авторизации была закрыта без уведомления об ошибке')
       })
     })
