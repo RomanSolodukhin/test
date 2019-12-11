@@ -171,7 +171,9 @@ describe('Авторизация', function(done) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
       formSubmission.then(function(value) {
-        assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+        let inputClass = await driver.findElement(By.id("loginform-password")).getAttribute('class')
+        let errorMsg = await driver.findElement(By.id("loginform-password")).getAttribute('title')
+        assert.notEqual(inputClass, 'b-input error', 'Error: '+errorMsg)
       })
     })
     it('Авторизация успешна', async function() {
