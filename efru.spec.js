@@ -86,6 +86,8 @@ describe('Авторизация', function(done) {
     for(let i = 0; i < testSteps.length; i++) {
       await allure.createStep(testSteps[i], function() {} )
     }
+    let consoleDTP = await driver.sendDevToolsCommand('DOMDebugger.getEventListeners')
+    allure.createAttachment('Тест DTP', String(consoleDTP))
     testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
@@ -154,14 +156,11 @@ describe('Авторизация', function(done) {
     })
     it('Отправить форму (с ошибкой)', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-        if(elementIsNotLocated(By.id("loginform-password"))) assert.fail('Форма авторизации была закрыта без уведомления об ошибке')
+        /*if(elementIsNotLocated(By.id("loginform-password"))) assert.fail('Форма авторизации была закрыта без уведомления об ошибке')*/
     })
     it('Получено уведомление об ошибке', async function() {
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
-      let consoleDTP = await driver.sendDevToolsCommand('DOMDebugger.getEventListeners')
-      console.log(consoleDTP)
     })
-
     it('Ввести учетные данные (корректные)', async function() {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
@@ -171,7 +170,7 @@ describe('Авторизация', function(done) {
     it('Отправить форму (верную)', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      let formSubmission = new Promise(
+      /*let formSubmission = new Promise(
         function(resolve, reject) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
@@ -179,7 +178,7 @@ describe('Авторизация', function(done) {
         (async() => {
           assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
         })
-      })
+      })*/
     })
     it('Авторизация успешна', async function() {
       this.test.severity = 'blocker'
