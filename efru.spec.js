@@ -157,6 +157,8 @@ describe('Авторизация', function(done) {
     })
     it('Получено уведомление об ошибке', async function() {
       assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
+      let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
+      console.log(consoleDTP)
     })
 
     it('Ввести учетные данные (корректные)', async function() {
