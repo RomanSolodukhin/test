@@ -84,11 +84,8 @@ describe('Авторизация', function(done) {
 
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
-      await allure.createStep(testSteps[i], function() {} )
+      await allure.createStep(testSteps[i], function() { return true } )
     }
-    let consoleDTP = await driver.sendDevToolsCommand('DOMDebugger.getEventListeners')
-    allure.createAttachment('Тест DTP', String(consoleDTP))
-    allure.createAttachment('Тест DTP 2', await driver.sendDevToolsCommand('Browser.getVersion'))
     testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
