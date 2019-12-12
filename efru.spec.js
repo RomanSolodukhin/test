@@ -20,7 +20,9 @@ describe('Eternal Fury RU', function() {
       enableLog: true,
       name: testName,
       enableVideo: true,
-      homepage: 'https://yandex.ru/'
+      prefs: {
+        homepage: 'https://www.yandex.ru/'
+      }
     }
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
@@ -29,7 +31,6 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
-    console.log(await driver.getCurrentUrl())
     session = await driver.getSession()
     console.log(session.id_)
 })
@@ -101,6 +102,7 @@ describe('Авторизация', function(done) {
   })
   it('Загрузить страницу', async function() {
     this.test.severity = 'blocker'
+    console.log(await driver.getCurrentUrl())
     await allure.createStep('Открыть страницу: '+site, await driver.get(site))
     testSteps.push('Открыть страницу: '+site)
   })
