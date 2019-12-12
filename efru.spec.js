@@ -88,6 +88,7 @@ describe('Авторизация', function(done) {
     }
     let consoleDTP = await driver.sendDevToolsCommand('DOMDebugger.getEventListeners')
     allure.createAttachment('Тест DTP', String(consoleDTP))
+    allure.createAttachment('Тест DTP 2', String(await driver.sendDevToolsCommand('Browser.getVersion')))
     testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
