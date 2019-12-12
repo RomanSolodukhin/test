@@ -212,8 +212,8 @@ describe('Сервер '+i, function(done) {
       if(scriptBlocker) this.skip()
     })
     afterEach(async function() {
-      let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
-      allure.createAttachment('DevTools console', String(consoleDTP))
+      /*let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
+      allure.createAttachment('DevTools console', String(consoleDTP))*/
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
         var res = await driver.takeScreenshot();
