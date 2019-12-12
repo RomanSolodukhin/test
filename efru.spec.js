@@ -102,7 +102,6 @@ describe('Авторизация', function(done) {
   })
   it('Загрузить страницу', async function() {
     this.test.severity = 'blocker'
-    console.log(await driver.getCurrentUrl())
     await allure.createStep('Открыть страницу: '+site, await driver.get(site))
     testSteps.push('Открыть страницу: '+site)
   })
