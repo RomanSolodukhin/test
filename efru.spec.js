@@ -19,10 +19,7 @@ describe('Eternal Fury RU', function() {
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true,
-      preferences: {
-        homepage: 'https://www.yandex.ru/'
-      }
+      enableVideo: true
     }
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
@@ -148,7 +145,7 @@ describe('Авторизация', function(done) {
         clearInterval(timer);
         return true
       }
-    }),sleep)
+    }), sleep)
   }
 
     it('Ввести учетные данные (заведомо неправильные)', async function() {
