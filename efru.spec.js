@@ -19,7 +19,8 @@ describe('Eternal Fury RU', function() {
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true
+      enableVideo: true,
+      homepage: 'https://yandex.ru/'
     }
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
@@ -28,6 +29,7 @@ describe('Eternal Fury RU', function() {
     .build();
     await driver.manage().window().setRect(1920, 1080)
     await driver.manage().window().maximize()
+    console.log(await driver.getCurrentUrl())
     session = await driver.getSession()
     console.log(session.id_)
 })
@@ -237,6 +239,10 @@ describe('Сервер '+i, function(done) {
     it('Выбрать сервер', async function() {
       await driver.findElement(By.xpath(serverselector)).click()
       await driver.wait(until.titleContains('Браузерная игра - Eternal Fury'))
+
+      let pageTitle = await driver.getTitle()
+      //assert.equal() css .crea_buy_popup_content maintenance
+      assert.equal('Bad request (#400)', pageTitle, pageTitle)
     });
     it('Проверка загрузки container', async function() {
       await driver.wait(until.elementLocated(By.id('container')))
