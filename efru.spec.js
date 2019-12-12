@@ -233,8 +233,7 @@ describe('Сервер '+i, function(done) {
     });
     it('Выбрать сервер', async function() {
       await driver.findElement(By.xpath(serverselector)).click()
-      await driver.wait(until.titleContains('Браузерная игра - Eternal Fury'))
-
+      await driver.wait(until.titleContains('Eternal Fury'))
       let pageTitle = await driver.getTitle()
       //assert.equal() css .crea_buy_popup_content maintenance
       assert.equal('Bad request (#400)', pageTitle, pageTitle)
