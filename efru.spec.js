@@ -84,7 +84,7 @@ describe('Авторизация', function(done) {
 
   afterEach(async function() {
     for(let i = 0; i < testSteps.length; i++) {
-      allure.createStep(testSteps[i], function() { 
+      allure.createStep(testSteps[i], async function() { 
         var res = await driver.takeScreenshot();
         allure.createAttachment('image', new Buffer(res, 'base64'))
       })
