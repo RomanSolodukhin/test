@@ -213,7 +213,7 @@ describe('Сервер '+i, function(done) {
     })
     afterEach(async function() {
       let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
-      allure.createAttachment('DevTools console', consoleDTP)
+      allure.createAttachment('DevTools console', String(consoleDTP))
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
         var res = await driver.takeScreenshot();
