@@ -91,6 +91,7 @@ describe('Авторизация', function(done) {
       var res = await driver.takeScreenshot();
       allure.createAttachment('image', new Buffer(res, 'base64'))
     })
+    allure.addLabel('label', 'value')
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot();
