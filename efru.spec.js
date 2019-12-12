@@ -20,7 +20,7 @@ describe('Eternal Fury RU', function() {
       enableLog: true,
       name: testName,
       enableVideo: true,
-      options: {
+      preferences: {
         homepage: 'https://www.yandex.ru/'
       }
     }
