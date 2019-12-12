@@ -241,6 +241,8 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
     });
     it('Проверка gameHeader (creabar)', async function() {
+      let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
+      console.log(consoleDTP)
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
     });
