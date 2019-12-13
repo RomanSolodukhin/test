@@ -292,7 +292,7 @@ function RemoveVideo(sessionId) {
           }
           else if(0 >= maxTime) {
             clearInterval(timer);
-            throw new Error('Ожидание в  '+counter+'мс превышено.');
+            throw new Error('Ожидание в  '+sleep*10+'мс превышено.');
           }
           else maxTime-=sleep;
         });
