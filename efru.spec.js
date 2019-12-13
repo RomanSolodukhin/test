@@ -134,13 +134,13 @@ describe('Авторизация', function(done) {
     testStep1()
     const testStep2 = allure.createStep('test const testStep2', async() => { assert.ok(true) } )
     testStep2()
-      step('Открыть форму авторизации', async() => {
+      step('Открыть форму авторизации', async function() {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
       })
-      step('Ввести логин', async() => {
+      step('Ввести логин', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
