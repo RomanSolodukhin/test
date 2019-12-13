@@ -126,7 +126,7 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-      return allure.createStep.call(description, fnBody)
+      return allure.createStep(description, fnBody)
     }
 
     const step1 = function(description, fnBody) { allure.createStep(description, fnBody) }
@@ -137,13 +137,13 @@ describe('Авторизация', function(done) {
     testStep1()
     const testStep2 = allure.createStep('test const testStep2', async() => { assert.ok(true) } )
     testStep2()
-      step('Открыть форму авторизации', async function() {
+      step('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
       })
-      step1('Ввести логин', async function() {
+      step('Ввести логин', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
