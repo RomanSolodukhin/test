@@ -127,7 +127,7 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(function (resolve, reject) {
-        let fnResult = allure.createStep(description, fnBody))
+        let fnResult = allure.createStep(description, fnBody)
         let sleep = 500,
         maxTime = sleep*10;
           let timer = setInterval(function () {
