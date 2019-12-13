@@ -142,6 +142,7 @@ describe('Авторизация', function(done) {
                 else maxTime-=sleep;
         }, sleep);
     }
+  };
       step('Открыть форму авторизации', async() {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
