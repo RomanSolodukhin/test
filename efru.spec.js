@@ -124,8 +124,8 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
   it('Авторизация', function() {
+    this.test.severity = 'blocker'
     allure.createStep('Открыть форму авторизации', async function() {
-      this.test.severity = 'blocker'
       await driver.findElement(By.linkText("Вход")).click()
       await driver.wait(until.elementLocated(By.id("loginModal")))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
@@ -141,12 +141,10 @@ describe('Авторизация', function(done) {
       assert.ok(true)
     })
     allure.createStep('Отправить форму', async function() {
-      this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       assert.ok(true)
     })
     allure.createStep('Авторизация успешна', async function() {
-      this.test.severity = 'blocker'
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       assert.ok(true)
