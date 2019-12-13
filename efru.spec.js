@@ -134,25 +134,25 @@ describe('Авторизация', function(done) {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
-      })
+      });
       step('Ввести логин', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
-      })
+      });
       step('Ввести пароль', async function() {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
         assert.ok(true)
-      })
+      });
       step('Отправить форму', async function() {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
         assert.ok(true)
-      })
+      });
       step('Авторизация успешна', async function() {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
         assert.ok(true)
-      })
+      });
   })
 
   it('Выбрать игру', async function() {
