@@ -127,7 +127,7 @@ describe('Авторизация', function(done) {
     async function step(description, fnBody) {
       await allure.createStep(description, () => {
         try {
-          await fnBody()
+          fnBody()
           assert.ok(true)
         }
         catch(err) {
