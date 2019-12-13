@@ -85,7 +85,6 @@ describe('Авторизация', function(done) {
   })
 
   afterEach(async function() {
-    testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot()
@@ -128,7 +127,7 @@ describe('Авторизация', function(done) {
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
         try {
-          let fnResult = await allure.createStep(description, fnBody)
+          let fnResult = await allure.createStep(description, fnBody())
           resolve(fnResult)
         }
         catch(err) {
@@ -137,8 +136,7 @@ describe('Авторизация', function(done) {
       })
     newStep.then(function(value) {
       console.log('Промис передал значение')
-      console.log(value)
-      return value
+      return value()
     })
   }
       step('Кликнуть по кнопке Входа', async function() {
