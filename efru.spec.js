@@ -129,13 +129,13 @@ describe('Авторизация', function(done) {
       var newStep = allure.createStep(description, fnBody)
       return newStep()
     }
-      allure.createStep('test111', allure.createStep('Открыть форму авторизации', async() => {
+      step('Открыть форму авторизации', async function() {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
-      }))
-      step('Ввести логин', async() => {
+      })
+      step('Ввести логин', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
@@ -144,11 +144,11 @@ describe('Авторизация', function(done) {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
         assert.ok(true)
       })
-      step('Отправить форму', async() => {
+      step('Отправить форму', async function() {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
         assert.ok(true)
       })
-      step('Авторизация успешна', async() => {
+      step('Авторизация успешна', async function() {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
         assert.ok(true)
