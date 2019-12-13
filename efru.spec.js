@@ -136,9 +136,8 @@ describe('Авторизация', function(done) {
     it('Отправить форму', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      let formSubmission = new Promise(
-        function(resolve, reject) {
-          if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
+      let formSubmission = new Promise(function(resolve, reject) {
+          if(driver.wait(until.stalenessOf(driver.findElement(By.id("loginform-password"))))) => resolve(true)
       })
       formSubmission.then(function(value) {
         (async() => {
