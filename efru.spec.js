@@ -125,8 +125,8 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', function() {
     this.test.severity = 'blocker'
-    const step = return function(description, fnBody) {
-      return allure.createStep(description, fnBody)
+    function step(description, fnBody) {
+      return allure.createStep.call(description, fnBody)
     }
 
     const step1 = function(description, fnBody) { allure.createStep(description, fnBody) }
