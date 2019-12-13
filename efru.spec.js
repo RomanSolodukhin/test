@@ -126,7 +126,8 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-      return allure.createStep(description, fnBody)
+      var newStep = allure.createStep(description, fnBody)
+      return newStep()
     }
       allure.createStep('test111', allure.createStep('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
