@@ -139,7 +139,7 @@ describe('Авторизация', function(done) {
       }, assert.ok(true))
       allure.createStep('Отправить форму', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      })
+      }, assert.ok(true))
       allure.createStep('Авторизация успешна', async() => {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
