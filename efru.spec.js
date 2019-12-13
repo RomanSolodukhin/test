@@ -127,47 +127,16 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
-
-  let elementIsNotLocated = async function(element) {
-    let sleep = 500,
-    maxTime = 3000
-    let timer = setInterval((async() => {
-      try {
-        await driver.wait(until.elementLocated(element))
-        maxTime-=sleep
-        if(0 >= maxTime) {
-          clearInterval(timer)
-          return false
-        }
-      }
-      catch(err) {
-        clearInterval(timer);
-        return true
-      }
-    }), sleep)
-  }
-
-    it('Ввести учетные данные (заведомо неправильные)', async function() {
-      await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
-    })
-    it('Отправить форму (с ошибкой)', async function() {
-      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-        /*if(elementIsNotLocated(By.id("loginform-password"))) assert.fail('Форма авторизации была закрыта без уведомления об ошибке')*/
-    })
-    it('Получено уведомление об ошибке', async function() {
-      assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: Уведомление об ошибке не было получено')
-    })
-    it('Ввести учетные данные (корректные)', async function() {
+    it('Ввести учетные данные', async function() {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
-    it('Отправить форму (верную)', async function() {
+    it('Отправить форму', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      /*let formSubmission = new Promise(
+      let formSubmission = new Promise(
         function(resolve, reject) {
           if(elementIsNotLocated(By.id("loginform-password"))) resolve(true)
       })
@@ -175,7 +144,7 @@ describe('Авторизация', function(done) {
         (async() => {
           assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
         })
-      })*/
+      })
     })
     it('Авторизация успешна', async function() {
       this.test.severity = 'blocker'
@@ -198,12 +167,14 @@ for(i = 1; i <= MAX_SERVERS;i++) {
 describe('Сервер '+i, function(done) {
     this.timeout(15000)
     this.slow(4000)
+    let scriptSkip = scriptBlocker
     let serverid = i
     let link = site+"games/ef/server/"+serverid
     let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
     after(async function() {
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
+      scriptSkip = false
     })
     beforeEach(function() {
       if(scriptBlocker) this.skip()
@@ -216,9 +187,8 @@ describe('Сервер '+i, function(done) {
         var res = await driver.takeScreenshot();
         allure.createAttachment(name, new Buffer(res, 'base64'))
         allure.createAttachment('Отчёт', String(this.currentTest.err))
-        allure.severity('blocker')
         removeVideo = false
-        if(this.currentTest.title == 'Выбрать сервер' || this.currentTest.title == 'Переключиться в XDM') scriptBlocker = true
+        if(this.currentTest.title == 'Выбрать сервер' || this.currentTest.title == 'Переключиться в XDM') scriptSkip = true
       }
     })
     it('Открыть окно выбора серверов', async function() {
@@ -232,13 +202,14 @@ describe('Сервер '+i, function(done) {
       }
     });
     it('Выбрать сервер', async function() {
+      allure.severity('blocker')
       await driver.findElement(By.xpath(serverselector)).click()
-      await driver.wait(until.titleContains('Eternal Fury'))
       let pageTitle = await driver.getTitle()
-      //assert.equal() css .crea_buy_popup_content maintenance
-      assert.equal('Bad request (#400)', pageTitle, pageTitle)
+      assert.notEqual('Bad request (#400)', pageTitle, pageTitle)
+      await driver.wait(until.titleContains('Eternal Fury'))
     });
     it('Проверка загрузки container', async function() {
+      allure.severity('blocker')
       await driver.wait(until.elementLocated(By.id('container')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
     });
@@ -258,18 +229,21 @@ describe('Сервер '+i, function(done) {
       }
     });
     it('Переключиться в XDM', async function() {
+      allure.severity('blocker')
       await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
       frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
       await driver.switchTo().frame(frame)
     });
     it('Переключиться в gameFrame', async function() {
+      allure.severity('high')
       await driver.wait(until.elementLocated(By.id('gameFrame')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
       frame = await driver.findElement(By.id('gameFrame'))
       await driver.switchTo().frame(frame)
     });
     it('Найти canvas', async function() {
+      allure.severity('high')
       await driver.wait(until.elementLocated(By.id('GameCanvas')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
     });
@@ -283,6 +257,7 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
     });
     it('Открыть окно пополнения', async function() {
+      allure.severity('high')
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
     })
