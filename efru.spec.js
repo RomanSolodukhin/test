@@ -85,9 +85,6 @@ describe('Авторизация', function(done) {
   })
 
   afterEach(async function() {
-    for(let i = 0; i < testSteps.length; i++) {
-      allure.createStep(testSteps[i], 'p')
-    }
     testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
@@ -132,7 +129,7 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
   it('Авторизация', function() {
-    allure.createStep('Ввести учётные данные', function() {
+    allure.createStep('Ввести учётные данные', async function() {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
