@@ -140,8 +140,7 @@ describe('Авторизация', function(done) {
       return await value()
     })
     newStep.then(function(error) {
-      console.log('Фигня какая-то произошла')
-      throw new Error(error)
+      step(description, fnBody)
     })
   }
       step('Кликнуть по кнопке Входа', async function() {
