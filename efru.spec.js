@@ -136,17 +136,6 @@ describe('Авторизация', function(done) {
     it('Отправить форму', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      let formSubmission = new Promise(function(resolve, reject) {
-          (async() => {
-            await driver.wait(until.stalenessOf(driver.findElement(By.id("loginform-password"))))
-          })
-          resolve(true)
-      })
-      formSubmission.then(function(value) {
-        (async() => {
-          assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
-        })
-      })
     })
     it('Авторизация успешна', async function() {
       this.test.severity = 'blocker'
