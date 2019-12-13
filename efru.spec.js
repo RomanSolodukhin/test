@@ -138,12 +138,12 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-      step('Открыть форму авторизации', async() => {
+      step('Открыть форму авторизации', async function() {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       });
-      step('Ввести логин', async() => {
+      step('Ввести логин', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       });
