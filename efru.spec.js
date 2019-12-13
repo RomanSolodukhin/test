@@ -150,7 +150,7 @@ describe('Авторизация', function(done) {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       })();
       await allure.createStep('Ввести пароль', async() => {
-        await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+        await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_W")
       })();
       await allure.createStep('Отправить форму', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
