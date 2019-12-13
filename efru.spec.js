@@ -39,7 +39,9 @@ describe('Eternal Fury RU', function() {
   })
   after(async function() {
     if(driver) await driver.quit()
+    let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
     if(removeVideo) await RemoveVideo(session.id_)
+    else allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, await request.get(videoPath).pipe(new Buffer(res, 'base64'))))
 })
   afterEach(async function() {
     let currentCapabilities = await session.getCapabilities()
@@ -278,11 +280,11 @@ describe('Сервер '+i, function(done) {
   }
 });
 
-function RemoveVideo(sessionId) {
+function RemoveVideo(videoPath) {
   let sleep = 500,
   maxTime = sleep*10;
     let timer = setInterval(function () {
-    request({method: 'DELETE', uri: 'http://localhost:4444/video/'+sessionId+'.mp4'}, function (error, response, body) {
+    request({method: 'DELETE', uri: videoPath}, function (error, response, body) {
           if(response.statusCode == 200) {
             clearInterval(timer);
             return true;
