@@ -124,24 +124,20 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', async function() {
     this.test.severity = 'blocker'
-    function step(description, fnBody) {
-      let newStep = new Promise(async function (resolve, reject) {
+    async function step(description, fnBody) {
+      await allure.createStep(description, async() => {
         try {
-          let fnResult = await allure.createStep(description, fnBody)
-          resolve(fnResult)
+          await fnBody()
+          assert.ok(true)
         }
         catch(err) {
-          reject(err)
+          assert.fail(err)
         }
-      })
-    newStep.then(function(value) {
-      console.log('Промис передал значение')
-      return value()
-    })
-  }
-      await allure.createStep('Кликнуть по кнопке Входа', async() => {
-        await driver.findElement(By.linkText("Вход")).click()
       })();
+    }
+      await allure.createStep('Кликнуть по кнопке Входа',
+        await driver.findElement(By.linkText("Вход")).click()
+      );
       await allure.createStep('Открыто окно авторизации', async() => {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
