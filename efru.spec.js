@@ -126,8 +126,10 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-    () => allure.createStep(description, fnBody)
+      () => allure.createStep(description, fnBody)
     }
+    const step1 = function(description, fnBody) { allure.createStep(description, fnBody) }
+
     const testStep = allure.createStep('test const testStep', function() { assert.ok(true) } )
     testStep()
     const testStep1 = allure.createStep('test const testStep1', async function() { assert.ok(true) } )
@@ -140,7 +142,7 @@ describe('Авторизация', function(done) {
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
       })
-      step('Ввести логин', async function() {
+      step1('Ввести логин', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
