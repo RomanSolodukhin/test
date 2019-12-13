@@ -127,7 +127,7 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
-        let fnResult = await allure.createStep(description, fnBody())         
+        let fnResult = await allure.createStep(description, return fnBody())         
 if(fnResult) {
           console.log(fnResult)
             resolve(fnResult)
@@ -143,7 +143,7 @@ if(fnResult) {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       });
-      step('Ввести логин', return async() => {
+      step('Ввести логин', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       });
