@@ -132,7 +132,7 @@ describe('Авторизация', function(done) {
     const step1 = function(description, fnBody) { allure.createStep(description, fnBody) }
 
     const testStep = allure.createStep('test const testStep', function() { assert.ok(true) } )
-    testStep()
+    testStep
     const testStep1 = allure.createStep('test const testStep1', async function() { assert.ok(true) } )
     testStep1()
     const testStep2 = allure.createStep('test const testStep2', async() => { assert.ok(true) } )
