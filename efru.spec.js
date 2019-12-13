@@ -127,24 +127,35 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
-        let fnResult = await allure.createStep(description, fnBody)         
-if(fnResult) {
-          console.log(fnResult)
+        let fnResult = await allure.createStep(description, fnBody())
+          if(fnResult) {
+            console.log(fnResult)
             resolve(fnResult)
           }
+          else reject(fnResult)
         })
-    newStep.then(function(value) {
+    newStep.then(async function(value) {
       console.log('Промис передал значение')
-      return value()
+      console.log(value)
+      return await value()
+    })
+    newStep.then(function(error) {
+      console.log('Фигня какая-то произошла')
+      throw new Error(error)
     })
   }
-      step('Открыть форму авторизации', async function() {
+      step('Кликнуть по кнопке Входа', async function() {
         await driver.findElement(By.linkText("Вход")).click()
+      })
+      step('Открыто окно авторизации', async function() {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       });
-      step('Ввести логин', async function() {
+      step('Отображается поле ввода логина', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
+      });
+      step('Ввести логин', async function() {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       });
       step('Ввести пароль', async function() {
@@ -244,14 +255,14 @@ describe('Сервер '+i, function(done) {
       await driver.switchTo().frame(frame)
     });
     it('Переключиться в gameFrame', async function() {
-      allure.severity('high')
+      allure.severity('critical')
       await driver.wait(until.elementLocated(By.id('gameFrame')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
       frame = await driver.findElement(By.id('gameFrame'))
       await driver.switchTo().frame(frame)
     });
     it('Найти canvas', async function() {
-      allure.severity('high')
+      allure.severity('critical')
       await driver.wait(until.elementLocated(By.id('GameCanvas')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
     });
@@ -265,7 +276,7 @@ describe('Сервер '+i, function(done) {
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
     });
     it('Открыть окно пополнения', async function() {
-      allure.severity('high')
+      allure.severity('critical')
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
     })
