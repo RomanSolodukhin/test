@@ -140,7 +140,7 @@ describe('Авторизация', function(done) {
     })
   }
       allure.startStep('Кликнуть по кнопке Входа')
-      async function() {
+      async() => {
         await driver.findElement(By.linkText("Вход")).click()
       })
       allure.endStep('Passed')
