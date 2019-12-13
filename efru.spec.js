@@ -133,8 +133,8 @@ describe('Авторизация', function(done) {
         }
         catch(err) {
           console.log('ошибка в шаге')
-          assert.fail('Error: '+description+' — не удалось. ')
           allure.createAttachment('Отчёт', String(err))
+          assert.fail('Error: '+description+' — не удалось. ')
         }
       })();
     }
