@@ -128,21 +128,14 @@ describe('Авторизация', function(done) {
     function step(description, fnBody) {
       let newStep = new Promise(function (resolve, reject) {
         let fnResult = allure.createStep(description, fnBody)
-        let sleep = 500,
-        maxTime = sleep*10;
-        let timer = setInterval(function () {
           if(fnResult) {
+            console.log('Промис успешен')
             clearInterval(timer)
             resolve(fnResult)
           }
-          else if(0 >= maxTime) {
-            clearInterval(timer);
-            throw new Error('Ожидание в  '+counter+'мс превышено.')
-          }
-          else maxTime-=sleep;
-        }, sleep);
-    });
+        })
     newStep.then(function(value) {
+      console.log('Промис передал значение')
       return value
     })
   }
