@@ -128,12 +128,9 @@ describe('Авторизация', function(done) {
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
         let fnResult = await allure.createStep(description, fnBody)
-          if(fnResult) {
-            console.log(fnResult)
-            resolve(fnResult)
-          }
-          else reject(fnResult)
-        })
+        if(error) reject(error)
+        else resolve(fnResult)
+      })
     newStep.then(async function(value) {
       console.log('Промис передал значение')
       console.log(value)
