@@ -139,27 +139,27 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-      await allure.createStep(('Кликнуть по кнопке Входа', await async() => {
+      await allure.createStep(('Кликнуть по кнопке Входа', async() => {
         await driver.findElement(By.linkText("Вход")).click()
       })();
-      await allure.createStep('Открыто окно авторизации', await async() => {
+      await allure.createStep('Открыто окно авторизации', async() => {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       })();
-      await allure.createStep(('Отображается поле ввода логина', await async() => {
+      await allure.createStep(('Отображается поле ввода логина', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
       })();
-      await allure.createStep(('Ввести логин', await async() => {
+      await allure.createStep(('Ввести логин', async() => {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       })();
-      await allure.createStep(('Ввести пароль', await async() => {
+      await allure.createStep(('Ввести пароль', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
       })();
-      await allure.createStep(('Отправить форму', await async() => {
+      await allure.createStep(('Отправить форму', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       })();
-      await allure.createStep(('Авторизация успешна', await async() => {
+      await allure.createStep(('Авторизация успешна', async() => {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       })();
