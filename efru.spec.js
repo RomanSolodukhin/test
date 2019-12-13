@@ -132,12 +132,12 @@ describe('Авторизация', function(done) {
     const step1 = function(description, fnBody) { allure.createStep(description, fnBody) }
 
     const testStep = allure.createStep('test const testStep', function() { assert.ok(true) } )
-    testStep
+    testStep()
     const testStep1 = allure.createStep('test const testStep1', async function() { assert.ok(true) } )
     testStep1()
     const testStep2 = allure.createStep('test const testStep2', async() => { assert.ok(true) } )
     testStep2()
-      step('Открыть форму авторизации', async() => {
+      ()=> allure.createStep('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
