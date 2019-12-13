@@ -126,7 +126,7 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     const testStep = allure.createStep('test const testStep', assert.ok(true))
-    const testStep1 = function() { allure.createStep('test const testStep1', function() { assert.ok(true) }) }
+    const testStep1 = allure.createStep('test const testStep1', function() { assert.ok(true) })
     testStep
     testStep1
     testStep()
