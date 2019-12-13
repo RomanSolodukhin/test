@@ -2,7 +2,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
 const { toMatchImageSnapshot } = require('jest-image-snapshot')
-const { expect } = require('jest')
+require('jest')
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
