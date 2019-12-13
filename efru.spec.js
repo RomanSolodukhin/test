@@ -135,10 +135,10 @@ describe('Авторизация', function(done) {
           reject(err)
         }
       })
-    newStep.then(async function(value) {
+    newStep.then(function(value) {
       console.log('Промис передал значение')
       console.log(value)
-      return await value()
+      return value
     })
   }
       step('Кликнуть по кнопке Входа', async function() {
