@@ -139,29 +139,27 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-      allure._allure.startStep('Кликнуть по кнопке Входа')
-      async() => {
+      allure.createStep(('Кликнуть по кнопке Входа', async() => {
         await driver.findElement(By.linkText("Вход")).click()
-      }
-      allure._allure.endStep('Passed')
+      });
       allure.createStep('Открыто окно авторизации', async() => {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       })();
-      step('Отображается поле ввода логина', async() => {
+      allure.createStep(('Отображается поле ввода логина', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
       })();
-      step('Ввести логин', async() => {
+      allure.createStep(('Ввести логин', async() => {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       })();
-      step('Ввести пароль', async() => {
+      allure.createStep(('Ввести пароль', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
       })();
-      step('Отправить форму', async() => {
+      allure.createStep(('Отправить форму', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       })();
-      step('Авторизация успешна', async() => {
+      allure.createStep(('Авторизация успешна', async() => {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       })();
