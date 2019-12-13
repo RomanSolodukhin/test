@@ -137,7 +137,7 @@ describe('Авторизация', function(done) {
         assert.ok(true)
       })
       allure.createStep('Ввести пароль', async() => {
-        await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+        await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_wrong")
         assert.ok(true)
       })
       allure.createStep('Отправить форму', async() => {
