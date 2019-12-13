@@ -139,7 +139,7 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-  let step1 = await async function() {
+  let step1 = async function() {
     await driver.findElement(By.linkText("Вход")).click()
   }
       step('Кликнуть по кнопке Входа', step1)
