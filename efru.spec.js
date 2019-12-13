@@ -139,10 +139,11 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-  let step1 = async function() {
-    await driver.findElement(By.linkText("Вход")).click()
-  }
-      step('Кликнуть по кнопке Входа', step1)
+      allure.startStep('Кликнуть по кнопке Входа', timestamp)
+      async function() {
+        await driver.findElement(By.linkText("Вход")).click()
+      })
+      allure.endStep('Passed', timestamp)
       step('Открыто окно авторизации', async function() {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
