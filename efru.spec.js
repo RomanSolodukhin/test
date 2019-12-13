@@ -130,7 +130,6 @@ describe('Авторизация', function(done) {
         let fnResult = allure.createStep(description, fnBody)
           if(fnResult) {
             console.log('Промис успешен')
-            clearInterval(timer)
             resolve(fnResult)
           }
         })
