@@ -129,8 +129,6 @@ describe('Авторизация', function(done) {
     const testStep1 = allure.createStep('test const testStep1', function() { assert.ok(true) })
     testStep
     testStep1
-    testStep()
-    testStep1()
       allure.createStep('test', assert.ok(true))
       allure.createStep('test2', function() { assert.ok(true) })
       allure.createStep('Открыть форму авторизации', async() => {
