@@ -128,12 +128,12 @@ describe('Авторизация', function(done) {
     function step(description, fnBody) {
       return allure.createStep(description, fnBody)
     }
-      ()=> allure.createStep('Открыть форму авторизации', async() => {
+      allure.createStep('test111', allure.createStep('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
         assert.ok(true)
-      })
+      }))
       step('Ввести логин', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
