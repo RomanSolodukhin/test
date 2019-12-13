@@ -131,24 +131,26 @@ describe('Авторизация', function(done) {
     await driver.findElement(By.linkText("Вход")).click()
     await driver.wait(until.elementLocated(By.id("loginform-username")))
   })
-    it('Ввести учетные данные', async function() {
+  it('Авторизация', function() {
+    allure.createStep('Ввести учётные данные', function() {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
-    it('Отправить форму', async function() {
+    allure.createStep('Отправить форму', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
     })
-    it('Авторизация успешна', async function() {
+    allure.createStep('Авторизация успешна', async function() {
       this.test.severity = 'blocker'
       await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
       await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
     })
+  })
 
   it('Выбрать игру', async function() {
-    expect(image).toMatchImageSnapshot()
+    //expect(image).toMatchImageSnapshot()
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
     await driver.findElement(By.linkText('Eternal Fury')).click()
