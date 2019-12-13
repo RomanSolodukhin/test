@@ -125,31 +125,31 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', function() {
     this.test.severity = 'blocker'
-
+    function step(description, fnBody) => {
+      allure.createStep(description, fnBody)
+    }
     const testStep = allure.createStep('test const testStep', function() { assert.ok(true) } )
     testStep()
     const testStep1 = allure.createStep('test const testStep1', async function() { assert.ok(true) } )
     testStep1()
     const testStep2 = allure.createStep('test const testStep2', async() => { assert.ok(true) } )
     testStep2()
-      allure.createStep('test', assert.ok(true))
-      allure.createStep('test2', function() { assert.ok(true) })
-      allure.createStep('Открыть форму авторизации', async() => {
+      allure.step('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       }, assert.ok(true))
-      allure.createStep('Ввести логин', async() => {
+      allure.step('Ввести логин', async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       }, assert.ok(true))
-      allure.createStep('Ввести пароль', async() => {
+      allure.step('Ввести пароль', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
       }, assert.ok(true))
-      allure.createStep('Отправить форму', async() => {
+      allure.step('Отправить форму', async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       }, assert.ok(true))
-      allure.createStep('Авторизация успешна', async() => {
+      allure.step('Авторизация успешна', async() => {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       }, assert.ok(true))
