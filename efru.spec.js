@@ -132,7 +132,7 @@ describe('Авторизация', function(done) {
           assert.ok(true)
         }
         catch(err) {
-          assert.fail(description+': не удалось. ')
+          assert.fail('Error: '+description+' — не удалось. ')
           allure.createAttachment('Отчёт', String(err))
         }
       })();
