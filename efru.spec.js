@@ -122,7 +122,7 @@ describe('Авторизация', function(done) {
     await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
     await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
   })
-  it('Авторизация', function() {
+  it('Авторизация', async function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
@@ -139,27 +139,27 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-      allure.createStep(('Кликнуть по кнопке Входа', async() => {
+      await allure.createStep(('Кликнуть по кнопке Входа', await async() => {
         await driver.findElement(By.linkText("Вход")).click()
       });
-      allure.createStep('Открыто окно авторизации', async() => {
+      await allure.createStep('Открыто окно авторизации', await async() => {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
       })();
-      allure.createStep(('Отображается поле ввода логина', async() => {
+      await allure.createStep(('Отображается поле ввода логина', await async() => {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
       })();
-      allure.createStep(('Ввести логин', async() => {
+      await allure.createStep(('Ввести логин', await async() => {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
       })();
-      allure.createStep(('Ввести пароль', async() => {
+      await allure.createStep(('Ввести пароль', await async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_WRONG")
       })();
-      allure.createStep(('Отправить форму', async() => {
+      await allure.createStep(('Отправить форму', await async() => {
         await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
       })();
-      allure.createStep(('Авторизация успешна', async() => {
+      await allure.createStep(('Авторизация успешна', await async() => {
         await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       })();
