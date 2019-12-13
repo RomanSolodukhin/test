@@ -125,9 +125,9 @@ describe('Авторизация', function(done) {
   it('Авторизация', async function() {
     this.test.severity = 'blocker'
     async function step(description, fnBody) {
-      await allure.createStep(description, () => {
+      await allure.createStep(description, async() => {
         try {
-          fnBody()
+          await fnBody()
           assert.ok(true)
         }
         catch(err) {
@@ -135,7 +135,7 @@ describe('Авторизация', function(done) {
         }
       })();
     }
-      await allure.createStep('Кликнуть по кнопке Входа', async function() {
+      await step('Кликнуть по кнопке Входа', async function() {
         await driver.findElement(By.linkText("Вход")).click()
       });
       await allure.createStep('Открыто окно авторизации', async() => {
