@@ -41,8 +41,13 @@ describe('Eternal Fury RU', function() {
     if(driver) await driver.quit()
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
     if(removeVideo) await RemoveVideo(session.id_)
-    else allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', await allure.createAttachment(session.id_, new Buffer(await request.get(videoPath).pipe(), 'base64')))
-})
+    else {
+      let videoFile
+      await request.get(videoPath).pipe(videoFile)
+      await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', await allure.createAttachment(session.id_, new Buffer(videoFile, 'base64')))
+
+    }
+  })
   afterEach(async function() {
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
