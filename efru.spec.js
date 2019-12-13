@@ -144,7 +144,7 @@ describe('Авторизация', function(done) {
       })
       formSubmission.then(function(value) {
         (async() => {
-          assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
+          assert.equal(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
         })();
       })
     })
