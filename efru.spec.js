@@ -147,7 +147,7 @@ describe('Авторизация', function(done) {
       allure.createStep('Открыто окно авторизации', async() => {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
-      });
+      })();
       step('Отображается поле ввода логина', async function() {
         await driver.wait(until.elementLocated(By.id("loginform-username")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
