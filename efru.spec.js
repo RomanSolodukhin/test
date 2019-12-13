@@ -1,6 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
+require('jest-image-snapshot')
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
