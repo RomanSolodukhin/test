@@ -127,22 +127,25 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(function (resolve, reject) {
-        let fnResult = allure.createStep(description, fnBody))
+        let fnResult = allure.createStep(description, fnBody)
         let sleep = 500,
         maxTime = sleep*10;
-          let timer = setInterval(function () {
-                  if(fnResult) {
-                    clearInterval(timer);
-                    return fnResult;
-                  }
-                else if(0 >= maxTime) {
-                  clearInterval(timer);
-                  throw new Error('Ожидание в  '+counter+'мс превышено.');
-                }
-                else maxTime-=sleep;
+        let timer = setInterval(function () {
+          if(fnResult) {
+            clearInterval(timer)
+            resolve(fnResult)
+          }
+          else if(0 >= maxTime) {
+            clearInterval(timer);
+            throw new Error('Ожидание в  '+counter+'мс превышено.')
+          }
+          else maxTime-=sleep;
         }, sleep);
-    }
-  };
+    });
+    newStep.then(function(value) {
+      return value
+    })
+  }
       step('Открыть форму авторизации', async() {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
