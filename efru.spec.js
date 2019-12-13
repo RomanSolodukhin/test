@@ -40,12 +40,12 @@ describe('Eternal Fury RU', function() {
   after(async function() {
     if(driver) await driver.quit()
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
-    if(removeVideo) await RemoveVideo(session.id_)
+    if(removeVideo) await RemoveVideo(videoPath)
     else {
       let videoFile
       await request.get(videoPath).on('response', function(response) {
         console.log(response.statusCode) // 200
-        console.log(response.headers['content-type']) // 'image/png'
+        console.log(response.headers['video/mp4']) // 'image/png'
       }).pipe(videoFile)
       await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, new Buffer(videoFile, 'base64')))
 
