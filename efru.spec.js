@@ -43,8 +43,11 @@ describe('Eternal Fury RU', function() {
     if(removeVideo) await RemoveVideo(session.id_)
     else {
       let videoFile
-      await request.get(videoPath).pipe(videoFile)
-      await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', await allure.createAttachment(session.id_, new Buffer(videoFile, 'base64')))
+      await request.get(videoPath).on('response', function(response) {
+        console.log(response.statusCode) // 200
+        console.log(response.headers['content-type']) // 'image/png'
+      }).pipe(videoFile)
+      await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, new Buffer(videoFile, 'base64')))
 
     }
   })
@@ -96,7 +99,7 @@ describe('Авторизация', function(done) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot()
       allure.createAttachment(name, new Buffer(res, 'base64'))
-      //allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity(this.currentTest.severity)
       removeVideo = false
       if(this.currentTest.severity == 'blocker') scriptBlocker = true
