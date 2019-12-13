@@ -1,7 +1,7 @@
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
-require('jest-image-snapshot')
+const { toMatchImageSnapshot } = require('jest-image-snapshot')
 
 describe('Eternal Fury RU', function() {
   this.timeout(10000)
@@ -90,7 +90,7 @@ describe('Авторизация', function(done) {
     testSteps.length = 0
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
-      var res = await driver.takeScreenshot();
+      var res = await driver.takeScreenshot()
       allure.createAttachment(name, new Buffer(res, 'base64'))
       allure.createAttachment('Отчёт', String(this.currentTest.err))
       allure.severity(this.currentTest.severity)
@@ -98,12 +98,14 @@ describe('Авторизация', function(done) {
       if(this.currentTest.severity == 'blocker') scriptBlocker = true
     }
   })
+  let image
   it('Загрузить страницу', async function() {
     this.test.severity = 'blocker'
     await allure.createStep('Открыть страницу: '+site, await driver.get(site))
     testSteps.push('Открыть страницу: '+site)
   })
   it('Проверка языка', async function() {
+    image = await driver.takeScreenshot()
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     if(lang == 'icon icon_ru') setlang = it.skip
   })
@@ -145,6 +147,7 @@ describe('Авторизация', function(done) {
     })
 
   it('Выбрать игру', async function() {
+    expect(image).toMatchImageSnapshot()
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
     await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
     await driver.findElement(By.linkText('Eternal Fury')).click()
