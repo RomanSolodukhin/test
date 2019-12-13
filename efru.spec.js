@@ -40,15 +40,10 @@ describe('Eternal Fury RU', function() {
   after(async function() {
     if(driver) await driver.quit()
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
-    if(removeVideo) await RemoveVideo(videoPath)
+    if(removeVideo) await removeVideo(videoPath)
     else {
-      let videoFile
-      await request.get(videoPath).on('response', function(response) {
-        console.log(response.statusCode) // 200
-        console.log(response.headers['video/mp4']) // 'image/png'
-      }).pipe(videoFile)
+      let videoFile = await getRemoteVideo(videoPath)
       await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, new Buffer(videoFile, 'base64')))
-
     }
   })
   afterEach(async function() {
@@ -288,7 +283,7 @@ describe('Сервер '+i, function(done) {
   }
 });
 
-function RemoveVideo(videoPath) {
+function removeVideo(videoPath) {
   let sleep = 500,
   maxTime = sleep*10;
     let timer = setInterval(function () {
@@ -303,5 +298,28 @@ function RemoveVideo(videoPath) {
           }
           else maxTime-=sleep;
         });
+  }, sleep);
+};
+
+function getRemoteVideo(videoPath) {
+  let sleep = 500,
+  videoFile,
+  maxTime = sleep*10;
+    let timer = setInterval(function () {
+      request
+        .get('http://google.com/img.png')
+        .on('response', function(response) {
+          if(response.statusCode == 200) {
+            clearInterval(timer);
+          }
+          else if(0 >= maxTime) {
+            clearInterval(timer);
+            throw new Error('Ожидание в  '+sleep*10+'мс превышено.');
+          }
+          else maxTime-=sleep;
+          console.log(response.statusCode) // 200
+          console.log(response.headers['content-type']) // 'image/png'
+        })
+        .pipe(videoFile)
   }, sleep);
 };
