@@ -125,6 +125,8 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', function() {
     this.test.severity = 'blocker'
+      allure.createStep('test', assert.ok(true))
+      allure.createStep('test2', function() { assert.ok(true) })
       allure.createStep('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
