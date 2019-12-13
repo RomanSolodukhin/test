@@ -139,9 +139,10 @@ describe('Авторизация', function(done) {
       return value()
     })
   }
-      step('Кликнуть по кнопке Входа', async function() {
-        await driver.findElement(By.linkText("Вход")).click()
-      })
+  let step1 = await async function() {
+    await driver.findElement(By.linkText("Вход")).click()
+  }
+      step('Кликнуть по кнопке Входа', step1)
       step('Открыто окно авторизации', async function() {
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
