@@ -139,9 +139,6 @@ describe('Авторизация', function(done) {
       console.log(value)
       return await value()
     })
-    newStep.then(function(error) {
-      step(description, fnBody)
-    })
   }
       step('Кликнуть по кнопке Входа', async function() {
         await driver.findElement(By.linkText("Вход")).click()
