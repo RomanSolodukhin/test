@@ -126,9 +126,7 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-      let newStep = allure.createStep(description,
-        fnBody()
-      })
+      let newStep = allure.createStep(description, fnBody())
       return newStep()
     }
       step('Открыть форму авторизации', async() => {
