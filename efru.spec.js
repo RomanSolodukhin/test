@@ -127,12 +127,14 @@ describe('Авторизация', function(done) {
     allure.createStep('Открыть форму авторизации', async function() {
       this.test.severity = 'blocker'
       await driver.findElement(By.linkText("Вход")).click()
-      await driver.wait(until.elementLocated(By.id("loginform-username")))
+      await driver.wait(until.elementLocated(By.id("loginModal")))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
     })
-    allure.createStep('Ввести учётные данные', async function() {
-      await driver.findElement(By.id("loginform-username")).clear()
-      await driver.findElement(By.id("loginform-password")).clear()
+    allure.createStep('Ввести логин', async function() {
+      await driver.wait(until.elementLocated(By.id("loginform-username")))
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+    })
+    allure.createStep('Ввести пароль', async function() {
       await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
     })
     allure.createStep('Отправить форму', async function() {
