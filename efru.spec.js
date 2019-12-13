@@ -140,7 +140,7 @@ describe('Авторизация', function(done) {
         await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
         assert.ok(true)
       })
-      step('Ввести пароль', async() => {
+      step('Ввести пароль', async function() {
         await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
         assert.ok(true)
       })
