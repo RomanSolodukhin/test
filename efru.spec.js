@@ -125,8 +125,13 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', function() {
     this.test.severity = 'blocker'
-    const testStep = allure.createStep('test const testStep', function() { assert.ok(true) } )
+
+    const testStep = allure.createStep('test const testStep1', function() { assert.ok(true) } )
     testStep()
+    const testStep1 = allure.createStep('test const testStep1', async function() { assert.ok(true) } )
+    testStep1()
+    const testStep2 = allure.createStep('test const testStep1', async() => { assert.ok(true) } )
+    testStep2()
       allure.createStep('test', assert.ok(true))
       allure.createStep('test2', function() { assert.ok(true) })
       allure.createStep('Открыть форму авторизации', async() => {
