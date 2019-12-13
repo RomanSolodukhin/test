@@ -129,13 +129,13 @@ describe('Авторизация', function(done) {
       let newStep = new Promise(function (resolve, reject) {
         let fnResult = allure.createStep(description, fnBody)
           if(fnResult) {
-            console.log('Промис успешен')
+            console.log(fnResult)
             resolve(fnResult)
           }
         })
     newStep.then(function(value) {
       console.log('Промис передал значение')
-      return value
+      return value()
     })
   }
       step('Открыть форму авторизации', async() => {
