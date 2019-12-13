@@ -131,7 +131,7 @@ describe('Авторизация', function(done) {
       await driver.findElement(By.id("loginform-username")).clear()
       await driver.findElement(By.id("loginform-password")).clear()
       await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ_wrong")
     })
     it('Отправить форму', async function() {
       this.test.severity = 'blocker'
