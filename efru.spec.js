@@ -127,7 +127,7 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = allure.createStep(description,
-        fnBody(assert.ok(true))
+        fnBody()
       })
       return newStep()
     }
