@@ -126,7 +126,7 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-      var newStep = allure.createStep(description, async() => {
+      let newStep = allure.createStep(description, async() => {
         fnBody
         assert.ok(true)
       })
