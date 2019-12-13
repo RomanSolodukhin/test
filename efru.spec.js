@@ -127,9 +127,13 @@ describe('Авторизация', function(done) {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
-        let fnResult = await allure.createStep(description, fnBody)
-        if(err) reject(err)
-        else resolve(fnResult)
+        try {
+          let fnResult = await allure.createStep(description, fnBody)
+          resolve(fnResult)
+        }
+        catch(err) {
+          reject(err)
+        }
       })
     newStep.then(async function(value) {
       console.log('Промис передал значение')
