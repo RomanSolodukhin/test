@@ -138,7 +138,7 @@ if(fnResult) {
       return value()
     })
   }
-      step('Открыть форму авторизации', async function() => {
+      step('Открыть форму авторизации', async() => {
         await driver.findElement(By.linkText("Вход")).click()
         await driver.wait(until.elementLocated(By.id("loginModal")))
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
