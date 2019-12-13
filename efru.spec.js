@@ -126,8 +126,21 @@ describe('Авторизация', function(done) {
   it('Авторизация', function() {
     this.test.severity = 'blocker'
     function step(description, fnBody) {
-      let newStep = allure.createStep(description, fnBody)
-      return newStep();
+      let newStep = new Promise(function (resolve, reject) {
+        let fnResult = allure.createStep(description, fnBody))
+        let sleep = 500,
+        maxTime = sleep*10;
+          let timer = setInterval(function () {
+                  if(fnResult) {
+                    clearInterval(timer);
+                    return fnResult;
+                  }
+                else if(0 >= maxTime) {
+                  clearInterval(timer);
+                  throw new Error('Ожидание в  '+counter+'мс превышено.');
+                }
+                else maxTime-=sleep;
+        }, sleep);
     }
       step('Открыть форму авторизации', async() {
         await driver.findElement(By.linkText("Вход")).click()
