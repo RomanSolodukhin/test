@@ -128,7 +128,7 @@ describe('Авторизация', function(done) {
     function step(description, fnBody) {
       let newStep = new Promise(async function (resolve, reject) {
         let fnResult = await allure.createStep(description, fnBody)
-        if(error) reject(error)
+        if(err) reject(err)
         else resolve(fnResult)
       })
     newStep.then(async function(value) {
