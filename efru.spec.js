@@ -307,7 +307,7 @@ function getRemoteVideo(videoPath) {
   maxTime = sleep*10;
     let timer = setInterval(function () {
       request
-        .get('http://google.com/img.png')
+        .get(videoPath)
         .on('response', function(response) {
           if(response.statusCode == 200) {
             clearInterval(timer);
@@ -317,8 +317,6 @@ function getRemoteVideo(videoPath) {
             throw new Error('Ожидание в  '+sleep*10+'мс превышено.');
           }
           else maxTime-=sleep;
-          console.log(response.statusCode) // 200
-          console.log(response.headers['content-type']) // 'image/png'
         })
         .pipe(videoFile)
   }, sleep);
