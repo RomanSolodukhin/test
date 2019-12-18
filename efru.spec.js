@@ -95,6 +95,12 @@ describe('Авторизация', function(done) {
   })
 
   afterEach(async function() {
+    driver.manage().logs().get(logging.Type.BROWSER)
+    .then(function(entries) {
+      entries.forEach(function(entry) {
+        console.log('[%s] %s', entry.level.name, entry.message);
+      });
+    });
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot()
