@@ -15,8 +15,8 @@ describe('Eternal Fury RU', function() {
   let removeVideo = true
 
   before(async function() {
-    var prefs = await new logging.Preferences();
-    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
+    /*var prefs = await new logging.Preferences();
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);*/
 
     /*var caps = Capabilities.chrome();
     caps.setLoggingPrefs(prefs);*/
