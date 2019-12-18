@@ -27,12 +27,10 @@ describe('Eternal Fury RU', function() {
       enableVideo: true
     }
 
-    var options = await new Options()
-    options.setUserPreferences(prefs)
-
-    driver = await new Builder(options)
+    driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
+    .setLoggingPrefs(prefs)
     .setAlertBehavior()
     .build();
     await driver.manage().window().setRect(1920, 1080)
