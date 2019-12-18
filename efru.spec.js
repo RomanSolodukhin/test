@@ -72,7 +72,7 @@ describe('Eternal Fury RU', function() {
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        attachLog.push(entry.level.name, entry.message)
+        attachLog.push(entry.level.name, entry.message, '\\n')
       });
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
@@ -302,7 +302,7 @@ describe('Сервер '+i, function(done) {
       .then(function(entries) {
         entries.forEach(function(entry) {
           attachLog.push(entry.level.name, entry.message)
-          if(String(entry.message).includes('Create unpacker')) allure.description((entry.level.name,entry.message))
+          if(String(entry.message).includes('Create unpacker')) allure.createAttachment('Найдена команда', String(entry.level.name, entry.message), 'text/plain')
         });
         console.log(attachLog)
         allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
