@@ -26,7 +26,7 @@ describe('Eternal Fury RU', function() {
       name: testName,
       enableVideo: true
     }
-    var options = await new ChromeOptions()
+    var options = {}
     options.setCapability(CapabilityType.LOGGING_PREFS, prefs)
     driver = await new Builder(options)
     .usingServer('http://localhost:4444/wd/hub')
