@@ -17,7 +17,6 @@ describe('Eternal Fury RU', function() {
   before(async function() {
     var prefs = await new logging.Preferences();
     prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
-    prefs.setLevel(logging.Type.CLIENT, logging.Level.ALL);
 
     var capabilities = {
       browserName: 'chrome',
@@ -54,7 +53,7 @@ describe('Eternal Fury RU', function() {
   })
   afterEach(async function() {
     var attachLog = []
-    console.log(driver.manage().logs().get())
+    console.log(driver.manage().logs().getAvailableLogTypes())
     driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
