@@ -100,7 +100,7 @@ describe('Авторизация', function(done) {
     .then(function(entries) {
       entries.forEach(function(entry) {
         console.log('[%s] %s', entry.level.name, entry.message);
-        attachLog.push([%s] %s', entry.level.name, entry.message)
+        attachLog.push('[%s] %s', entry.level.name, entry.message)
       });
     });
     allure.createAttachment('console', new Buffer(attachLog, 'base64'))
