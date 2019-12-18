@@ -16,7 +16,7 @@ describe('Eternal Fury RU', function() {
 
   before(async function() {
     var prefs = new logging.Preferences();
-    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
+    await prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
 
     var capabilities = {
       browserName: 'chrome',
