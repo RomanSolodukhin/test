@@ -1,4 +1,4 @@
-const { Builder, By, Key, until, Options} = require('selenium-webdriver')
+const { Builder, By, Key, until, Options, logging} = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
 require('jest-image-snapshot')
@@ -15,11 +15,8 @@ describe('Eternal Fury RU', function() {
   let removeVideo = true
 
   before(async function() {
-    var prefs = new logging.Preferences();
+    var prefs = await new logging.Preferences();
     prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
-
-    /*var caps = Capabilities.chrome();
-    caps.setLoggingPrefs(prefs);*/
 
     var capabilities = {
       browserName: 'chrome',
@@ -30,10 +27,10 @@ describe('Eternal Fury RU', function() {
       enableVideo: true
     }
 
-    var options = new Options()
+    var options = await new Options()
     options.setUserPreferences(prefs)
 
-    driver = await new Builder()
+    driver = await new Builder(options)
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
     .setAlertBehavior()
