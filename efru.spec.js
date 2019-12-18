@@ -27,6 +27,7 @@ describe('Eternal Fury RU', function() {
       enableVideo: true,
       loggingPrefs: prefs
     }
+    capabilities.setCapability('goog:loggingPrefs', prefs)
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
