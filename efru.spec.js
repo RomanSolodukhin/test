@@ -24,8 +24,7 @@ describe('Eternal Fury RU', function() {
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true,
-      loggingPrefs: prefs
+      enableVideo: true
     }
     capabilities.setCapability('goog:loggingPrefs', prefs)
     driver = await new Builder()
