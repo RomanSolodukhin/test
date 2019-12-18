@@ -313,7 +313,7 @@ describe('Сервер '+i, function(done) {
           attachLog.push(entry.level.name, entry.message)
         });
         console.log(attachLog)
-        allure.description(String(attachLog))
+        allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
       });
     })
     })
