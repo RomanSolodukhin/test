@@ -9,7 +9,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 0
+  let MAX_SERVERS = 1
   let testName = String(this.title)
   let session
   let removeVideo = true
