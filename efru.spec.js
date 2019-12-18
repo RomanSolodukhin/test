@@ -95,7 +95,7 @@ describe('Авторизация', function(done) {
   })
 
   afterEach(async function() {
-    var attachLog
+    var attachLog = []
     driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
