@@ -302,9 +302,8 @@ describe('Сервер '+i, function(done) {
       .then(function(entries) {
         entries.forEach(function(entry) {
           attachLog.push(entry.level.name, entry.message)
-          if(String(entry.message).includes('Create unpacker')) allure.createAttachment('Найдена команда', String(entry.level.name, entry.message), 'text/plain')
+          if(String(entry.message).includes('Create unpacker')) allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
         });
-        console.log(attachLog)
         allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
       });
     })
