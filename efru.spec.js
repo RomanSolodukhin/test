@@ -15,13 +15,17 @@ describe('Eternal Fury RU', function() {
   let removeVideo = true
 
   before(async function() {
+    var prefs = new logging.Preferences();
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
+
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true
+      enableVideo: true,
+      setLoggingPrefs: prefs
     }
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
@@ -198,6 +202,12 @@ describe('Сервер '+i, function(done) {
       if(scriptBlocker) this.skip()
     })
     afterEach(async function() {
+      driver.manage().logs().get(logging.Type.BROWSER)
+      .then(function(entries) {
+        entries.forEach(function(entry) {
+          console.log('[%s] %s', entry.level.name, entry.message);
+        });
+      });
       /*let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
       allure.createAttachment('DevTools console', String(consoleDTP))*/
       if(this.currentTest.err) {
