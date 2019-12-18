@@ -310,7 +310,7 @@ describe('Сервер '+i, function(done) {
       var attachLog = []
       console.log(await driver.manage().logs().getAvailableLogTypes())
       await driver.executeScript(`console.info('test INFO level')`)
-      await driver.manage().logs().get(logging.Type.BROWSER)
+      await driver.manage().logs().get(logging.Type.DRIVER)
       .then(function(entries) {
         entries.forEach(function(entry) {
           console.log('[%s] %s', entry.level.name, entry.message);
