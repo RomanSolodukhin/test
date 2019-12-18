@@ -14,6 +14,20 @@ describe('Eternal Fury RU', function() {
   let session
   let removeVideo = true
 
+  async function step(description, fnBody) {
+    await allure.createStep(description, async() => {
+      try {
+        await fnBody()
+        assert.ok(true)
+      }
+      catch(err) {
+        console.log('ошибка в шаге')
+        allure.createAttachment('Отчёт', String(err))
+        assert.fail('Error: '+description+' — не удалось. ')
+      }
+    })();
+  }
+
   before(async function() {
     var prefs = await new logging.Preferences();
     prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
@@ -43,6 +57,7 @@ describe('Eternal Fury RU', function() {
     this.currentTest.severity = 'normal'
   })
   after(async function() {
+    console.log(await driver.manage().logs().getAvailableLogTypes())
     if(driver) await driver.quit()
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
     if(removeVideo) await deleteVideo(videoPath)
@@ -53,14 +68,12 @@ describe('Eternal Fury RU', function() {
   })
   afterEach(async function() {
     var attachLog = []
-    console.log(await driver.manage().logs().getAvailableLogTypes())
     await driver.executeScript(`console.info('test INFO level')`)
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
         attachLog.push(entry.level.name, entry.message)
       });
-      console.log(attachLog)
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
     let currentCapabilities = await session.getCapabilities()
@@ -145,20 +158,6 @@ describe('Авторизация', function(done) {
   })
   it('Авторизация', async function() {
     this.test.severity = 'blocker'
-
-    async function step(description, fnBody) {
-      await allure.createStep(description, async() => {
-        try {
-          await fnBody()
-          assert.ok(true)
-        }
-        catch(err) {
-          console.log('ошибка в шаге')
-          allure.createAttachment('Отчёт', String(err))
-          assert.fail('Error: '+description+' — не удалось. ')
-        }
-      })();
-    }
       await step('Кликнуть по кнопке Входа', async function() {
         await driver.findElement(By.linkText("Вход")).click()
       });
@@ -214,14 +213,6 @@ describe('Сервер '+i, function(done) {
       if(scriptBlocker) this.skip()
     })
     afterEach(async function() {
-      /*driver.manage().logs().get(logging.Type.BROWSER)
-      .then(function(entries) {
-        entries.forEach(function(entry) {
-          console.log('[%s] %s', entry.level.name, entry.message);
-        });
-      });*/
-      /*let consoleDTP = await driver.sendDevToolsCommand('Console.messageAdded')
-      allure.createAttachment('DevTools console', String(consoleDTP))*/
       if(this.currentTest.err) {
       let name = String(this.currentTest.title)
         var res = await driver.takeScreenshot();
@@ -311,6 +302,7 @@ describe('Сервер '+i, function(done) {
       .then(function(entries) {
         entries.forEach(function(entry) {
           attachLog.push(entry.level.name, entry.message)
+          if(String(entry.message).contains('Create unpacker')) allure.description((entry.level.name,entry.message))
         });
         console.log(attachLog)
         allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
