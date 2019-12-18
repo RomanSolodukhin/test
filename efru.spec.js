@@ -17,7 +17,7 @@ describe('Eternal Fury RU', function() {
   before(async function() {
     var prefs = await new logging.Preferences();
     prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
-
+    prefs.setLevel(logging.Type.DRIVER, logging.Level.ALL);
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
@@ -62,7 +62,7 @@ describe('Eternal Fury RU', function() {
         attachLog.push('[%s] %s', entry.level.name, entry.message)
       });
       console.log(attachLog)
-      allure.createAttachment('console browser', String(attachLog))
+      allure.createAttachment('console browser', String(attachLog), 'plain/text')
     });
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
@@ -291,16 +291,34 @@ describe('Сервер '+i, function(done) {
     it('Вернуться в основной frame', async function() {
       await driver.switchTo().defaultContent()
       await driver.wait(until.elementLocated(By.id('container')))
+      var res = await driver.takeScreenshot()
+      allure.createAttachment(name, new Buffer(res, 'base64'))
     });
     it('Открыть gameHeader', async function() {
       await driver.findElement(By.id("hide-menu")).click()
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+      var res = await driver.takeScreenshot()
+      allure.createAttachment(name, new Buffer(res, 'base64'))
     });
     it('Открыть окно пополнения', async function() {
       allure.severity('critical')
       await driver.wait(until.elementLocated(By.id('gameHeader')))
       await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
+      var res = await driver.takeScreenshot()
+      allure.createAttachment(name, new Buffer(res, 'base64'))
+      var attachLog = []
+      console.log(await driver.manage().logs().getAvailableLogTypes())
+      await driver.executeScript(`console.info('test INFO level')`)
+      await driver.manage().logs().get(logging.Type.BROWSER)
+      .then(function(entries) {
+        entries.forEach(function(entry) {
+          console.log('[%s] %s', entry.level.name, entry.message);
+          attachLog.push('[%s] %s', entry.level.name, entry.message)
+        });
+        console.log(attachLog)
+        allure.description(String(attachLog))
+      });
     })
     })
   }
