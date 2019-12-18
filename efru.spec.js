@@ -15,7 +15,7 @@ describe('Eternal Fury RU', function() {
   let removeVideo = true
 
   before(async function() {
-    var prefs = new logging.Preferences();
+    var prefs = await new logging.Preferences();
     prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
 
     var capabilities = {
@@ -26,8 +26,9 @@ describe('Eternal Fury RU', function() {
       name: testName,
       enableVideo: true
     }
-    capabilities.setCapability('goog:loggingPrefs', prefs)
-    driver = await new Builder()
+    var options = await new ChromeOptions()
+    options.setCapability(CapabilityType.LOGGING_PREFS, prefs)
+    driver = await new Builder(options)
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
     .setAlertBehavior()
