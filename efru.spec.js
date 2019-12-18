@@ -15,8 +15,8 @@ describe('Eternal Fury RU', function() {
   let removeVideo = true
 
   before(async function() {
-    /*var prefs = new logging.Preferences();
-    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);*/
+    var prefs = new logging.Preferences();
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
 
     /*var caps = Capabilities.chrome();
     caps.setLoggingPrefs(prefs);*/
@@ -30,10 +30,10 @@ describe('Eternal Fury RU', function() {
       enableVideo: true
     }
 
-    /*var options = Capabilities.chrome()
-    options.setUserPreferences(prefs)*/
+    var options = new Capabilities()
+    options.setUserPreferences(prefs)
 
-    driver = await new Builder()
+    driver = await new Builder(options)
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
     .setAlertBehavior()
