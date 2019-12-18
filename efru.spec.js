@@ -30,8 +30,8 @@ describe('Eternal Fury RU', function() {
       enableVideo: true
     }
 
-    var options = Capabilities.chrome()
-    options.setUserPreferences(prefs)
+    /*var options = Capabilities.chrome()
+    options.setUserPreferences(prefs)*/
 
     driver = await new Builder(options)
     .usingServer('http://localhost:4444/wd/hub')
