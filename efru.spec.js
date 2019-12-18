@@ -54,6 +54,7 @@ describe('Eternal Fury RU', function() {
   })
   afterEach(async function() {
     var attachLog = []
+    console.log(driver.manage().logs().get())
     driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
@@ -62,15 +63,6 @@ describe('Eternal Fury RU', function() {
       });
     });
     allure.createAttachment('console browser', String(attachLog))
-    attachLog = []
-    driver.manage().logs().get(logging.Type.CLIENT)
-    .then(function(entries) {
-      entries.forEach(function(entry) {
-        console.log('[%s] %s', entry.level.name, entry.message);
-        attachLog.push('[%s] %s', entry.level.name, entry.message)
-      });
-    });
-    allure.createAttachment('console CLIENT', String(attachLog))
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
