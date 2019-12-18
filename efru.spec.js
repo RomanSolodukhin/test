@@ -16,7 +16,7 @@ describe('Eternal Fury RU', function() {
 
   before(async function() {
     var prefs = new logging.Preferences();
-    await prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
 
     var capabilities = {
       browserName: 'chrome',
@@ -24,9 +24,9 @@ describe('Eternal Fury RU', function() {
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true,
-      setLoggingPrefs: prefs
+      enableVideo: true
     }
+    capabilities.setLoggingPrefs(prefs)
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
