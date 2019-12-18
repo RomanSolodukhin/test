@@ -302,7 +302,8 @@ describe('Сервер '+i, function(done) {
       .then(function(entries) {
         entries.forEach(function(entry) {
           attachLog.push(entry.level.name, entry.message)
-          if(entry.message.contains('Create unpacker')) allure.description((entry.level.name,entry.message))
+          let consoleMsg = String(entry.message)
+          if(consoleMsg.contains('Create unpacker')) allure.description((entry.level.name,entry.message))
         });
         console.log(attachLog)
         allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
