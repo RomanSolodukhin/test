@@ -16,7 +16,7 @@ describe('Eternal Fury RU', function() {
 
   before(async function() {
     var prefs = await new logging.Preferences();
-    prefs.setLevel(logging.Type.BROWSER, logging.Level.DEBUG);
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL, logging.Type.CLIENT);
 
     var capabilities = {
       browserName: 'chrome',
@@ -52,6 +52,24 @@ describe('Eternal Fury RU', function() {
     }
   })
   afterEach(async function() {
+    var attachLog = []
+    driver.manage().logs().get(logging.Type.BROWSER)
+    .then(function(entries) {
+      entries.forEach(function(entry) {
+        console.log('[%s] %s', entry.level.name, entry.message);
+        attachLog.push('[%s] %s', entry.level.name, entry.message)
+      });
+    });
+    allure.createAttachment('console browser', new Buffer(attachLog, 'base64'))
+    attachLog = []
+    driver.manage().logs().get(logging.Type.CLIENT)
+    .then(function(entries) {
+      entries.forEach(function(entry) {
+        console.log('[%s] %s', entry.level.name, entry.message);
+        attachLog.push('[%s] %s', entry.level.name, entry.message)
+      });
+    });
+    allure.createAttachment('console client', new Buffer(attachLog, 'base64'))
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -95,15 +113,6 @@ describe('Авторизация', function(done) {
   })
 
   afterEach(async function() {
-    var attachLog = []
-    driver.manage().logs().get(logging.Type.BROWSER)
-    .then(function(entries) {
-      entries.forEach(function(entry) {
-        console.log('[%s] %s', entry.level.name, entry.message);
-        attachLog.push('[%s] %s', entry.level.name, entry.message)
-      });
-    });
-    allure.createAttachment('console', new Buffer(attachLog, 'base64'))
     if(this.currentTest.err) {
     let name = String(this.currentTest.title)
       var res = await driver.takeScreenshot()
