@@ -24,9 +24,9 @@ describe('Eternal Fury RU', function() {
       enableVNC: true,
       enableLog: true,
       name: testName,
-      enableVideo: true
+      enableVideo: true,
+      LOGGING_PREFS: prefs
     }
-    capabilities.setLoggingPrefs(prefs)
     driver = await new Builder()
     .usingServer('http://localhost:4444/wd/hub')
     .withCapabilities(capabilities)
