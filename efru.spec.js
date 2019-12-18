@@ -62,7 +62,7 @@ describe('Eternal Fury RU', function() {
         attachLog.push('[%s] %s', entry.level.name, entry.message)
       });
       console.log(attachLog)
-      allure.createAttachment('console browser', attachLog)
+      allure.createAttachment('console browser', String(attachLog))
     });
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
