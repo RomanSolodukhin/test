@@ -1,4 +1,4 @@
-const { Builder, By, Key, until } = require('selenium-webdriver')
+const { Builder, By, Key, until, Options} = require('selenium-webdriver')
 const assert = require('assert')
 var request = require('request')
 require('jest-image-snapshot')
