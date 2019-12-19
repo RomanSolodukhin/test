@@ -13,7 +13,7 @@ describe('Eternal Fury RU', function() {
   let testName = String(this.title)
   let session
   let removeVideo = true
-
+  let scriptBlocker = false
   async function step(description, fnBody) {
     await allure.createStep(description, async() => {
       try {
@@ -72,7 +72,7 @@ describe('Eternal Fury RU', function() {
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        attachLog.push(entry.level.name, entry.message, '\\n')
+        attachLog.push(entry.level.name+' '+entry.message+'\\n')
       });
       allure.description(attachLog)
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
@@ -108,7 +108,6 @@ describe('Eternal Fury RU', function() {
     console.warn(err)
   }
 })
-let scriptBlocker = false
 
 describe('Авторизация', function(done) {
   let lang
