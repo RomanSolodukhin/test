@@ -302,7 +302,7 @@ describe('Сервер '+i, function(done) {
       .then(function(entries) {
         entries.forEach(function(entry) {
           attachLog.push(entry.level.name, entry.message)
-          if(String(entry.message).includes('Create unpacker')) allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
+          if(String(entry.message).includes('Create unpacker') && String(entry.messge).includes('9bsSZKahhGL7VRphR+IJx2')) allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
         });
         allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
       });
