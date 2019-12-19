@@ -67,6 +67,17 @@ describe('Eternal Fury RU', function() {
     }
   })
   afterEach(async function() {
+
+    if(this.currentTest.err) {
+    let name = String(this.currentTest.title)
+      var res = await driver.takeScreenshot()
+      allure.createAttachment(name, new Buffer(res, 'base64'))
+      allure.createAttachment('Отчёт', String(this.currentTest.err))
+      allure.severity(this.currentTest.severity)
+      removeVideo = false
+      if(this.currentTest.severity == 'blocker') scriptBlocker = true
+    }
+
     var attachLog = []
     await driver.executeScript(`console.info('test INFO level')`)
     await driver.manage().logs().get(logging.Type.BROWSER)
@@ -116,18 +127,6 @@ describe('Авторизация', function(done) {
 
   beforeEach(function() {
     if(scriptBlocker) this.skip()
-  })
-
-  afterEach(async function() {
-    if(this.currentTest.err) {
-    let name = String(this.currentTest.title)
-      var res = await driver.takeScreenshot()
-      allure.createAttachment(name, new Buffer(res, 'base64'))
-      allure.createAttachment('Отчёт', String(this.currentTest.err))
-      allure.severity(this.currentTest.severity)
-      removeVideo = false
-      if(this.currentTest.severity == 'blocker') scriptBlocker = true
-    }
   })
   let image
   it('Загрузить страницу', async function() {
@@ -211,16 +210,6 @@ describe('Сервер '+i, function(done) {
     })
     beforeEach(function() {
       if(scriptBlocker) this.skip()
-    })
-    afterEach(async function() {
-      if(this.currentTest.err) {
-      let name = String(this.currentTest.title)
-        var res = await driver.takeScreenshot();
-        allure.createAttachment(name, new Buffer(res, 'base64'))
-        allure.createAttachment('Отчёт', String(this.currentTest.err))
-        removeVideo = false
-        if(this.currentTest.title == 'Выбрать сервер' || this.currentTest.title == 'Переключиться в XDM') scriptSkip = true
-      }
     })
     it('Открыть окно выбора серверов', async function() {
       try {
