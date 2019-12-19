@@ -74,7 +74,7 @@ describe('Eternal Fury RU', function() {
       entries.forEach(function(entry) {
         attachLog.push(entry.level.name, entry.message)
       });
-      allure.description('1\\n2<br>3')
+      allure.description('Строка1<br>Строка2')
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
     let currentCapabilities = await session.getCapabilities()
