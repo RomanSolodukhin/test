@@ -72,7 +72,7 @@ describe('Eternal Fury RU', function() {
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        attachLog.push(entry.level.name+' '+entry.message+'<br>')
+        attachLog.push(entry.level.name+' '+entry.message+'br')
       });
       allure.description(attachLog)
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
