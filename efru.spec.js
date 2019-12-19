@@ -114,13 +114,14 @@ describe('Eternal Fury RU', function() {
       reportUrl: process.env.GIT_URL
   };
   var jenkinsEnv2 = {
-    name1a: execName,
-    type2: "jenkins",
+    name: execName,
+    type: "jenkins",
+    lol: 'test',
     dfd: process.env.JENKINS_URL,
     buildOrderff: process.env.BUILD_NUMBER,
     buildNameff: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
     buildUrl: process.env.BUILD_URL,
-    reportName1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+    repoffame1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
     reportUrl: process.env.GIT_URL
   };
     allure.createExecutor(jenkinsEnv2)
