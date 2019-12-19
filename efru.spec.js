@@ -117,22 +117,21 @@ describe('Eternal Fury RU', function() {
       });
       allure.description('Строка1<br>Строка2')
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
-      
-      let currentCapabilities = await session.getCapabilities()
-      await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
-      await allure.addEnvironment('OS:','Ubuntu 18.04')
-      await allure.addEnvironment('resolution:', '1920x1080')
-      await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
-      await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
-      await allure.addEnvironment('session id: ', String(session.id_))
-
-      if(process.env.GIT_BRANCH) {
-        execName = 'Jenkins (from Git commit)'
-        await allure.addEnvironment('git branch: ', process.env.GIT_BRANCH)
-        await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
-        await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
-      }
     });
+    let currentCapabilities = await session.getCapabilities()
+    await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
+    await allure.addEnvironment('OS:','Ubuntu 18.04')
+    await allure.addEnvironment('resolution:', '1920x1080')
+    await allure.addEnvironment('browserName: ', String(currentCapabilities.getBrowserName()))
+    await allure.addEnvironment('browserVersion: ', String(currentCapabilities.getBrowserVersion()))
+    await allure.addEnvironment('session id: ', String(session.id_))
+
+    if(process.env.GIT_BRANCH) {
+      execName = 'Jenkins (from Git commit)'
+      await allure.addEnvironment('git branch: ', process.env.GIT_BRANCH)
+      await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
+      await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
+    }
 })
 
 describe('Авторизация', function(done) {
