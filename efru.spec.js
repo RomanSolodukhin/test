@@ -51,6 +51,34 @@ describe('Eternal Fury RU', function() {
     await driver.manage().window().maximize()
     session = await driver.getSession()
     console.log(session.id_)
+    try {
+      jenkinsEnv = {
+        name: execName,
+        type: "jenkins",
+        url: process.env.JENKINS_URL,
+        buildOrder: process.env.BUILD_NUMBER,
+        buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
+        buildUrl: process.env.BUILD_URL,
+        reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+        reportUrl: process.env.GIT_URL
+    };
+    var jenkinsEnv2 = {
+      name: execName,
+      type: "jenkins",
+      lol: 'test',
+      dfd: process.env.JENKINS_URL,
+      buildOrderff: process.env.BUILD_NUMBER,
+      buildNameff: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
+      buildUrl: process.env.BUILD_URL,
+      repoffame1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
+      reportUrl: process.env.GIT_URL
+    };
+      allure.createExecutor(jenkinsEnv2)
+      allure.createExecutor(jenkinsEnv)
+    }
+    catch(err) {
+      console.warn(err)
+    }
 })
 
   beforeEach(function () {
@@ -102,34 +130,6 @@ describe('Eternal Fury RU', function() {
       await allure.addEnvironment('commit: ', process.env.GIT_COMMIT)
       await allure.addEnvironment('Author: ', process.env.GIT_COMMITTER_NAME+' ('+process.env.GIT_COMMITTER_EMAIL+')')
     }
-  try {
-    jenkinsEnv = {
-      name: execName,
-      type: "jenkins",
-      url: process.env.JENKINS_URL,
-      buildOrder: process.env.BUILD_NUMBER,
-      buildName: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-      buildUrl: process.env.BUILD_URL,
-      reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-      reportUrl: process.env.GIT_URL
-  };
-  var jenkinsEnv2 = {
-    name: execName,
-    type: "jenkins",
-    lol: 'test',
-    dfd: process.env.JENKINS_URL,
-    buildOrderff: process.env.BUILD_NUMBER,
-    buildNameff: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-    buildUrl: process.env.BUILD_URL,
-    repoffame1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-    reportUrl: process.env.GIT_URL
-  };
-    allure.createExecutor(jenkinsEnv2)
-    allure.createExecutor(jenkinsEnv)
-  }
-  catch(err) {
-    console.warn(err)
-  }
 })
 
 describe('Авторизация', function(done) {
