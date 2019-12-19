@@ -280,7 +280,7 @@ describe('Сервер '+i, function(done) {
     });
     it('Вернуться в основной frame', async function() {
       await driver.switchTo().defaultContent()
-      await driver.wait(until.elementLocated(By.id('container')))
+      await driver.wait(until.elementLocated(By.id('container')), 30000)
       var res = await driver.takeScreenshot()
       allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
     });
