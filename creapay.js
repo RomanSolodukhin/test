@@ -215,7 +215,7 @@ describe('Платёж '+i, function(done) {
 				await driver.wait(until.elementLocated(By.linkText("OK")))
 				await driver.findElement(By.linkText("OK")).click()
         balance=ExtractInt(await GetString(By.id("balanceInGame")))-balance
-	      assert.equal(balance, 15000, 'Баланс пополнен на '+balance)
+	      assert.equal(balance, 15000, 'Ожидание: баланс пополнен на '+15000+'<br>Факт: баланс пополнен на '+balance)
 			})
       it('Дождаться загрузки истории платежей', async function() {
         await driver.wait(until.elementLocated(By.css(".c-pay-history")))
