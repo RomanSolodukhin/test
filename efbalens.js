@@ -2,7 +2,7 @@ console.info("_Start");
 var scriptName = 'efbalens';
 var { testData, times, baseUrl } = require('./efbalens_ddt.js');
 //default data
-var iBrowser = 0, iUser = 1, iServer = 0, iAmount = 5, iRes = 0;
+var iBrowser = 0, iUser = 8, iServer = 0, iAmount = 5, iRes = 0;
 
 var browserName = testData.browsers[iBrowser];
 var login = testData.users.username[iUser], pass = testData.users.pass[iUser];
