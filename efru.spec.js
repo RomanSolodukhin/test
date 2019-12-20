@@ -75,7 +75,7 @@ describe('Eternal Fury RU', function() {
       repoffame1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
       reportUrl: process.env.GIT_URL
     };
-      allure.createExecutor(jenkinsEnv2)
+      //allure.createExecutor(jenkinsEnv2)
       allure.createExecutor(jenkinsEnv)
     }
     catch(err) {
