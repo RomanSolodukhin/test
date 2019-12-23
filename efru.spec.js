@@ -129,11 +129,10 @@ describe('Вход на портал', function(done) {
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
     await step('Открыть страницу: '+site, await driver.get(site))
-
   })
   it('Проверка языка', async function() {
     let lang
-    await step('Поиск флага — переключателя', {
+    await step('Поиск флага — переключателя', async function() {
       lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
     })
     if(lang != 'icon icon_ru') {
