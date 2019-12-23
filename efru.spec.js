@@ -122,9 +122,6 @@ describe('Eternal Fury RU', function() {
 })
 
 describe('Вход на портал', function(done) {
-  let lang
-  let testSteps = []
-
   beforeEach(function() {
     if(scriptBlocker) this.skip()
   })
@@ -135,8 +132,10 @@ describe('Вход на портал', function(done) {
 
   })
   it('Проверка языка', async function() {
-    image = await driver.takeScreenshot()
-    lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+    let lang
+    await step('Поиск флага — переключателя', {
+      lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
+    })
     if(lang != 'icon icon_ru') {
       await step('Найти переключатель языков', async function() {
         await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
