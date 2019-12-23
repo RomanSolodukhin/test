@@ -23,7 +23,6 @@ describe('Eternal Fury RU', function() {
         assert.ok(true)
       }
       catch(err) {
-        console.log('ошибка в шаге')
         allure.createAttachment('Отчёт', String(err))
         assert.fail('Error: '+description+' — не удалось. ')
       }
@@ -64,18 +63,6 @@ describe('Eternal Fury RU', function() {
         reportName: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
         reportUrl: process.env.GIT_URL
     };
-    var jenkinsEnv2 = {
-      name: execName,
-      type: "jenkins",
-      lol: 'test',
-      dfd: process.env.JENKINS_URL,
-      buildOrderff: process.env.BUILD_NUMBER,
-      buildNameff: process.env.JOB_NAME+' '+process.env.BUILD_DISPLAY_NAME,
-      buildUrl: process.env.BUILD_URL,
-      repoffame1: process.env.GIT_BRANCH+'/'+process.env.GIT_COMMIT+'/'+process.env.GIT_COMMITTER_NAME,
-      reportUrl: process.env.GIT_URL
-    };
-      //allure.createExecutor(jenkinsEnv2)
       allure.createExecutor(jenkinsEnv)
     }
     catch(err) {
@@ -92,8 +79,8 @@ describe('Eternal Fury RU', function() {
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
     if(removeVideo) await deleteVideo(videoPath)
     else {
-      /*let videoFile = new Buffer(await getRemoteVideo(videoPath), 'base64')
-      await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, videoFile))*/
+      let videoFile = new Buffer(await getRemoteVideo(videoPath), 'base64')
+      await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, videoFile))
     }
   })
   afterEach(async function() {
@@ -134,41 +121,42 @@ describe('Eternal Fury RU', function() {
     }
 })
 
-describe('Авторизация', function(done) {
+describe('Вход на портал', function(done) {
   let lang
-  let setlang = it
   let testSteps = []
 
   beforeEach(function() {
     if(scriptBlocker) this.skip()
   })
   let image
-  it('Загрузить страницу', async function() {
+  it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
-    await allure.createStep('Открыть страницу: '+site, await driver.get(site))
-    testSteps.push('Открыть страницу: '+site)
+    await step('Открыть страницу: '+site, await driver.get(site))
+
   })
   it('Проверка языка', async function() {
     image = await driver.takeScreenshot()
     lang = await driver.wait(until.elementLocated(By.xpath("/html/body/header/div/div/div/a/b"))).getAttribute('class')
-    if(lang == 'icon icon_ru') setlang = it.skip
+    if(lang != 'icon icon_ru') {
+      await step('Найти переключатель языков', async function() {
+        await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
+        testSteps.push('Найти элемент css=.lang-list')
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
+        testSteps.push('Проверить видимость элемента css=.lang-list')
+      })
+      await step('Открыть меню выбора языков', async function() {
+        await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
+        await driver.wait(until.elementLocated(By.linkText("Русский")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
+      })
+      await step('Сменить язык', async function() {
+        await driver.findElement(By.linkText("Русский")).click()
+        await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
+        await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
+      })
+    }
   })
-  setlang('Найти переключатель языков', async function() {
-    await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-    testSteps.push('Найти элемент css=.lang-list')
-    await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
-    testSteps.push('Проверить видимость элемента css=.lang-list')
-  })
-  setlang('Открыть меню выбора языков', async function() {
-    await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
-    await driver.wait(until.elementLocated(By.linkText("Русский")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Русский"))))
-  })
-  setlang('Сменить язык', async function() {
-    await driver.findElement(By.linkText("Русский")).click()
-    await driver.wait(until.elementLocated(By.linkText("Вход")),30000) ////a[contains(.,'Вход')]
-    await driver.wait(until.elementIsVisible(driver.findElement(By.linkText("Вход"))))
-  })
+
   it('Авторизация', async function() {
     this.test.severity = 'blocker'
       await step('Кликнуть по кнопке Входа', async function() {
@@ -196,124 +184,125 @@ describe('Авторизация', function(done) {
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
       });
   })
-
   it('Выбрать игру', async function() {
-    //expect(image).toMatchImageSnapshot()
-    await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
-    await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
-    await driver.findElement(By.linkText('Eternal Fury')).click()
-  })
-  it('Открыть страницу игры', async function() {
-    await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Играть бесплатно')]")))
-    await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]"))))
+    await step('Выбрать игру', async function() {
+      await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
+      await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
+      await driver.findElement(By.linkText('Eternal Fury')).click()
+    })
+    await step('Открыть страницу игры', async function() {
+      await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Играть бесплатно')]")))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]"))))
+    })
   })
 })
 
-for(i = 11; i <= MAX_SERVERS;i++) {
-describe('Сервер '+i, function(done) {
-    this.timeout(15000)
-    this.slow(4000)
-    let scriptSkip = scriptBlocker
-    let serverid = i
-    let link = site+"games/ef/server/"+serverid
-    let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
-    after(async function() {
-      await driver.switchTo().defaultContent()
-      await driver.navigate().back()
-      scriptSkip = false
-    })
-    beforeEach(function() {
-      if(scriptBlocker) this.skip()
-    })
-    it('Открыть окно выбора серверов', async function() {
-      try {
-        await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
-        await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
-      }
-      catch(err) {
-        assert.fail(err)
-      }
-    });
-    it('Выбрать сервер', async function() {
-      allure.severity('blocker')
-      await driver.findElement(By.xpath(serverselector)).click()
-      let pageTitle = await driver.getTitle()
-      assert.notEqual('Bad request (#400)', pageTitle, pageTitle)
-      await driver.wait(until.titleContains('Eternal Fury'))
-    });
-    it('Проверка загрузки container', async function() {
-      allure.severity('blocker')
-      await driver.wait(until.elementLocated(By.id('container')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
-    });
-    it('Проверка gameHeader (creabar)', async function() {
-      await driver.wait(until.elementLocated(By.id('gameHeader')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-    });
-    it('Скрыть gameHeader', async function() {
-      await driver.switchTo().defaultContent()
-      await driver.findElement(By.id("hide-menu")).click()
-      try {
-        await driver.wait(until.elementLocated(By.id('gameHeader')))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-      }
-      catch(error) {
-        assert.ok(true)
-      }
-    });
-    it('Переключиться в XDM', async function() {
-      allure.severity('blocker')
-      await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
-      await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
-      frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
-      await driver.switchTo().frame(frame)
-    });
-    it('Переключиться в gameFrame', async function() {
-      allure.severity('critical')
-      await driver.wait(until.elementLocated(By.id('gameFrame')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
-      frame = await driver.findElement(By.id('gameFrame'))
-      await driver.switchTo().frame(frame)
-    });
-    it('Найти canvas', async function() {
-      allure.severity('critical')
-      await driver.wait(until.elementLocated(By.id('GameCanvas')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
-    });
-    it('Вернуться в основной frame', async function() {
-      await driver.switchTo().defaultContent()
-      await driver.wait(until.elementLocated(By.id('container')), 30000)
-      var res = await driver.takeScreenshot()
-      allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
-    });
-    it('Открыть gameHeader', async function() {
-      await driver.findElement(By.id("hide-menu")).click()
-      await driver.wait(until.elementLocated(By.id('gameHeader')))
-      await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
-      var res = await driver.takeScreenshot()
-      allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
-    });
-    it('Открыть окно пополнения', async function() {
-      allure.severity('critical')
-      await driver.wait(until.elementLocated(By.id('gameHeader')))
-      await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
-      var res = await driver.takeScreenshot()
-      allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
-      var attachLog = []
-      await driver.manage().logs().get(logging.Type.DRIVER)
-      .then(function(entries) {
-        entries.forEach(function(entry) {
-          attachLog.push(entry.level.name, entry.message)
-          if(String(entry.message).includes('Create unpacker')) {
-            if(String(entry.messge).includes('9bsSZKahhGL7VRphR+IJx2')) {
-              allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
-            }
+for(i = 1; i <= MAX_SERVERS;i++) {
+  describe('Сервер '+i, function(done) {
+      this.timeout(15000)
+      this.slow(4000)
+      let serverid = i
+      let link = site+"games/ef/server/"+serverid
+      let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
+
+      after(async function() {
+        await driver.switchTo().defaultContent()
+        await driver.navigate().back()
+        scriptBlocker = false
+      })
+      before(function() {
+        if(scriptBlocker) this.skip()
+      })
+      it('Выбор сервера', async function() {
+        await step('Открыть окно выбора серверов', async function() {
+          await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
+          await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
+        })
+        await step('Выбрать сервер', async function() {
+          allure.severity('blocker')
+          await driver.findElement(By.xpath(serverselector)).click()
+          let pageTitle = await driver.getTitle()
+          assert.notEqual('Bad request (#400)', pageTitle, pageTitle)
+          await driver.wait(until.titleContains('Eternal Fury'))
+        })
+      })
+      it('Загрузка игры', async function() {
+        await step('Проверка загрузки container', async function() {
+          allure.severity('blocker')
+          await driver.wait(until.elementLocated(By.id('container')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
+        });
+        await step('Переключиться в XDM', async function() {
+          allure.severity('blocker')
+          await driver.wait(until.elementLocated(By.css('[id*="easyXDM_default"]')),30000)
+          await driver.wait(until.elementIsVisible(driver.findElement(By.css('[id*="easyXDM_default"]'))),30000)
+          frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
+          await driver.switchTo().frame(frame)
+        });
+        await step('Переключиться в gameFrame', async function() {
+          allure.severity('critical')
+          await driver.wait(until.elementLocated(By.id('gameFrame')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
+          frame = await driver.findElement(By.id('gameFrame'))
+          await driver.switchTo().frame(frame)
+        });
+        await step('Найти canvas', async function() {
+          allure.severity('critical')
+          await driver.wait(until.elementLocated(By.id('GameCanvas')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
+        });
+        await step('Вернуться в основной frame', async function() {
+          await driver.switchTo().defaultContent()
+          await driver.wait(until.elementLocated(By.id('container')), 30000)
+          var res = await driver.takeScreenshot()
+          allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
+        });
+      })
+      it('Проверка gameHeader (creabar)', async function() {
+        await step('Найти gameHeader (creabar)', async function() {
+          await driver.wait(until.elementLocated(By.id('gameHeader')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+        });
+        await step('Скрыть gameHeader', async function() {
+          await driver.switchTo().defaultContent()
+          await driver.findElement(By.id("hide-menu")).click()
+          try {
+            await driver.wait(until.elementLocated(By.id('gameHeader')))
+            await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+          }
+          catch(error) {
+            assert.ok(true)
           }
         });
-        allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
-      });
-    })
+        await step('Открыть gameHeader', async function() {
+          await driver.findElement(By.id("hide-menu")).click()
+          await driver.wait(until.elementLocated(By.id('gameHeader')))
+          await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameHeader'))))
+          var res = await driver.takeScreenshot()
+          allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
+        });
+        await step('Открыть окно пополнения', async function() {
+          allure.severity('critical')
+          await driver.wait(until.elementLocated(By.id('gameHeader')))
+          await driver.findElement(By.css('.g-header_profile_data .b-btn')).click()
+          var res = await driver.takeScreenshot()
+          allure.createAttachment('Скриншот', new Buffer(res, 'base64'))
+          var attachLog = []
+          await driver.manage().logs().get(logging.Type.DRIVER)
+          .then(function(entries) {
+            entries.forEach(function(entry) {
+              attachLog.push(entry.level.name, entry.message)
+              if(String(entry.message).includes('Create unpacker')) {
+                if(String(entry.messge).includes('9bsSZKahhGL7VRphR+IJx2')) {
+                  allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
+                }
+              }
+            });
+            allure.createAttachment('DRIVER', String(attachLog), 'text/plain')
+          });
+        })
+      })
     })
   }
 });
@@ -335,7 +324,7 @@ function deleteVideo(videoPath) {
         });
   }, sleep);
 };
-/*
+
 function getRemoteVideo(videoPath) {
   let sleep = 500,
   videoFile,
@@ -356,4 +345,3 @@ function getRemoteVideo(videoPath) {
         .pipe(videoFile)
   }, sleep);
 };
-*/
