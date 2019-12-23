@@ -156,30 +156,30 @@ describe('Вход на портал', function(done) {
 
   it('Авторизация', async function() {
     this.test.severity = 'blocker'
-      await step('Кликнуть по кнопке Входа', async function() {
-        await driver.findElement(By.linkText("Вход")).click()
-      });
-      await step('Открыто окно авторизации', async function() {
-        await driver.wait(until.elementLocated(By.id("loginModal")))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
-      });
-      await step('Отображается поле ввода логина', async function() {
-        await driver.wait(until.elementLocated(By.id("loginform-username")))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
-      });
-      await step('Ввести логин', async function() {
-        await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
-      });
-      await step('Ввести пароль', async function() {
-        await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
-      });
-      await step('Отправить форму', async function() {
-        await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
-      });
-      await step('Авторизация успешна', async function() {
-        await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
-        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
-      });
+    await step('Кликнуть по кнопке Входа', async function() {
+      await driver.findElement(By.linkText("Вход")).click()
+    })
+    await step('Открыто окно авторизации', async function() {
+      await driver.wait(until.elementLocated(By.id("loginModal")))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginModal"))))
+    })
+    await step('Отображается поле ввода логина', async function() {
+      await driver.wait(until.elementLocated(By.id("loginform-username")))
+      await driver.wait(until.elementIsVisible(driver.findElement(By.id("loginform-username"))))
+    })
+    await step('Ввести логин', async function() {
+      await driver.findElement(By.id("loginform-username")).sendKeys("r.solodukhin@creagames.com")
+    })
+    await step('Ввести пароль', async function() {
+      await driver.findElement(By.id("loginform-password")).sendKeys("123456qQ")
+    })
+    await step('Отправить форму', async function() {
+      await driver.findElement(By.id("loginform-password")).sendKeys(Key.ENTER)
+    })
+    await step('Авторизация успешна', async function() {
+      await driver.wait(until.elementLocated(By.css(".g-header_profile_data_name")),30000)
+      await driver.wait(until.elementIsVisible(driver.findElement(By.css(".g-header_profile_data_name"))))
+    })
   })
   it('Выбрать игру', async function() {
     await step('Выбрать игру', async function() {
