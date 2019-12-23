@@ -78,10 +78,10 @@ describe('Eternal Fury RU', function() {
     if(driver) await driver.quit()
     let videoPath = 'http://localhost:4444/video/'+session.id_+'.mp4'
     if(removeVideo) await deleteVideo(videoPath)
-    else {
+/*    else {
       let videoFile = new Buffer(await getRemoteVideo(videoPath), 'base64')
       await allure.createStep(' /// Aerokube. Selenoid /// Видео сеанса', allure.createAttachment(session.id_, videoFile))
-    }
+    }*/
   })
   afterEach(async function() {
 
@@ -321,7 +321,7 @@ function deleteVideo(videoPath) {
         });
   }, sleep);
 };
-
+/*
 function getRemoteVideo(videoPath) {
   let sleep = 500,
   videoFile,
@@ -342,3 +342,4 @@ function getRemoteVideo(videoPath) {
         .pipe(videoFile)
   }, sleep);
 };
+*/
