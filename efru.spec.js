@@ -125,10 +125,12 @@ describe('Вход на портал', function(done) {
     if(scriptBlocker) this.skip()
   })
   let image
+
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
     await step('Открыть страницу: '+site, await driver.get(site))
   })
+
   it('Проверка языка', async function() {
     let lang
     await step('Поиск флага — переключателя', async function() {
@@ -137,9 +139,7 @@ describe('Вход на портал', function(done) {
     if(lang != 'icon icon_ru') {
       await step('Найти переключатель языков', async function() {
         await driver.wait(until.elementLocated(By.css(".lang-list")),30000)
-        testSteps.push('Найти элемент css=.lang-list')
         await driver.wait(until.elementIsVisible(driver.findElement(By.css(".lang-list"))))
-        testSteps.push('Проверить видимость элемента css=.lang-list')
       })
       await step('Открыть меню выбора языков', async function() {
         await driver.actions().move({origin: driver.findElement(By.css(".lang-list"))}).perform()
