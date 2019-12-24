@@ -126,9 +126,28 @@ describe('Вход на портал', function(done) {
   })
   let image
 
+  function pageIsLoaded() {
+    try (
+      let locatedElements
+      let elements = driver.findElements(By.css('*'))
+      //await driver.wait(until.elementsLocated(elements))
+      for(i = 0; i < elements.length; i+=5) {
+        (async() => {
+          await driver.wait(until.elementIsVisible(elements[i])) => locatedElements++
+        })
+      }
+      let kLocated = locatedElements/elements.length/5
+      if(kLocated > 0.7) return true
+      else return false
+    )
+    catch(err) {
+
+    }
+  }
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
     await step('Открыть страницу: '+site, await driver.get(site))
+    await pageIsLoaded()
   })
 
   it('Проверка языка', async function() {
@@ -321,6 +340,7 @@ function deleteVideo(videoPath) {
         });
   }, sleep);
 };
+
 /*
 function getRemoteVideo(videoPath) {
   let sleep = 500,
