@@ -130,7 +130,7 @@ describe('Вход на портал', function(done) {
     let elements = await driver.findElements(By.css('*'))
     let locatedElements
     elements.every(async function(element, index, array) {
-      await driver.wait(until.elementLocated(element)
+      await driver.wait(until.elementLocated(element))
       locatedElements++
     })
     //await driver.elementsLocated(By.css('*'))
