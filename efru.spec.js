@@ -128,11 +128,17 @@ describe('Вход на портал', function(done) {
 
   async function pageIsLoaded() {
     let elements = await driver.findElements(By.css('*'))
-    let locatedElements = await driver.elementsLocated(By.css('*'))
+    let locatedElements
+    elements.every(function(element, index, array) {
+      await driver.wait(until.elementLocated(element)
+      locatedElements++
+    })
+    //await driver.elementsLocated(By.css('*'))
     console.log(elements.length, locatedElements)
     let kLocated = locatedElements/elements.length
     if(kLocated > 0.7) return true
   }
+
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
     await step('Открыть страницу: '+site, async function() {
