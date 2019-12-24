@@ -16,10 +16,13 @@ describe('Eternal Fury RU', function() {
   let scriptBlocker = false
   let execName = 'Jenkins (manual)'
 
-  async function step(description, fnBody) {
+  async function step(description, testBody) {
     await allure.createStep(description, async() => {
       try {
-        await fnBody()
+        if(typeof testBody() != 'function') throw new Error('Error: '+testBody.name+' is not a function')
+        console.log('Пример')
+        console.log('Error: '+testBody.name+' is not a function')
+        await testBody()
         assert.ok(true)
       }
       catch(err) {
