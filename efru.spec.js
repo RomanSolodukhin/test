@@ -128,8 +128,8 @@ describe('Вход на портал', function(done) {
 
   async function pageIsLoaded() {
     let elements = await driver.findElements(By.css('*'))
-    console.log(elements.length)
     let locatedElements = await driver.elementsLocated(By.css('*'))
+    console.log(elements.length, locatedElements)
     let kLocated = locatedElements/elements.length
     if(kLocated > 0.7) return true
   }
