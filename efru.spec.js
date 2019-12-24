@@ -133,7 +133,8 @@ describe('Вход на портал', function(done) {
       //await driver.wait(until.elementsLocated(elements))
       for(i = 0; i < elements.length; i+=5) {
         (async() => {
-          await driver.wait(until.elementIsVisible(elements[i])) => locatedElements++
+          await driver.wait(until.elementIsVisible(elements[i]))
+          locatedElements++
         })
       }
       let kLocated = locatedElements/elements.length/5
