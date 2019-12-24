@@ -126,7 +126,7 @@ describe('Вход на портал', function(done) {
   })
   let image
 
-  function pageIsLoaded() {
+  async function pageIsLoaded() {
     try {
       let elements = await driver.findElements(By.css('*'))
       console.log(elements.length)
@@ -137,7 +137,7 @@ describe('Вход на портал', function(done) {
       else return false
     }
     catch(err) {
-
+      console.log(err)
     }
   }
   it('Загрузить портал', async function() {
