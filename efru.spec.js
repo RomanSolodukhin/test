@@ -127,23 +127,18 @@ describe('Вход на портал', function(done) {
   let image
 
   async function pageIsLoaded() {
-    try {
-      let elements = await driver.findElements(By.css('*'))
-      console.log(elements.length)
-      //await driver.wait(until.elementsLocated(elements))
-      let locatedElements = await driver.elementsLocated(By.css('*'))
-      let kLocated = locatedElements/elements.length
-      if(kLocated > 0.7) return true
-      else return false
-    }
-    catch(err) {
-      console.log(err)
-    }
+    let elements = await driver.findElements(By.css('*'))
+    console.log(elements.length)
+    let locatedElements = await driver.elementsLocated(By.css('*'))
+    let kLocated = locatedElements/elements.length
+    if(kLocated > 0.7) return true
   }
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
-    await step('Открыть страницу: '+site, await driver.get(site))
-    await pageIsLoaded()
+    await step('Открыть страницу: '+site, async function() {
+      await driver.get(site)
+      await pageIsLoaded()
+    })
   })
 
   it('Проверка языка', async function() {
