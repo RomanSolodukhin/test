@@ -127,7 +127,7 @@ describe('Вход на портал', function(done) {
   let image
 
   function pageIsLoaded() {
-    try (
+    try {
       let locatedElements
       let elements = driver.findElements(By.css('*'))
       //await driver.wait(until.elementsLocated(elements))
@@ -139,7 +139,7 @@ describe('Вход на портал', function(done) {
       let kLocated = locatedElements/elements.length/5
       if(kLocated > 0.7) return true
       else return false
-    )
+    }
     catch(err) {
 
     }
