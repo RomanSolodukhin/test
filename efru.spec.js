@@ -111,7 +111,8 @@ describe('Eternal Fury RU', function() {
     await driver.manage().logs().get(logging.Type.PERFORMANCE)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        attachLog.push(entry.message)
+        let msg = entry.message
+        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(entry.message)
       });
       allure.createAttachment('console PERFORMANCE', String(attachLog), 'text/plain')
     });
