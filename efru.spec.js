@@ -34,8 +34,8 @@ describe('Eternal Fury RU', function() {
 
   before(async function() {
     var prefs = await new logging.Preferences();
-    //prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
-    //prefs.setLevel(logging.Type.DRIVER, logging.Level.ALL);
+    prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
+    prefs.setLevel(logging.Type.DRIVER, logging.Level.ALL);
     prefs.setLevel(logging.Type.PERFORMANCE, logging.Level.ALL);
 
     var capabilities = {
@@ -101,13 +101,20 @@ describe('Eternal Fury RU', function() {
     }
 
     var attachLog = []
-    await driver.executeScript(`console.info('test INFO level')`)
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
         attachLog.push(entry.level.name, entry.message)
       });
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
+    });
+    attachLog.length = 0
+    await driver.manage().logs().get(logging.Type.PERFORMANCE)
+    .then(function(entries) {
+      entries.forEach(function(entry) {
+        attachLog.push(entry.level.name, entry.message)
+      });
+      allure.createAttachment('console PERFORMANCE', String(attachLog), 'text/plain')
     });
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
