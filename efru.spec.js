@@ -106,14 +106,16 @@ describe('Eternal Fury RU', function() {
       });
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
+
     attachLog.length = 0
     await driver.manage().logs().get(logging.Type.PERFORMANCE)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        attachLog.push(entry.level.name, entry.message)
+        attachLog.push(entry.message)
       });
       allure.createAttachment('console PERFORMANCE', String(attachLog), 'text/plain')
     });
+
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
     await allure.addEnvironment('OS:','Ubuntu 18.04')
@@ -139,9 +141,10 @@ describe('Вход на портал', function(done) {
   async function pageIsLoaded() {
     let elements = await driver.findElements(By.css('*'))
     let locatedElements
-    elements.every(function(element, index, array) {
+    elements.every(async function(element, index, array) {
       try {
-        if(element.isDisplayed()) locatedElements++
+        await element.isDisplayed())
+        locatedElements++
       }
       catch(err) {
         console.log(err)
@@ -257,6 +260,7 @@ for(i = 1; i <= MAX_SERVERS;i++) {
       it('Загрузка игры', async function() {
         await step('Проверка загрузки container', async function() {
           allure.severity('blocker')
+          await driver.sleep(10000)
           await driver.wait(until.elementLocated(By.id('container')))
           await driver.wait(until.elementIsVisible(driver.findElement(By.id('container'))))
         });
@@ -319,7 +323,7 @@ for(i = 1; i <= MAX_SERVERS;i++) {
           await driver.manage().logs().get(logging.Type.DRIVER)
           .then(function(entries) {
             entries.forEach(function(entry) {
-              attachLog.push(entry.level.name, entry.message)
+              attachLog.push(entry.message)
               if(String(entry.message).includes('Create unpacker')) {
                 if(String(entry.messge).includes('9bsSZKahhGL7VRphR+IJx2')) {
                   allure.createAttachment('Найдена команда', String(entry.message), 'text/plain')
