@@ -34,9 +34,10 @@ describe('Eternal Fury RU', function() {
 
   before(async function() {
     var prefs = await new logging.Preferences();
-    prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
-    prefs.setLevel(logging.Type.DRIVER, logging.Level.ALL);
+    //prefs.setLevel(logging.Type.BROWSER, logging.Level.ALL);
+    //prefs.setLevel(logging.Type.DRIVER, logging.Level.ALL);
     prefs.setLevel(logging.Type.PERFORMANCE, logging.Level.ALL);
+
     var capabilities = {
       browserName: 'chrome',
       version: '78.0',
