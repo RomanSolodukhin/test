@@ -19,7 +19,7 @@ describe('Eternal Fury RU', function() {
   async function step(description, testBody) {
     await allure.createStep(description, async() => {
       try {
-        if(typeof testBody() != 'function') throw new Error('Error: '+testBody.name+' is not a function')
+        if(typeof testBody != 'function') throw new Error('Error: '+testBody.name+' is not a function')
         console.log('Пример')
         console.log('Error: '+testBody.name+' is not a function')
         await testBody()
