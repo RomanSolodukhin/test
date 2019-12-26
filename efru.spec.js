@@ -98,21 +98,23 @@ describe('Eternal Fury RU', function() {
       if(this.currentTest.severity == 'blocker') scriptBlocker = true
     }
 
-    var attachLog = {}
+    var attachLog = []
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        Object.assign(attachLog, entry.message)
+        attachLog.push(entry.level.name, entry.message)
       });
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
 
-    attachLog = {}
+    attachLog.length = 0
     await driver.manage().logs().get(logging.Type.PERFORMANCE)
     .then(function(entries) {
       entries.forEach(function(entry) {
         let msg = entry.message
-        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) Object.assign(attachLog, JSON.parse(entry.message))
+        ['facebook', 'yandex', 'google'].every(function(currentValue) {
+          if(msg.includes(currentValue) == false) attachLog.push(JSON.parse(msg))
+        })
       });
       allure.createAttachment('PERFORMANCE '+'text/plain', JSON.stringify(attachLog, null, '\t'), 'text/plain')
       allure.createAttachment('PERFORMANCE '+'text/html', attachLog, 'text/html')
