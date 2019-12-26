@@ -112,25 +112,12 @@ describe('Eternal Fury RU', function() {
     .then(function(entries) {
       entries.forEach(function(entry) {
         let msg = entry.message
-        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(entry.message)
+        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(JSON.parse(entry.message))
       });
       ['text/html', 'text/csv', 'text/plain'].forEach(function(currentValue) {
         allure.createAttachment('PERFORMANCE '+currentValue, JSON.stringify(attachLog, null, '\t'), currentValue)
       })
     });
-
-    /*
-    text/cmd: команды
-    text/css: Cascading Style Sheets (RFC 2318)
-    text/csv: CSV (RFC 4180)
-    text/html: HTML (RFC 2854)
-    text/javascript (Obsolete): JavaScript (RFC 4329)
-    text/plain: текстовые данные (RFC 2046 и RFC 3676)
-    text/php: Скрипт языка PHP
-    text/xml: Extensible Markup Language (RFC 3023)
-    text/markdown: файл языка разметки Markdown (RFC 7763)
-    text/cache-manifest: файл манифеста(RFC 2046)
-    */
 
     let currentCapabilities = await session.getCapabilities()
     await allure.addEnvironment('platformName: ', String(currentCapabilities.getPlatform()))
