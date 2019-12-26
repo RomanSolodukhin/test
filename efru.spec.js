@@ -114,9 +114,9 @@ describe('Eternal Fury RU', function() {
         let msg = entry.message
         if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(JSON.parse(entry.message))
       });
-      ['text/html', 'text/csv', 'text/plain'].forEach(function(currentValue) {
-        allure.createAttachment('PERFORMANCE '+currentValue, JSON.stringify(attachLog, null, '\t'), currentValue)
-      })
+      allure.createAttachment('PERFORMANCE '+'text/plain', JSON.stringify(attachLog, null, '\t'), 'text/plain')
+      allure.createAttachment('PERFORMANCE '+'text/html', attachLog, 'text/html')
+      allure.createAttachment('PERFORMANCE '+'text/csv', attachLog, 'text/csv')
     });
 
     let currentCapabilities = await session.getCapabilities()
