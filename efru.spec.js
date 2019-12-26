@@ -98,7 +98,7 @@ describe('Eternal Fury RU', function() {
       if(this.currentTest.severity == 'blocker') scriptBlocker = true
     }
 
-    var attachLog = []
+    var attachLog = {}
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
@@ -107,7 +107,7 @@ describe('Eternal Fury RU', function() {
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
 
-    attachLog.length = 0
+    attachLog = {}
     await driver.manage().logs().get(logging.Type.PERFORMANCE)
     .then(function(entries) {
       entries.forEach(function(entry) {
