@@ -115,7 +115,7 @@ describe('Eternal Fury RU', function() {
         if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(entry.message)
       });
       ['text/html', 'text/csv', 'text/cmd', 'text/plain', 'text/javascript'].forEach(function(currentValue) {
-        allure.createAttachment('PERFORMANCE '+currentValue, String(attachLog), currentValue)
+        allure.createAttachment('PERFORMANCE '+currentValue, attachLog, currentValue)
       })
     });
 
