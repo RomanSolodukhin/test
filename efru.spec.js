@@ -102,7 +102,7 @@ describe('Eternal Fury RU', function() {
     await driver.manage().logs().get(logging.Type.BROWSER)
     .then(function(entries) {
       entries.forEach(function(entry) {
-        Object.assign(attachLog, JSON.parse(entry.message))
+        Object.assign(attachLog, entry.message)
       });
       allure.createAttachment('console browser', String(attachLog), 'text/plain')
     });
