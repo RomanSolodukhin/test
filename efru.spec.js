@@ -112,7 +112,7 @@ describe('Eternal Fury RU', function() {
     .then(function(entries) {
       entries.forEach(function(entry) {
         let msg = entry.message
-        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) attachLog.push(JSON.parse(entry.message))
+        if(msg.includes('facebook') == false && msg.includes('yandex') == false && msg.includes('google') == false) Object.assign(attachLog, JSON.parse(entry.message))
       });
       allure.createAttachment('PERFORMANCE '+'text/plain', JSON.stringify(attachLog, null, '\t'), 'text/plain')
       allure.createAttachment('PERFORMANCE '+'text/html', attachLog, 'text/html')
