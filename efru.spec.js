@@ -9,7 +9,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 11
+  let MAX_SERVERS = 1
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -139,29 +139,10 @@ describe('Вход на портал', function(done) {
   })
   let image
 
-  async function pageIsLoaded() {
-    let elements = await driver.findElements(By.css('*'))
-    let locatedElements
-    elements.forEach(async function(currentValue) {
-      try {
-        await currentValue.isDisplayed()
-        locatedElements++
-      }
-      catch(err) {
-        console.log(err)
-      }
-    })
-    //await driver.elementsLocated(By.css('*'))
-    console.log(elements.length, locatedElements)
-    let kLocated = locatedElements/elements.length
-    if(kLocated > 0.7) return true
-  }
-
   it('Загрузить портал', async function() {
     this.test.severity = 'blocker'
     await step('Открыть страницу: '+site, async function() {
       await driver.get(site)
-      await pageIsLoaded()
     })
   })
 
