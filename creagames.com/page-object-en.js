@@ -24,7 +24,7 @@ export default class Page {
 	}
 	header() {
 		lang() {
-			list: '.lang-list',
+			list: new Button(By.css('.lang-list'), ),
 			ru: new Button(By.css('.icon icon-ru'), function(selector) {
 				return this._driver.findElement(selector).getAttribute('href') == this.url+'/ru';
 			}),
