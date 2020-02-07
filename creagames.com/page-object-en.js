@@ -24,7 +24,10 @@ export default class Page {
 	}
 	header() {
 		lang() {
-			list: new Button(By.css('.lang-list'), ),
+			list: new Button(By.css('.lang-list'), async function(selector) {
+				await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('global-header-sub-menu'))));
+				return true;
+			}),
 			ru: new Button(By.css('.icon icon-ru'), function(selector) {
 				return this._driver.findElement(selector).getAttribute('href') == this.url+'/ru';
 			}),
