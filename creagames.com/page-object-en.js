@@ -13,7 +13,7 @@ export class Page {
 				conclusion: new TextString(By.css('body > div > div.text2'), 'Stay tuned!'),
 				socialText: new TextString(By.css('body > div > div.social_text'), 'Follow us on social media:'),
 				social: {
-					facebook: new Button(By.css('.fb'), LinkC.check(this.facebookUrl)
+					facebook: new Button(By.css('.fb'), HyperLink.check(this.facebookUrl)
 				}
 		},
 		this.header: {
@@ -22,10 +22,10 @@ export class Page {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
 					return true;
 				}),
-				ru: new Button(By.css('.icon icon-ru'), LinkC.check(selector, this.url+'/ru')),
-				en: new Button(By.css('.icon icon-en'), LinkC.check(selector, this.url+'/en')),
-				fr: new Button(By.css('.icon icon-fr'), LinkC.check(selector, this.url+'/fr')),
-				de: new Button(By.css('.icon icon-de'), LinkC.check(selector, this.url+'/de')),
+				ru: new Button(By.css('.icon icon-ru'), HyperLink.check(selector, this.url+'/ru')),
+				en: new Button(By.css('.icon icon-en'), HyperLink.check(selector, this.url+'/en')),
+				fr: new Button(By.css('.icon icon-fr'), HyperLink.check(selector, this.url+'/fr')),
+				de: new Button(By.css('.icon icon-de'), HyperLink.check(selector, this.url+'/de')),
 				current: function() {
 					return this._driver.findElement(By.css('html')).getAttribute('lang');
 				}
@@ -39,10 +39,10 @@ export class Page {
 			if(targetLang == this.header.lang.current) throw new Error('Выбранный язык уже установлен.');
 			async function() {
 				try {
-					driver.actions().move({origin: driver.findElement(this.header.lang.list)}).perform();
-					await driver.wait(until.elementIsVisible(driver.findElement(this.header.lang[targetLang])));
-					driver.findElement(this.header.lang[targetLang]).click();
-					await driver.wait(this.header.lang.current == targetLang);
+					this._driver.actions().move({origin: this._driver.findElement(this.header.lang.list)}).perform();
+					await driver.wait(until.elementIsVisible(this._driver.findElement(this.header.lang[targetLang])));
+					this._driver.findElement(this.header.lang[targetLang]).click();
+					await this._driver.wait(this.header.lang.current == targetLang);
 					return true;
 				}
 				catch(err) {
@@ -75,7 +75,7 @@ class Button {
 	}
 }
 
-statis LinkC(selector, url) {
+static HyperLink(selector, url) {
 	check() {
 		return Page._driver.findElement(selector).getAttribute('href') == url;
 	}
