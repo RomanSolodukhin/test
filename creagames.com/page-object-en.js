@@ -17,15 +17,23 @@ export class Page {
 				}
 		},
 		this.header: {
+			logo: new Button(By.css('.global-header-logo'), HyperLink.check(this.url)),
+			menu: {
+				games: new Button(By.css('.has_submenu'), async function(selector) {
+					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.game-list'))));
+					return true;
+				}),
+
+			}
 			lang: {
-				list: new Button(By.css('.lang-list'), async function(selector) {
+				list: new DropdownArrow(By.css('.lang-list'), async function(selector) {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
 					return true;
 				}),
-				ru: new Button(By.css('.icon icon-ru'), HyperLink.check(selector, this.url+'/ru')),
-				en: new Button(By.css('.icon icon-en'), HyperLink.check(selector, this.url+'/en')),
-				fr: new Button(By.css('.icon icon-fr'), HyperLink.check(selector, this.url+'/fr')),
-				de: new Button(By.css('.icon icon-de'), HyperLink.check(selector, this.url+'/de')),
+				ru: new Button(By.css('.icon icon-ru'), HyperLink.check(this.url+'/ru')),
+				en: new Button(By.css('.icon icon-en'), HyperLink.check(this.url+'/en')),
+				fr: new Button(By.css('.icon icon-fr'), HyperLink.check(this.url+'/fr')),
+				de: new Button(By.css('.icon icon-de'), HyperLink.check(this.url+'/de')),
 				current: function() {
 					return this._driver.findElement(By.css('html')).getAttribute('lang');
 				}
@@ -62,6 +70,19 @@ class TextString {
 	}
 }
 
+class DropdownArrow {
+	constructor(selector, result) {
+		this.selector = selector;
+		this.result = result;
+	}
+	press() {
+		Page._driver.actions().move({origin: Page._driver.findElement(selector)}).perform();
+	}
+	check() {
+		return this.result(this.selector);
+	}
+}
+
 class Button {
 	constructor(selector, result) {
 		this.selector = selector;
@@ -75,8 +96,8 @@ class Button {
 	}
 }
 
-static HyperLink(selector, url) {
-	check() {
+function HyperLink(url) {
+	this.prototype.check = function() {
 		return Page._driver.findElement(selector).getAttribute('href') == url;
 	}
-}
+};
