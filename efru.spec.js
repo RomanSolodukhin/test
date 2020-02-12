@@ -11,7 +11,7 @@ describe('Eternal Fury RU', function() {
   let testName = String(this.title)
   let session
   let removeVideo = true
-
+  let game = 'Eternal Fury'
   before(async function() {
     var capabilities = {
       browserName: 'chrome',
@@ -136,10 +136,10 @@ describe('Авторизация', function(done) {
       assert.notEqual(await driver.findElement(By.id("loginform-password")).getAttribute('class'), 'b-input error', 'Auth Error: '+await driver.findElement(By.id("loginform-password")).getAttribute('title'))
     }*/
   })
-  it('Выбрать игру', async function() {
+  it('Выбрать игру '+game, async function() {
     await driver.actions().move({origin: driver.findElement(By.css(".has_submenu:nth-child(1)"))}).perform()
-    await driver.wait(until.elementLocated(By.linkText('Eternal Fury')))
-    await driver.findElement(By.linkText('Eternal Fury')).click()
+    await driver.wait(until.elementLocated(By.linkText(game)))
+    await driver.findElement(By.linkText(game)).click()
   })
   it('Загрузить страницу игры', async function() {
     await driver.wait(until.elementLocated(By.xpath("//a[contains(text(),'Играть бесплатно')]")))
@@ -154,6 +154,7 @@ describe('Сервер '+i, function(done) {
     let serverid = i
     let link = site+"games/ef/server/"+serverid
     let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
+
     after(async function() {
       scriptBlocker = false
       await driver.switchTo().defaultContent()
@@ -176,8 +177,8 @@ describe('Сервер '+i, function(done) {
     it('Открыть окно выбора серверов', async function() {
       try {
         await driver.findElement(By.xpath("//a[contains(text(),'Играть бесплатно')]")).click()
-        await driver.wait(until.elementLocated(By.xpath("//a[contains(@href, '/games/ef/server/1')]")))
-        await driver.wait(until.elementIsVisible(driver.findElement(By.xpath("//a[contains(@href, '/games/ef/server/1')]"))))
+        await driver.wait(until.elementLocated(By.css(".b-popup.b-popup_server")))
+        await driver.wait(until.elementIsVisible(driver.findElement(By.css(".b-popup.b-popup_server"))))
       }
       catch(err) {
         assert.fail(err)
