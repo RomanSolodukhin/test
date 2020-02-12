@@ -218,13 +218,13 @@ describe('Сервер '+i, function(done) {
       frame = await driver.findElement(By.css('[id*="easyXDM_default"]'))
       await driver.switchTo().frame(frame)
     });
-    it('Переключиться в gameFrame', async function() {
+    skip.it('Переключиться в gameFrame', async function() {
       await driver.wait(until.elementLocated(By.id('gameFrame')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('gameFrame'))))
       frame = await driver.findElement(By.id('gameFrame'))
       await driver.switchTo().frame(frame)
     });
-    it('Найти canvas', async function() {
+    skip.it('Найти canvas', async function() {
       await driver.wait(until.elementLocated(By.id('GameCanvas')))
       await driver.wait(until.elementIsVisible(driver.findElement(By.id('GameCanvas'))))
     });
