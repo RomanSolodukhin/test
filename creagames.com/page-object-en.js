@@ -56,7 +56,7 @@ export class Page {
 						icon: '/uploads/images/game_logo_small/5/c/x5cc31ca562bb66cdce48fb5d0a34e031.png.pagespeed.ic.7pYbeodUNM.png'
 					}),
 				},
-				news: new Button(By.css('[href='+this.url+'/en/news]'))
+				news: new Button(By.css('[href='+this.url+'/en/news]', HyperLink.check(this.url+'/en/news]')))
 			},
 			lang: {
 				dropdown_arrow: new Button(By.css('.lang-list'), async function(selector) {
