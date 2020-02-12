@@ -7,7 +7,7 @@ describe('Eternal Fury RU', function() {
   this.slow(1000)
   let driver
   let site = "https://www.creagames.com/"
-  let MAX_SERVERS = 10
+  let MAX_SERVERS = 14
   let testName = String(this.title)
   let session
   let removeVideo = true
@@ -155,6 +155,7 @@ describe('Сервер '+i, function(done) {
     let link = site+"games/ef/server/"+serverid
     let serverselector = "//a[contains(@href, '/games/ef/server/"+serverid+"')]"
     after(async function() {
+      scriptBlocker = false
       await driver.switchTo().defaultContent()
       await driver.navigate().back()
     })
