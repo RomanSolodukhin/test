@@ -102,6 +102,9 @@ class TextString {
 	check() {
 		return Page._driver.findElement(this.selector).getText().includes(this.text);
 	}
+        WebElement() {
+                return Page._driver.findElement(this.selector);
+        }
 }
 
 class Button {
@@ -118,6 +121,9 @@ class Button {
 	check() {
 		return this.result(this.selector);
 	}
+        WebElement() {
+                return Page._driver.findElement(this.selector);
+        }
 }
 
 class Game {
@@ -129,6 +135,9 @@ class Game {
 		this.icon = new Picture(selector.value+' > '+'[src="'+icon+']"');
 		this.button = new Button(selector, HyperLink.check(url));
 	}
+        WebElement() {
+                return Page._driver.findElement(this.selector);
+        }
 }
 
 class Picture(selector) {
@@ -139,6 +148,9 @@ class Picture(selector) {
 		new pictureSize = Page._driver.findElement(selector).getRect();
 		if(pictureSize.height != 0 && pictureSize.width != 0) return true;
 	}
+        WebElement() {
+                return Page._driver.findElement(this.selector);
+        }
 }
 
 function HyperLink(url) {
