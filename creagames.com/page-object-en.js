@@ -19,6 +19,7 @@ export class Page {
 		this.header: {
 			logo: new Button(By.css('.global-header-logo'), HyperLink.check(this.url)),
 			menu: {
+				selector: By.css('.global-header-menu-item'),
 				games: new DropdownArrow(By.css('.has_submenu'), async function(selector) {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.game-list'))));
 					return true;
@@ -30,10 +31,10 @@ export class Page {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
 					return true;
 				}),
-				ru: new Button(By.css('.icon icon-ru'), HyperLink.check(this.url+'/ru')),
-				en: new Button(By.css('.icon icon-en'), HyperLink.check(this.url+'/en')),
-				fr: new Button(By.css('.icon icon-fr'), HyperLink.check(this.url+'/fr')),
-				de: new Button(By.css('.icon icon-de'), HyperLink.check(this.url+'/de')),
+				ru: new Button(By.css('.icon.icon-ru'), HyperLink.check(this.url+'/ru')),
+				en: new Button(By.css('.icon.icon-en'), HyperLink.check(this.url+'/en')),
+				fr: new Button(By.css('.icon.icon-fr'), HyperLink.check(this.url+'/fr')),
+				de: new Button(By.css('.icon.icon-de'), HyperLink.check(this.url+'/de')),
 				current: function() {
 					return this._driver.findElement(By.css('html')).getAttribute('lang');
 				}
