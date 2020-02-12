@@ -100,7 +100,7 @@ class TextString {
 		this.text = text;
 	}
 	check() {
-		return Page._driver.findElement(this.selector).getText() == this.text;
+		return Page._driver.findElement(this.selector).getText().includes(this.text);
 	}
 }
 
@@ -117,6 +117,27 @@ class Button {
 	}
 	check() {
 		return this.result(this.selector);
+	}
+}
+
+class Game {
+	constructor({selector, url, name, genre, icon}) {
+		this.selector = selector;
+		this.url = url;
+		this.name = new TextString(selector, name);
+		this.genre = new TextString(selector, genre);
+		this.icon = new Picture(selector.value+' > '+'[src="'+icon+']"');
+		this.button = new Button(selector, HyperLink.check(url));
+	}
+}
+
+class Picture(selector) {
+	constructor(selector) {
+		this.selector = selector;
+	}
+	check() {
+		new pictureSize = Page._driver.findElement(selector).getRect();
+		if(pictureSize.height != 0 && pictureSize.width != 0) return true;
 	}
 }
 
