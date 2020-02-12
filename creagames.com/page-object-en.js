@@ -28,35 +28,35 @@ export class Page {
 					}), //так себе локатор
 					expand: this.header.menu.games.dropdown_arrow.hover,
 					roa: new Game({
-						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href='+this.url+'/'+this.currentLang+'/game/roa"]'),
+						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href="'+this.url+'/'+this.currentLang+'/game/roa"]'),
 						url: this.url+this.currentLang+'/game/roa',
 						name: 'Rise Of Angels',
 						genre: 'MMORPG',
 						icon: '/uploads/images/game_logo_small/7/c/7c5637a539ccb791b6952ca1dc60e8b3.png'
 					}),
 					ef: new Game({
-						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href='+this.url+'/'+this.currentLang+'/game/ef"]'),
+						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href="'+this.url+'/'+this.currentLang+'/game/ef"]'),
 						url: this.url+this.currentLang+'/game/ef',
 						name: 'Eternal Fury',
 						genre: 'MMORPG',
 						icon: '/uploads/images/game_logo_small/0/2/x02b71f733136de2521a33e6e85e8cb4e.png.pagespeed.ic.HFc_E0uXG9.png'
 					}),
 					kr: new Game({
-						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href='+this.url+'/'+this.currentLang+'/game/kr"]'),
+						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href="'+this.url+'/'+this.currentLang+'/game/kr"]'),
 						url: this.url+this.currentLang+'/game/kr',
 						name: 'Keepers Of The Rift',
 						genre: 'MMORPG',
 						icon: '/uploads/images/game_logo_small/f/c/xfc5e1b622f9fc355ec5b104eb4c1e951.png.pagespeed.ic.a1sm-Pez0k.png'
 					}),
 					gm: new Game({
-						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href='+this.url+'/'+this.currentLang+'/game/gm"]'),
+						selector: By.css(this.header.menu.dropdown_arrow.value+' > '+'[href="'+this.url+'/'+this.currentLang+'/game/gm"]'),
 						url: this.url+this.currentLang+'/game/gm',
 						name: 'Guns’n’Magic',
 						genre: 'MMORPG',
 						icon: '/uploads/images/game_logo_small/5/c/x5cc31ca562bb66cdce48fb5d0a34e031.png.pagespeed.ic.7pYbeodUNM.png'
 					}),
 				},
-				news: new Button(By.css('[href='+this.url+'/en/news]', HyperLink.check(this.url+'/en/news]')))
+				news: new Button(By.css('[href="'+this.url+'/en/news"]', HyperLink.check(this.url+'/en/news]')))
 			},
 			lang: {
 				dropdown_arrow: new Button(By.css('.lang-list'), async function(selector) {
