@@ -19,12 +19,12 @@ export class Page {
 		this.header: {
 			logo: new Button(By.css('.global-header-logo'), HyperLink.check(this.url)),
 			menu: {
-				games: new Button(By.css('.has_submenu'), async function(selector) {
+				games: new DropdownArrow(By.css('.has_submenu'), async function(selector) {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.game-list'))));
 					return true;
 				}),
 
-			}
+			},
 			lang: {
 				list: new DropdownArrow(By.css('.lang-list'), async function(selector) {
 					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
