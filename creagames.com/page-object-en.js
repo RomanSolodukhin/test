@@ -58,7 +58,7 @@ export class Page {
 				},
 				news: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/news"]'), HyperLink.check(this.url+this.currentLang+'/news]')),
 				forum: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/site/forums"]'), HyperLink.check(this.url+this.currentLang+'/site/forums"]')),
-				support: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/support"]'), HyperLink.check(this.url+this.currentLang+'/support"]'))
+				support: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/support"]'), HyperLink.check(this.url+this.currentLang+'/support"]')),
 			},
 			profile: {
 				selector: By.css('.global-header-profile-data'),
@@ -66,19 +66,20 @@ export class Page {
 				amount: By.css('.wallet-amount'),
 				icon: new Picture(By.css(this.header.profile.selector.value+' .icon-money')),
 				recharge: new Button(By.css(this.header.profile.selector.value+' .button-small'), function() {
+					let bgcolor = Page._driver.findElement(By.css(selector)).getCssValue('background-color');
 						return {
-							default: this._driver.findElement(By.css(selector)).getCssValue('background-color') == '#FF1C51',
-							hover: this._driver.findElement(By.css(selector)).getCssValue('background-color') == '#FF617E'
+							default:  bgcolor == '#FF1C51',
+							hover: bgcolor == '#FF617E'
 						}
 					}),
-					avatar: new Picture(By.css(this.header.profile.selector.value+' .global-header-profile-data-avatar')),
-					nick: new TextString(By.css(this.header.profile.selector.value+' .user-identity-username'), ),
-					nickButton: new Button( , HyperLink.check(this.url+this.currentLang+'/profile/games"'))
-				}),
-			}
+				avatar: new Picture(By.css(this.header.profile.selector.value+' .global-header-profile-data-avatar')),
+				nick: By.css(this.header.profile.selector.value+' .user-identity-username'),
+				account: new Button(By.css(this.header.profile.selector.value+' [href="'+this.url+this.currentLang+'/profile/games"'), HyperLink.check(this.url+this.currentLang+'/profile/games"')),
+				logout: new Button(By.css(this.header.profile.selector.value+' [data-href]'), HyperLink.check(this.url+this.currentLang+'site/logout?redirect_url=%2F'+this.currentLang))
+			},
 			lang: {
 				dropdown_arrow: new Button(By.css('.lang-list'), async function(selector) {
-					await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
+					await Page._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
 					return true;
 				}),
 				expand: this.header.lang.dropdown_arrow.hover,
