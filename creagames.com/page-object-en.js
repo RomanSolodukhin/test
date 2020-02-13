@@ -7,17 +7,17 @@ export class Page {
 		this.currentLang = 'en',
 		this.title = 'CreaGames — browser MMORPGs',
 		this.facebookUrl = 'https://www.facebook.com/creagamesworld/',
-		this.maintenance: {
+		this.maintenance = {
 				title: new TextString(By.css('body > div > h1'), 'Maintenance'),
 				apeal: new TextString(By.css('body > div > div.text-preview'), 'Dear friends,'),
 				text: new TextString(By.css('body > div > div.text'), 'The CreaGames portal is temporarily unavailable due to maintenance. When the website is back and better than ever, we will announce it in the Facebook groups of our projects.'),
 				conclusion: new TextString(By.css('body > div > div.text2'), 'Stay tuned!'),
 				socialText: new TextString(By.css('body > div > div.social_text'), 'Follow us on social media:'),
 				social: {
-					facebook: new Button(By.css('.fb'), HyperLink.check(this.facebookUrl)
+					facebook: new Button(By.css('.fb'), HyperLink.check(this.facebookUrl))
 				}
 		},
-		this.header: {
+		this.header = {
 			logo: new Button(By.css('.global-header-logo'), HyperLink.check(this.url)),
 			menu: {
 				selector: By.css('.global-header-menu'),
