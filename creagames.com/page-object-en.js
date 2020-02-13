@@ -60,6 +60,10 @@ export class Page {
 				forum: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/site/forums"]'), HyperLink.check(this.url+this.currentLang+'/site/forums"]')),
 				support: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/support"]'), HyperLink.check(this.url+this.currentLang+'/support"]')),
 			},
+			login: {
+				signin: ,
+				signup:
+			},
 			profile: {
 				selector: By.css('.global-header-profile-data'),
 				balance: new Button(By.css(this.header.profile.selector.value+' [href="'+this.url+this.currentLang+'/profile/balance"'), HyperLink.check(this.url+this.currentLang+'/profile/balance"')),
