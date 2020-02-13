@@ -58,11 +58,7 @@ export class Page {
 				},
 				news: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/news"]'), HyperLink.check(this.url+this.currentLang+'/news]')),
 				forum: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/site/forums"]'), HyperLink.check(this.url+this.currentLang+'/site/forums"]')),
-				support: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/support"]'), HyperLink.check(this.url+this.currentLang+'/support"]')),
-			},
-			login: {
-				signin: ,
-				signup:
+				support: new Button(By.css(this.header.menu.dropdown_arrow.value+' [href="'+this.url+this.currentLang+'/support"]'), HyperLink.check(this.url+this.currentLang+'/support"]'))
 			},
 			profile: {
 				selector: By.css('.global-header-profile-data'),
@@ -79,20 +75,84 @@ export class Page {
 				avatar: new Picture(By.css(this.header.profile.selector.value+' .global-header-profile-data-avatar')),
 				nick: By.css(this.header.profile.selector.value+' .user-identity-username'),
 				account: new Button(By.css(this.header.profile.selector.value+' [href="'+this.url+this.currentLang+'/profile/games"'), HyperLink.check(this.url+this.currentLang+'/profile/games"')),
-				logout: new Button(By.css(this.header.profile.selector.value+' [data-href]'), HyperLink.check(this.url+this.currentLang+'site/logout?redirect_url=%2F'+this.currentLang))
-			},
-			lang: {
-				dropdown_arrow: new Button(By.css('.lang-list'), async function(selector) {
-					await Page._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
-					return true;
-				}),
-				expand: this.header.lang.dropdown_arrow.hover,
-				ru: new Button(By.css('.icon.icon-ru'), HyperLink.check(this.url+'/ru')),
-				en: new Button(By.css('.icon.icon-en'), HyperLink.check(this.url+'/en')),
-				fr: new Button(By.css('.icon.icon-fr'), HyperLink.check(this.url+'/fr')),
-				de: new Button(By.css('.icon.icon-de'), HyperLink.check(this.url+'/de')),
-				current: function() {
-					return this._driver.findElement(By.css('html')).getAttribute('lang');
+				logout: new Button(By.css(this.header.profile.selector.value+' [data-href]'), HyperLink.check(this.url+this.currentLang+'site/logout?redirect_url=%2F'+this.currentLang)),
+				authorization: {
+					login: new Button(By.css(this.header.profile.selector.value+'.popup-trigger[data-popup="login"]'), async function() {
+						await Page._driver.wait(until.elementLocated(By.css('*[id="popup-login"]')));
+						await Page._driver.wait(until.elementIsVisible(Page._driver.findElement(By.css('*[id="popup-login"]')));
+						return true;
+					}),
+					popup: {
+						selector: By.css('*[id="popup-login"] .popup-content'),
+						title: ,
+						social: {
+
+						},
+						username: ,
+						password: ,
+						remember: ,
+						recovery: ,
+						submit: ,
+						signup:
+						/*
+						<div class="popup-content" style="top: 247.5px;">
+						<div class="popup-title">
+						<h2>Authorization</h2>
+						<b class="icon icon-close js-modal-close"></b>
+						</div>
+						<div class="popup-social-row">
+						<p>Sign in with social networks</p>
+						<span class="social-authorization-item icon-sign icon-sign-facebook" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=facebook"></span>
+						<span class="social-authorization-item icon-sign icon-sign-yahoo" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=yahoo&amp;redirect_url=%2Fen"></span>
+						<span class="social-authorization-item icon-sign icon-sign-google" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=google"></span>
+						<p class="popup-social-or">or</p>
+						</div>
+						<div class="global-form">
+						<form action="" method="post">
+						<label class="form-row">
+						<input name="username" class="form-input" type="text" placeholder="Email / Username" maxlength="255">
+						<span class="form-error"></span>
+						</label>
+						<label class="form-row">
+						<input name="password" class="form-input" type="password" placeholder="Password" maxlength="255">
+						<span class="form-error"></span>
+						</label>
+						<label class="form-row form-checkbox-row">
+						<input class="form-checkbox" name="remember" value="1" type="checkbox" checked="checked">
+						<b class="icon-checkbox"></b>
+						Remember me <a class="a-solid popup-trigger float-right" data-popup="recovery">Forgot password?</a>
+						</label>
+						<div class="form-row">
+						<button class="submit button button-medium" type="button">Login</button>
+						</div>
+						</form>
+						</div>
+						<div class="popup-bottom">
+						Have no account? <a class="a-dashed js-modal-open popup-trigger" data-popup="signup">Sign up</a>
+						</div>
+						</div>
+						*/
+					}
+				},
+				registration: {
+					singup: new Button(By.css(this.header.profile.selector.value+'.popup-trigger[data-popup="signup"]'), 'popup регистрации'),
+					popup: {
+
+					}
+				},
+				lang: {
+					dropdown_arrow: new Button(By.css('.lang-list'), async function(selector) {
+						await Page._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.global-header-sub-menu'))));
+						return true;
+					}),
+					expand: this.header.lang.dropdown_arrow.hover,
+					ru: new Button(By.css('.icon.icon-ru'), HyperLink.check(this.url+'/ru')),
+					en: new Button(By.css('.icon.icon-en'), HyperLink.check(this.url+'/en')),
+					fr: new Button(By.css('.icon.icon-fr'), HyperLink.check(this.url+'/fr')),
+					de: new Button(By.css('.icon.icon-de'), HyperLink.check(this.url+'/de')),
+					current: function() {
+						return this._driver.findElement(By.css('html')).getAttribute('lang');
+					}
 				}
 			}
 		}
