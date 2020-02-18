@@ -84,9 +84,11 @@ export class Page {
 					}),
 					popup: {
 						selector: By.css('*[id="popup-login"] .popup-content'),
-						title: ,
+						title: By.css(this.header.profile.authorization.popup.selector.value+' h2'),
 						social: {
-
+							facebook: new Button(By.css(this.header.profile.authorization.popup.selector.value+' .icon-sign-facebook'), HyperLink.check(this.url+this.currentLang+'/site/social-authorization?platform_code=facebook')),
+							yahoo: new Button(By.css(this.header.profile.authorization.popup.selector.value+' .icon-sign-yahoo'), HyperLink.check(this.url+this.currentLang+'/site/social-authorization?platform_code=yahoo')),
+							google: new Button(By.css(this.header.profile.authorization.popup.selector.value+' .icon-sign-google'), HyperLink.check(this.url+this.currentLang+'/site/social-authorization?platform_code=google')),
 						},
 						username: ,
 						password: ,
@@ -238,6 +240,6 @@ class Picture(selector) {
 
 function HyperLink(url) {
 	this.prototype.check = function() {
-		return Page._driver.findElement(selector).getAttribute('href') == url;
+		return Page._driver.findElement(selector).getAttribute('href') || Page._driver.findElement(selector).getAttribute('data-href') == url;
 	}
 };
