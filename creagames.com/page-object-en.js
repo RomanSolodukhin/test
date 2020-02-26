@@ -22,7 +22,7 @@ export class Page {
 			menu: {
 				selector: By.css('.global-header-menu'),
 				games: {
-					dropdown_arrow: new Button(By.css(this.header.menu.selector.value++' .has-submenu'), async function(selector) {
+					dropdown_arrow: new Button(By.css(this.header.menu.selector.value+' .has-submenu'), async function(selector) {
 						await this._driver.wait(until.elementIsVisible(this._driver.findElement(By.css('.game-list'))));
 						return true;
 					}), //так себе локатор
@@ -90,35 +90,13 @@ export class Page {
 							yahoo: new Button(By.css(this.header.profile.authorization.popup.selector.value+' .icon-sign-yahoo'), HyperLink.check(this.url+this.currentLang+'/site/social-authorization?platform_code=yahoo')),
 							google: new Button(By.css(this.header.profile.authorization.popup.selector.value+' .icon-sign-google'), HyperLink.check(this.url+this.currentLang+'/site/social-authorization?platform_code=google')),
 						},
-						username: ,
-						password: ,
+						username: new InputField(By.css(this.header.profile.authorization.popup.selector.value+' *[name="username"]'), {type: 'text', maxlength: 255, placeholder: 'Email / Username'}),
+						password: new InputField(By.css(this.header.profile.authorization.popup.selector.value+' *[name="password"]'), {type: 'password', maxlength: 255, placeholder: 'Password'}),
 						remember: ,
 						recovery: ,
 						submit: ,
 						signup:
-						/*
-						<div class="popup-content" style="top: 247.5px;">
-						<div class="popup-title">
-						<h2>Authorization</h2>
-						<b class="icon icon-close js-modal-close"></b>
-						</div>
-						<div class="popup-social-row">
-						<p>Sign in with social networks</p>
-						<span class="social-authorization-item icon-sign icon-sign-facebook" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=facebook"></span>
-						<span class="social-authorization-item icon-sign icon-sign-yahoo" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=yahoo&amp;redirect_url=%2Fen"></span>
-						<span class="social-authorization-item icon-sign icon-sign-google" data-href="https://www.creagames.com/en/site/social-authorization?platform_code=google"></span>
-						<p class="popup-social-or">or</p>
-						</div>
-						<div class="global-form">
-						<form action="" method="post">
-						<label class="form-row">
-						<input name="username" class="form-input" type="text" placeholder="Email / Username" maxlength="255">
-						<span class="form-error"></span>
-						</label>
-						<label class="form-row">
-						<input name="password" class="form-input" type="password" placeholder="Password" maxlength="255">
-						<span class="form-error"></span>
-						</label>
+/*
 						<label class="form-row form-checkbox-row">
 						<input class="form-checkbox" name="remember" value="1" type="checkbox" checked="checked">
 						<b class="icon-checkbox"></b>
@@ -185,11 +163,14 @@ class TextString {
 		this.text = text;
 	}
 	check() {
-		return Page._driver.findElement(this.selector).getText().includes(this.text);
+		return this.WebElement().getText().includes(this.text);
 	}
-        WebElement() {
-                return Page._driver.findElement(this.selector);
-        }
+  WebElement() {
+    return Page._driver.findElement(this.selector);
+  }
+	isDisplayed() {
+		return this.WebElement().isDisplayed();
+	}
 }
 
 class Button {
@@ -198,17 +179,20 @@ class Button {
 		this.result = result;
 	}
 	press() {
-		Page._driver.findElement(this.selector).click();
+		this.WebElement().click();
 	}
 	hover() {
-		Page._driver.actions().move({origin: Page._driver.findElement(selector)}).perform();
+		Page._driver.actions().move({origin: this.WebElement()}).perform();
 	}
 	check() {
 		return this.result(this.selector);
 	}
-        WebElement() {
-                return Page._driver.findElement(this.selector);
-        }
+  WebElement() {
+    return Page._driver.findElement(this.selector);
+  }
+	isDisplayed() {
+		return this.WebElement().isDisplayed();
+	}
 }
 
 class Game {
@@ -220,22 +204,63 @@ class Game {
 		this.icon = new Picture(By.css(selector.value+'[src="'+icon+']"'));
 		this.button = new Button(selector, HyperLink.check(url));
 	}
-        WebElement() {
-                return Page._driver.findElement(this.selector);
-        }
+	check() {
+		return {
+			name: this.name.check(),
+			genre: this.genre.check(),
+			icon: this.icon.check(),
+			button: this.button.check()
+		}
+	}
+  WebElement() {
+    return Page._driver.findElement(this.selector);
+  }
+	isDisplayed() {
+		return this.WebElement().isDisplayed();
+	}
 }
 
-class Picture(selector) {
+class Picture {
 	constructor(selector) {
 		this.selector = selector;
 	}
 	check() {
-		new pictureSize = Page._driver.findElement(selector).getRect();
+		new pictureSize = this.WebElement().getRect();
 		if(pictureSize.height != 0 && pictureSize.width != 0) return true;
 	}
-        WebElement() {
-                return Page._driver.findElement(this.selector);
-        }
+  WebElement() {
+    return Page._driver.findElement(this.selector);
+  }
+	isDisplayed() {
+		return this.WebElement().isDisplayed();
+	}
+}
+
+class InputField {
+	constructor(selector, params) {
+		this.selector = selector;
+		this.params = params;
+	}
+	sendKeys(sendVar) {
+		this.WebElement().sendKeys(sendVar);
+		return this.value() == sendVar || this.value();
+	}
+	check() {
+		return {
+			type: this.WebElement().getAttribute('type') === this.params.type || 'Observed: '+this.WebElement().getAttribute('type'),
+			maxlength: this.WebElement().getAttribute('maxlength') === this.params.maxlength || 'Observed: '+this.WebElement().getAttribute('maxlength'),
+			placeholder: this.value() == this.params.maxlength || 'Observed: '+this.value()
+		}
+	}
+	value() {
+		return this.WebElement().getText()
+	}
+	WebElement() {
+		return Page._driver.findElement(this.selector);
+	}
+	isDisplayed() {
+		return this.WebElement().isDisplayed();
+	}
 }
 
 function HyperLink(url) {
