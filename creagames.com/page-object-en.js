@@ -185,6 +185,7 @@ class Button {
 		Page._driver.actions().move({origin: this.WebElement()}).perform();
 	}
 	check() {
+		this.press();
 		return this.result(this.selector);
 	}
   WebElement() {
