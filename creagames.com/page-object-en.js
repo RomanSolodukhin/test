@@ -100,7 +100,7 @@ export class Page {
 						<label class="form-row form-checkbox-row">
 						<input class="form-checkbox" name="remember" value="1" type="checkbox" checked="checked">
 Тут ловить запрос вида и искать username password (если чекбокс не отмечен, далее искать remember=1 - если чекбокс был)
-{"hasPostData":true,"headers":{"Accept":"*/*","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8","Origin":"https://www.creagames.com","Referer":"https://www.creagames.com/","User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36","X-CSRF-Token":"aXEtVllzYmwKNkwYLSkMCzoHfRRgKiwlKyYbOh4/JhwGGUs.OjU4DQ==","X-Requested-With":"XMLHttpRequest"},"initialPriority":"High","method":"POST","mixedContentType":"none","postData":"_csrf=aXEtVllzYmwKNkwYLSkMCzoHfRRgKiwlKyYbOh4%2FJhwGGUs.OjU4DQ%3D%3D&LoginForm%5Busername%5D=r.solodukhin%40creagames.com&LoginForm%5Bpassword%5D=123456qQ","referrerPolicy":"no-referrer-when-downgrade","url":"https://www.creagames.com/site/login"},"requestId":"304.278","timestamp":3182855.511203,"type":"XHR","wallTime":1577347200.556095}}
+
 						<b class="icon-checkbox"></b>
 						Remember me <a class="a-solid popup-trigger float-right" data-popup="recovery">Forgot password?</a>
 						</label>
