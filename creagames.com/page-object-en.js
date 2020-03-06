@@ -99,6 +99,8 @@ export class Page {
 /*
 						<label class="form-row form-checkbox-row">
 						<input class="form-checkbox" name="remember" value="1" type="checkbox" checked="checked">
+Тут ловить запрос вида и искать username password (если чекбокс не отмечен, далее искать remember=1 - если чекбокс был)
+
 						<b class="icon-checkbox"></b>
 						Remember me <a class="a-solid popup-trigger float-right" data-popup="recovery">Forgot password?</a>
 						</label>
